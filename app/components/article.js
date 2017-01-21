@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router";
 import ArticleBody from "./article-body";
-import Coments from "./coments";
+import Comments from "./comments";
 
 const Article = React.createClass({
     render: function () {
@@ -13,7 +13,7 @@ const Article = React.createClass({
 
                             <ArticleBody />
 
-                            <Coments />
+                            <Comments/>
 
                         </div>
                     </div>

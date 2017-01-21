@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router";
 
-const Coments = React.createClass({
+const Comments = React.createClass({
     render: function () {
         return (
             <div>
@@ -54,4 +54,4 @@ const Coments = React.createClass({
     }
 });
 
-export default Coments;
+export default Comments;
