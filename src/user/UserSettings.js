@@ -14,7 +14,7 @@ export default class UserSettingsextends extends React.Component {
                                 </div>
                                 <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <img className="img-thumbnail profile-avatar"
-                                         src="assets/img/default-avatars/avatar-01.png" alt=""/>
+                                         src={require('../../assets/img/default-avatars/avatar-01.png')} alt=""/>
                                 </div>
                                 <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                     <div className="col-md-9 personal-info">

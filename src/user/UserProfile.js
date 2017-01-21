@@ -23,8 +23,8 @@ export default class UserProfile extends React.Component {
                     <div className="row">
                         <aside className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                             <div className="profile">
-                                <img className="profile-avatar" src="assets/img/default-avatars/avatar-01.png"
-                                     alt=""/>
+                                <img className="profile-avatar"
+                                     src={require('../../assets/img/default-avatars/avatar-01.png')} alt=""/>
                                 <div>
                                     <h2 className="login">Joe Smith</h2>
                                     <span>Имя: Joe</span><br/>
