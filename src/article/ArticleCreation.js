@@ -1,7 +1,12 @@
 import React from "react";
 
-const ArticleCreation = React.createClass({
-    render: function () {
+export default class ArticleCreation extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
         return (
             <div className="wrap">
                 <div className="container main">
@@ -36,6 +41,4 @@ const ArticleCreation = React.createClass({
             </div>
         );
     }
-});
-
-export default ArticleCreation;
+}

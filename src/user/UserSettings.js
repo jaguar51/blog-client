@@ -1,8 +1,8 @@
 import React from "react";
 import {Link} from "react-router";
 
-const UserSettings = React.createClass({
-    render: function () {
+export default class UserSettingsextends extends React.Component {
+    render() {
         return (
             <div className="wrap">
                 <div className="container main">
@@ -82,6 +82,4 @@ const UserSettings = React.createClass({
             </div>
         );
     }
-});
-
-export default UserSettings;
+}

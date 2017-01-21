@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router";
-import LogForm from "./LogForm";
+import LogForm from "../sign/LogForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../assets/css/styles.css";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -71,16 +71,8 @@ export default class MainLayout extends React.Component {
                                 </form>
 
                                 <ul className="nav navbar-nav navbar-right">
-                                    <li>
-                                        <Link className="loginBtn" onClick={this.logInButtonClick} to="">
-                                            Вход
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="signUpBtn" onClick={this.signUpButtonClick} to="">
-                                            Регистрация
-                                        </Link>
-                                    </li>
+                                    <li className="loginBtn" onClick={this.logInButtonClick}>Вход</li>
+                                    <li className="signUpBtn" onClick={this.signUpButtonClick}>Регистрация</li>
                                 </ul>
                             </div>
                         </div>

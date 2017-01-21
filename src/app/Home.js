@@ -2,8 +2,13 @@ import React from "react";
 import ArticleBig from "../article/ArticleBig";
 import ArticleStandard from "../article/ArticleStandard";
 
-const Home = React.createClass({
-    render: function () {
+export default class Home extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
         return (
             <div className="wrap">
                 <div className="container main">
@@ -21,6 +26,4 @@ const Home = React.createClass({
             </div>
         );
     }
-});
-
-export default Home;
+}

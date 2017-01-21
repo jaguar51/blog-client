@@ -1,26 +1,28 @@
 import React from "react";
 import {Link} from "react-router";
 
-const Comments = React.createClass({
-    render: function () {
+export default class Comments extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
         return (
             <div>
                 <div className="article-form">
                     <div className="article-body">
-                        <h3>
-                            Комментарии
-                        </h3>
+                        <h3>Комментарии</h3>
                         <hr />
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu
                             pellentesque tortor vestibulum ut. Maecenas non massa sem.
                         </p>
                         <footer className="article-info author">
-                            <a className="author-content" href="personal_page.html">
-                                <img src="assets/img/default-avatars/avatar-01.png" width="40px" height="40px"
-                                     alt=""/>
+                            <Link className="author-content" to="/profile">
+                                <img src="assets/img/default-avatars/avatar-01.png" width="40px" height="40px" alt=""/>
                                 <span> By Joe Smith</span>
-                            </a>
+                            </Link>
                             <span className="comments">1 Aug at 4:20 pm</span>
                         </footer>
 
@@ -29,11 +31,10 @@ const Comments = React.createClass({
                             Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem.
                         </p>
                         <footer className="article-info author">
-                            <a className="author-content" href="personal_page.html">
-                                <img src="assets/img/default-avatars/avatar-01.png" width="40px" height="40px"
-                                     alt=""/>
+                            <Link className="author-content" to="/profile">
+                                <img src="assets/img/default-avatars/avatar-01.png" width="40px" height="40px" alt=""/>
                                 <span> By Joe Smith</span>
-                            </a>
+                            </Link>
                             <span className="comments">1 Aug at 4:20 pm</span>
                         </footer>
                     </div>
@@ -52,6 +53,4 @@ const Comments = React.createClass({
             </div>
         );
     }
-});
-
-export default Comments;
+}

@@ -137,6 +137,12 @@ a {
     color: #fff;
 }
 
+.loginBtn,
+.signUpBtn {
+    padding: 15px;
+    cursor: pointer;
+}
+
 .profile h3 {
     color: #333;
     font-weight: 700;
@@ -306,6 +312,7 @@ a {
 }
 
 .article-content {
+    /*height: 50px;*/
     margin-top: 5px;
 }
 

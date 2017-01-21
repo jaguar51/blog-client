@@ -37,13 +37,11 @@ export default class ArticlePreview extends React.Component {
                     <h2 className="article-title">
                         {this.testTitle()}
                     </h2>
-                    <TextTruncate line={2} truncateText="…" text={this.testText()}
-                                  className="article-content"/>
+                    <TextTruncate line={1} truncateText="…" text={this.testText()} className="article-content"/>
                 </div>
                 <footer className="article-info-preview author">
                     <Link to="/profile" className="author-content">
-                        <img src="assets/img/default-avatars/avatar-05.png" width="40px" height="40px"
-                             alt=""/>
+                        <img src="assets/img/default-avatars/avatar-05.png" width="40px" height="40px" alt=""/>
                         <span> By Joe Smith</span>
                     </Link>
                     <span className="comments">42 comments</span>
@@ -51,4 +49,4 @@ export default class ArticlePreview extends React.Component {
             </div>
         );
     }
-};
+}
