@@ -1,13 +1,11 @@
 import React from "react";
 import {Router, Route, browserHistory, IndexRoute} from "react-router";
-// Layouts
-import MainLayout from "./components/main-layout";
-// Pages
-import Home from "./components/home";
-import Article from "./components/article";
-import UserProfile from "./components/user-profile";
-import UserSettings from "./components/user-settings";
-import ArticleCreation from "./components/article-creation";
+import MainLayout from "./MainLayout";
+import Home from "./Home";
+import Article from "../article/Article";
+import UserProfile from "../user/UserProfile";
+import UserSettings from "../user/UserSettings";
+import ArticleCreation from "../article/ArticleCreation";
 
 export default (
     <Router history={browserHistory}>

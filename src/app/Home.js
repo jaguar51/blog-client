@@ -1,7 +1,7 @@
 import React from "react";
-import BigArtcile from "./big-article";
-import StandArtcile from "./stand-article";
-import LogForm from "./logform";
+import ArticleBig from "../article/ArticleBig";
+import ArticleStandard from "../article/ArticleStandard";
+import LogForm from "./LogForm";
 
 const Home = React.createClass({
     render: function () {
@@ -9,14 +9,14 @@ const Home = React.createClass({
             <div className="wrap">
                 <div className="container main">
                     <div className="row">
-                        <BigArtcile />
-                        <BigArtcile />
+                        <ArticleBig/>
+                        <ArticleBig/>
                     </div>
 
                     <div className="row">
-                        <StandArtcile />
-                        <StandArtcile />
-                        <StandArtcile />
+                        <ArticleStandard/>
+                        <ArticleStandard/>
+                        <ArticleStandard/>
                     </div>
                 </div>
                 <LogForm />

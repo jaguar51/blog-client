@@ -2,10 +2,10 @@ const webpack = require('webpack');
 const path = require('path');
 
 const BUILD_DIR = path.resolve(__dirname, './build');
-const APP_DIR = path.resolve(__dirname, './app');
+const APP_DIR = path.resolve(__dirname, './src');
 
 const config = {
-    entry: APP_DIR + '/index.js',
+    entry: APP_DIR + '/app/App.js',
     output: {
         path: BUILD_DIR,
         filename: 'bundle.js'

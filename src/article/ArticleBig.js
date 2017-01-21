@@ -1,15 +1,15 @@
 import React from "react";
 import {Link} from "react-router";
-import ArticlePrev from "./article-preview";
+import ArticlePreview from "./ArticlePreview";
 
-const BigArticle = React.createClass({
+const ArticleBig = React.createClass({
     render: function () {
         return (
             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <ArticlePrev />
+                <ArticlePreview />
             </div>
         );
     }
 });
 
-export default BigArticle;
+export default ArticleBig;

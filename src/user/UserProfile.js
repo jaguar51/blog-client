@@ -1,5 +1,5 @@
 import React from "react";
-import ArticlePrev from "./article-preview";
+import ArticlePreview from "../article/ArticlePreview";
 
 const UserProfile = React.createClass({
     render: function () {
@@ -9,7 +9,7 @@ const UserProfile = React.createClass({
                     <div className="row">
                         <aside className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                             <div className="profile">
-                                <img className="profile-avatar" src="app/assets/img/default-avatars/avatar-01.png"
+                                <img className="profile-avatar" src="assets/img/default-avatars/avatar-01.png"
                                      alt=""/>
                                 <div>
                                     <h2 className="login">Joe Smith</h2>
@@ -38,9 +38,9 @@ const UserProfile = React.createClass({
                         </aside>
 
                         <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                            <ArticlePrev />
+                            <ArticlePreview />
 
-                            <ArticlePrev />
+                            <ArticlePreview />
                         </div>
                     </div>
                 </div>

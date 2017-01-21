@@ -2,7 +2,7 @@ import React from "react";
 import {browserHistory, Link} from "react-router";
 import TextTruncate from "react-text-truncate";
 
-export default class ArticlePrev extends React.Component {
+export default class ArticlePreview extends React.Component {
 
     constructor(props) {
         super(props);
@@ -31,7 +31,7 @@ export default class ArticlePrev extends React.Component {
         return (
             <div className="article">
                 <figure className="article-image is-3by2" onClick={this.handleClick}>
-                    <img src="app/assets/img/default-article-img/default-img1.png" alt=""/>
+                    <img src="assets/img/default-article-img/default-img1.png" alt=""/>
                 </figure>
                 <div className="article-body-preview" onClick={this.handleClick}>
                     <h2 className="article-title">
@@ -42,7 +42,7 @@ export default class ArticlePrev extends React.Component {
                 </div>
                 <footer className="article-info-preview author">
                     <Link to="/profile" className="author-content">
-                        <img src="app/assets/img/default-avatars/avatar-05.png" width="40px" height="40px"
+                        <img src="assets/img/default-avatars/avatar-05.png" width="40px" height="40px"
                              alt=""/>
                         <span> By Joe Smith</span>
                     </Link>

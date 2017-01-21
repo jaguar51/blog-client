@@ -1,10 +1,10 @@
 import React from "react";
 import {Link} from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../assets/css/styles.css";
+import "../../assets/css/styles.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import "../assets/js/loginform.js";
-import "../assets/js/tags.js";
+import "../../assets/js/loginform.js";
+import "../../assets/js/tags.js";
 
 const MainLayout = React.createClass({
     render: function () {

@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router";
-import ArticleBody from "./article-body";
-import Comments from "./comments";
+import ArticleBody from "./ArticleBody";
+import Comments from "../comment/Comments";
 
 const Article = React.createClass({
     render: function () {

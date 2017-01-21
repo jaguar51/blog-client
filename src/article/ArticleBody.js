@@ -60,7 +60,7 @@ const ArticleBody = React.createClass({
                     </footer>
                     <footer className="article-info author">
                         <a className="author-content" href="personal_page.html">
-                            <img src="app/assets/img/default-avatars/avatar-01.png" width="40px" height="40px"
+                            <img src="assets/img/default-avatars/avatar-01.png" width="40px" height="40px"
                                  alt=""/>
                             <span> By Joe Smith</span>
                         </a>
