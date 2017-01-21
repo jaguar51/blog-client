@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router";
-import ArticlePrev from "./article-prev";
+import ArticlePrev from "./article-preview";
 
 const StandArticle = React.createClass({
     render: function () {

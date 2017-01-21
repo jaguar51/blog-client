@@ -24,7 +24,7 @@ header, nav, article, aside, footer, section {
 
 @font-face {
     font-family: 'Museo';
-    src: url('../fonts/exljbris - Museo Cyrl 900.otf');
+    src: url('../fonts/Museo-Cyrl-900.otf');
 }
 
 @font-face {
@@ -263,6 +263,7 @@ a {
     color: #333;
     margin-top: 15px;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .article:hover,
@@ -292,6 +293,11 @@ a {
     padding: 20px;
 }
 
+.article-body-preview {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 .article-title {
     color: #333;
     font-size: 1.4em;
@@ -306,6 +312,14 @@ a {
 .article-info {
     font-size: 0.85em;
     margin-top: 10px;
+}
+
+.article-info-preview {
+    font-size: 0.85em;
+    margin-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
 }
 
 .author img,
@@ -394,7 +408,7 @@ a {
 }
 
 .navbar-default .navbar-collapse {
-    border: 0px;
+    border: 0;
 }
 
 .search-btn {
@@ -494,7 +508,6 @@ a {
     transition: all .4s linear;
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
-    backface-visibility: hidden;
 }
 
 .login-html .login,

@@ -4,6 +4,10 @@
   "author": "Botsula Konstantin",
   "description": "Cool blog app",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaguar51/blog-client"
+  },
   "dependencies": {
     "bootstrap": "^3.3.7",
     "css-loader": "^0.26.1",

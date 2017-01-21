@@ -1,5 +1,5 @@
 import React from "react";
-import ArticlePrev from "./article-prev";
+import ArticlePrev from "./article-preview";
 
 const UserProfile = React.createClass({
     render: function () {
