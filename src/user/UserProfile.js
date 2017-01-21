@@ -1,8 +1,22 @@
 import React from "react";
+import {browserHistory} from "react-router";
 import ArticlePreview from "../article/ArticlePreview";
 
-const UserProfile = React.createClass({
-    render: function () {
+export default class UserProfile extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    createArticleClick() {
+        browserHistory.push('/article-creation');
+    }
+
+    settingsClick() {
+        browserHistory.push('/settings');
+    }
+
+    render() {
         return (
             <div className="wrap">
                 <div className="container main">
@@ -16,11 +30,14 @@ const UserProfile = React.createClass({
                                     <span>Имя: Joe</span><br/>
                                     <span>Фамилия: Smith</span>
                                 </div>
-                                <form action="/article-creation">
-                                    <button type="button" className="btn btn-primary btn-sm btn-block custom-button">
-                                        Создать статью
-                                    </button>
-                                </form>
+
+                                <button type="button"
+                                        className="btn btn-primary btn-sm btn-block custom-button custom-btn-group"
+                                        onClick={this.createArticleClick}>
+                                    Создать статью
+                                </button>
+
+
                                 <div className="btn-group-vertical custom-btn-group">
                                     <button type="button" className="btn btn-primary btn-sm btn-block custom-button">Все
                                         статьи
@@ -29,11 +46,12 @@ const UserProfile = React.createClass({
                                         Черновики
                                     </button>
                                 </div>
-                                <form action="/settings">
-                                    <button type="submit"
-                                            className="btn btn-primary btn-sm btn-block custom-changes-btn">Настройки
-                                    </button>
-                                </form>
+
+                                <button type="submit"
+                                        className="btn btn-primary btn-sm btn-block custom-changes-btn"
+                                        onClick={this.settingsClick}>Настройки
+                                </button>
+
                             </div>
                         </aside>
 
@@ -47,6 +65,4 @@ const UserProfile = React.createClass({
             </div>
         );
     }
-});
-
-export default UserProfile;
+};

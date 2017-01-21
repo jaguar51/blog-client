@@ -1,7 +1,13 @@
 import React from "react";
+import {Link} from "react-router";
 
-const ArticleBody = React.createClass({
-    render: function () {
+export default class ArticleBody extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
         return (
             <div className="article-form">
                 <div className="article-body">
@@ -10,17 +16,12 @@ const ArticleBody = React.createClass({
                     </h1>
                     <hr/>
                     <ol>
-                        <li>
-                            <h1><s><em><strong>dfgdfgdfg</strong></em></s></h1>
-                        </li>
+                        <li><h1><s><em><strong>dfgdfgdfg</strong></em></s></h1></li>
                         <li><s><em><strong>rt</strong></em></s></li>
                         <li><s><em><strong>ret</strong></em></s></li>
-                        <li>
-                            <small><s><em><strong>erte</strong></em></s></small>
-                        </li>
+                        <li><s><em><strong>erte</strong></em></s></li>
                         <li><s><em><strong>rt</strong></em></s></li>
                     </ol>
-
                     <hr/>
                     <ul>
                         <li>dfgdfgdgdf</li>
@@ -28,7 +29,6 @@ const ArticleBody = React.createClass({
                         <li><span className="marker">fg</span></li>
                         <li>dfg&nbsp;</li>
                     </ul>
-
                     <blockquote>
                         <p>dfgdfgdf</p>
                     </blockquote>
@@ -59,17 +59,14 @@ const ArticleBody = React.createClass({
                         <li className="addedTag"><span>test</span></li>
                     </footer>
                     <footer className="article-info author">
-                        <a className="author-content" href="personal_page.html">
-                            <img src="assets/img/default-avatars/avatar-01.png" width="40px" height="40px"
-                                 alt=""/>
+                        <Link className="author-content" to="/profile">
+                            <img src="assets/img/default-avatars/avatar-01.png" width="40px" height="40px" alt=""/>
                             <span> By Joe Smith</span>
-                        </a>
+                        </Link>
                         <span className="comments">1 Aug at 4:20 pm</span>
                     </footer>
                 </div>
             </div>
         );
     }
-});
-
-export default ArticleBody;
+}

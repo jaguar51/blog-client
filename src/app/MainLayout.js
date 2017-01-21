@@ -1,13 +1,43 @@
 import React from "react";
 import {Link} from "react-router";
+import LogForm from "../sign/LogForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../assets/css/styles.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import "../../assets/js/loginform.js";
 import "../../assets/js/tags.js";
 
-const MainLayout = React.createClass({
-    render: function () {
+export default class MainLayout extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            showSign: false,
+            checked: 'login'
+        };
+        this.logInButtonClick = this.logInButtonClick.bind(this);
+        this.signUpButtonClick = this.signUpButtonClick.bind(this);
+        this.hideSignWindow = this.hideSignWindow.bind(this);
+    }
+
+    logInButtonClick() {
+        this.setState({
+            showSign: true,
+            checked: 'login'
+        });
+    }
+
+    signUpButtonClick() {
+        this.setState({
+            showSign: true,
+            checked: 'signup'
+        });
+    }
+
+    hideSignWindow() {
+        this.setState({showSign: false});
+    }
+
+    render() {
         return (
             <div className="app">
                 <nav className="navbar navbar-default navbar-fixed-top navbar-style">
@@ -41,8 +71,8 @@ const MainLayout = React.createClass({
                                 </form>
 
                                 <ul className="nav navbar-nav navbar-right">
-                                    <li><Link to="#" className="loginBtn">Вход</Link></li>
-                                    <li><Link to="#" className="signUpBtn">Регистрация</Link></li>
+                                    <li className="loginBtn" onClick={this.logInButtonClick}>Вход</li>
+                                    <li className="signUpBtn" onClick={this.signUpButtonClick}>Регистрация</li>
                                 </ul>
                             </div>
                         </div>
@@ -50,10 +80,9 @@ const MainLayout = React.createClass({
                 </nav>
                 <main>
                     {this.props.children}
+                    {this.state.showSign ? <LogForm checked={this.state.checked} close={this.hideSignWindow}/> : null}
                 </main>
             </div>
         );
     }
-});
-
-export default MainLayout;
+};

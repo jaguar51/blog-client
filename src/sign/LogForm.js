@@ -1,17 +1,43 @@
 import React from "react";
 import {Link} from "react-router";
 
-const LogForm = React.createClass({
-    render: function () {
+export default class LogForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showLogin: props.checked == 'login',
+            showSignUp: props.checked == 'signup'
+        };
+        this.render = this.render.bind(this);
+        this.logInClick = this.logInClick.bind(this);
+        this.singUpClick = this.singUpClick.bind(this);
+    }
+
+    logInClick() {
+        this.setState({
+            showLogin: true,
+            showSignUp: false
+        });
+    }
+
+    singUpClick() {
+        this.setState({
+            showLogin: false,
+            showSignUp: true
+        });
+    }
+
+    render() {
         return (
             <div className="popup" id="login-dialog">
                 <div className="login-wrap">
                     <div className="login-html">
-                        <button type="button" className="close custom-close">×</button>
-                        <input id="tab-1" type="radio" name="tab" className="login"/><label htmlFor="tab-1"
-                                                                                            className="tab">Вход</label>
-                        <input id="tab-2" type="radio" name="tab" className="sign-up"/><label htmlFor="tab-2"
-                                                                                              className="tab">Регистрация</label>
+                        <button type="button" className="close custom-close" onClick={this.props.close}>×</button>
+                        <input checked={this.state.showLogin} onChange={this.logInClick} id="tab-1" type="radio"
+                               name="tab" className="login"/><label htmlFor="tab-1" className="tab">Вход</label>
+                        <input checked={this.state.showSignUp} onChange={this.singUpClick} id="tab-2" type="radio"
+                               name="tab" className="sign-up"/><label htmlFor="tab-2"
+                                                                      className="tab">Регистрация</label>
                         <div className="login-form" id="login-form">
                             <div className="sign-in-htm">
                                 <div className="group">
@@ -69,6 +95,4 @@ const LogForm = React.createClass({
             </div>
         );
     }
-});
-
-export default LogForm;
+};
