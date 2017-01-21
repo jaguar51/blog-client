@@ -1,7 +1,6 @@
 import React from "react";
 import ArticleBig from "../article/ArticleBig";
 import ArticleStandard from "../article/ArticleStandard";
-import LogForm from "./LogForm";
 
 const Home = React.createClass({
     render: function () {
@@ -19,7 +18,6 @@ const Home = React.createClass({
                         <ArticleStandard/>
                     </div>
                 </div>
-                <LogForm />
             </div>
         );
     }
