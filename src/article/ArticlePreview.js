@@ -31,7 +31,7 @@ export default class ArticlePreview extends React.Component {
         return (
             <div className="article">
                 <figure className="article-image is-3by2" onClick={this.handleClick}>
-                    <img src="assets/img/default-article-img/default-img1.png" alt=""/>
+                    <img src={require('../../assets/img/default-article-img/default-img1.png')} alt=""/>
                 </figure>
                 <div className="article-body-preview" onClick={this.handleClick}>
                     <h2 className="article-title">
@@ -41,7 +41,8 @@ export default class ArticlePreview extends React.Component {
                 </div>
                 <footer className="article-info-preview author">
                     <Link to="/profile" className="author-content">
-                        <img src="assets/img/default-avatars/avatar-05.png" width="40px" height="40px" alt=""/>
+                        <img src={require('../../assets/img/default-avatars/avatar-01.png')} width="40px" height="40px"
+                             alt=""/>
                         <span> By Joe Smith</span>
                     </Link>
                     <span className="comments">42 comments</span>
