@@ -1,7 +1,7 @@
 import React from "react";
 import ReactSummernote from "react-summernote";
 import request from "es6-request";
-import Tags from "./Tags";
+import TagContainer from "./TagContainer";
 import {Api} from "../api/Api";
 
 import 'react-summernote/dist/react-summernote.css';
@@ -11,51 +11,8 @@ export default class ArticleCreation extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            currentTag: '',
-            tags: [],
-        }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleKeyPress = this.handleKeyPress.bind(this);
-        this.existingTag = this.existingTag.bind(this);
-        this.removeTag = this.removeTag.bind(this);
+
         this.uploadImage = this.uploadImage.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({
-            currentTag: event.target.value
-        });
-    }
-
-    removeTag(index) {
-        var array = this.state.tags;
-        array.splice(index, 1);
-        this.setState({tags: array });
-    }
-
-    existingTag(tag) {
-        for(var i = 0; i < this.state.tags.length; i++) {
-            if (this.state.tags[i] == tag) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    handleKeyPress(event) {
-        if((event.key == 'Enter') && (this.state.currentTag != '')){
-            if (!this.existingTag(this.state.currentTag.trim())) {
-                this.setState({
-                    tags: this.state.tags.concat([this.state.currentTag.trim()]),
-                    currentTag: ''
-                })
-            } else {
-                this.setState({
-                    currentTag: ''
-                })
-            }
-        }
     }
 
     uploadImage(files) {
@@ -129,15 +86,7 @@ export default class ArticleCreation extends React.Component {
                                         onImageUpload={this.uploadImage}
                                     />
                                 </div>
-                                <div className="form-group tags-form">
-                                    <label htmlFor="tag">Теги</label>
-                                    <ul className="tags" id="tag">
-                                        <Tags items={this.state.tags} remove={this.removeTag}/>
-                                        <li className="tagAdd">
-                                            <input type="text" onKeyPress={this.handleKeyPress} onChange={this.handleChange} value={this.state.currentTag}/>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <TagContainer />
                                 <button type="submit" className="btn btn-default custom-button">Отправить</button>
                                 <button type="submit" className="btn btn-default custom-changes-btn">Сохранить</button>
                             </div>
