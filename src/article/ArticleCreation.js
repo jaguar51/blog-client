@@ -1,7 +1,7 @@
 import React from "react";
 import ReactSummernote from "react-summernote";
 import request from "es6-request";
-import Tag from "./Tag";
+import Tags from "./Tags";
 import {Api} from "../api/Api";
 
 import 'react-summernote/dist/react-summernote.css';
@@ -18,13 +18,20 @@ export default class ArticleCreation extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.existingTag = this.existingTag.bind(this);
+        this.removeTag = this.removeTag.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
     }
 
     handleChange(event) {
         this.setState({
-            currentTag: event.target.value.trim()
+            currentTag: event.target.value
         });
+    }
+
+    removeTag(index) {
+        var array = this.state.tags;
+        array.splice(index, 1);
+        this.setState({tags: array });
     }
 
     existingTag(tag) {
@@ -38,9 +45,9 @@ export default class ArticleCreation extends React.Component {
 
     handleKeyPress(event) {
         if((event.key == 'Enter') && (this.state.currentTag != '')){
-            if (!this.existingTag(this.state.currentTag)) {
+            if (!this.existingTag(this.state.currentTag.trim())) {
                 this.setState({
-                    tags: this.state.tags.concat([this.state.currentTag]),
+                    tags: this.state.tags.concat([this.state.currentTag.trim()]),
                     currentTag: ''
                 })
             } else {
@@ -62,8 +69,10 @@ export default class ArticleCreation extends React.Component {
         //             $image.attr("alt", image.name);
         //         });
         //     });
-        var data = new FormData();
-        data.append("image", files);
+        console.log(files[0]);
+        let data = new FormData();
+        data.append("image", files[0]);
+        console.log(data);
         $.ajax({
             data: data,
             type: "POST",
@@ -123,7 +132,7 @@ export default class ArticleCreation extends React.Component {
                                 <div className="form-group tags-form">
                                     <label htmlFor="tag">Теги</label>
                                     <ul className="tags" id="tag">
-                                        <Tag items={this.state.tags} />
+                                        <Tags items={this.state.tags} remove={this.removeTag}/>
                                         <li className="tagAdd">
                                             <input type="text" onKeyPress={this.handleKeyPress} onChange={this.handleChange} value={this.state.currentTag}/>
                                         </li>
