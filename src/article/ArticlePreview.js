@@ -41,8 +41,7 @@ export default class ArticlePreview extends React.Component {
                 </div>
                 <footer className="article-info-preview author">
                     <Link to="/profile" className="author-content">
-                        <img src={require('../../assets/img/default-avatars/avatar-01.png')} width="40px" height="40px"
-                             alt=""/>
+                        <img src={require('../../assets/img/default-avatars/avatar-01.png')} width="40px" height="40px" alt=""/>
                         <span> By Joe Smith</span>
                     </Link>
                     <span className="comments">42 comments</span>

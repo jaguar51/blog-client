@@ -11,7 +11,6 @@ export default class TagContainer extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
-        this.existingTag = this.existingTag.bind(this);
         this.removeTag = this.removeTag.bind(this);
     }
 
@@ -35,7 +34,7 @@ export default class TagContainer extends React.Component {
             if (!this.state.tagList.includes(tag)) {
                 this.setState((prevState, props) => {
                     return {
-                        tagList: prevState.tagList.concat([tag]),
+                        tagList: prevState.tagList.concat(tag),
                         currentTag: ''
                     }
                 })

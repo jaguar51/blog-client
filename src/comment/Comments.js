@@ -20,8 +20,7 @@ export default class Comments extends React.Component {
                         </p>
                         <footer className="article-info author">
                             <Link className="author-content" to="/profile">
-                                <img src={require('../../assets/img/default-avatars/avatar-01.png')} width="40px"
-                                     height="40px" alt=""/>
+                                <img src={require('../../assets/img/default-avatars/avatar-01.png')} width="40px" height="40px" alt=""/>
                                 <span> By Joe Smith</span>
                             </Link>
                             <span className="comments">1 Aug at 4:20 pm</span>
@@ -33,8 +32,7 @@ export default class Comments extends React.Component {
                         </p>
                         <footer className="article-info author">
                             <Link className="author-content" to="/profile">
-                                <img src={require('../../assets/img/default-avatars/avatar-01.png')} width="40px"
-                                     height="40px" alt=""/>
+                                <img src={require('../../assets/img/default-avatars/avatar-01.png')} width="40px" height="40px" alt=""/>
                                 <span> By Joe Smith</span>
                             </Link>
                             <span className="comments">1 Aug at 4:20 pm</span>
@@ -46,8 +44,7 @@ export default class Comments extends React.Component {
                     <div className="article-body">
                         <div className="form-group">
                             <label htmlFor="text">Оставить комментарий</label>
-                            <textarea className="form-control vresize" name="text" id="text"
-                                      placeholder="Введите текст"/>
+                            <textarea className="form-control vresize" name="text" id="text" placeholder="Введите текст"/>
                         </div>
                         <button type="submit" className="btn btn-default custom-button">Отправить</button>
                     </div>

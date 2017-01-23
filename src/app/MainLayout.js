@@ -43,8 +43,7 @@ export default class MainLayout extends React.Component {
                     <div className="container">
                         <div className="custom-navbar">
                             <div className="navbar-header ">
-                                <button type="button" data-target="#navbarCollapse" data-toggle="collapse"
-                                        className="navbar-toggle custom-button">
+                                <button type="button" data-target="#navbarCollapse" data-toggle="collapse" className="navbar-toggle custom-button">
                                     <span className="sr-only">Toggle navigation</span>
                                     <span className="icon-bar"/>
                                     <span className="icon-bar"/>
@@ -60,15 +59,14 @@ export default class MainLayout extends React.Component {
                                             <div className="input-group">
                                                 <input type="text" className="form-control search" placeholder="Найти"/>
                                                 <span className="input-group-btn">
-                                    <button className="btn btn-default custom-button search-btn" type="button">
-                                        <span className="glyphicon glyphicon-search"/>
-                                    </button>
-                                </span>
+                                                    <button className="btn btn-default custom-button search-btn" type="button">
+                                                        <span className="glyphicon glyphicon-search"/>
+                                                    </button>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
-
                                 <ul className="nav navbar-nav navbar-right">
                                     <li className="loginBtn" onClick={this.logInButtonClick}>Вход</li>
                                     <li className="signUpBtn" onClick={this.signUpButtonClick}>Регистрация</li>
