@@ -1,6 +1,7 @@
 import React from "react";
 import ReactSummernote from "react-summernote";
 import TagContainer from "./TagContainer";
+import request from "superagent";
 import "react-summernote/dist/react-summernote.css";
 import "react-summernote/lang/summernote-ru-RU";
 
@@ -13,41 +14,19 @@ export default class ArticleCreation extends React.Component {
     }
 
     uploadImage(files) {
-        // var data = new FormData();
-        // data.append("image", files);
-        // request.post("http://localhost:8080/api/images")
-        //     .options(data)
-        //     .header("Authorization", "Bearer 4e7e1b12-cd43-4ae7-bf3f-fa9c1ef30626")
-        //     .then((body) => {
-        //         ReactSummernote.insertImage("http://localhost:8080/api/images/file/" + body.data.result.originalPath, $image => {
-        //             $image.attr("alt", image.name);
-        //         });
-        //     });
-        console.log(files[0]);
         let data = new FormData();
         data.append("image", files[0]);
-        console.log(data);
-        $.ajax({
-            data: data,
-            type: "POST",
-            url: "http://localhost:8080/api/images",
-            headers: {
-                Authorization: "Bearer 4e7e1b12-cd43-4ae7-bf3f-fa9c1ef30626",
-            },
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (json) {
-                // var img = $('<img>').attr('src', 'http://localhost:8080/api/images/file/' + json.data.result.originalPath);
-                // $('#text').summernote("insertNode", img[0]);
-                ReactSummernote.insertImage("http://localhost:8080/api/images/file/" + json.data.result.originalPath, $image => {
-                    $image.attr("alt", image.name);
-                });
-            },
-            error: function (data) {
-                console.log(data);
-            }
-        });
+        request
+            .post('http://localhost:8080/api/images')
+            .send(data)
+            .set('Authorization', 'Bearer 5e7c8a58-ca70-4709-a10f-9bccca386527')
+            .end(function(err, res){
+                if (err || !res.ok) {
+                    console.log(res.body)
+                } else {
+                    ReactSummernote.insertImage("http://localhost:8080/api/images/file/" + res.body.data.result.originalPath);
+                }
+            });
     }
 
     render() {
@@ -60,7 +39,8 @@ export default class ArticleCreation extends React.Component {
                                 <h3>Создание статьи</h3>
                                 <div className="form-group">
                                     <label htmlFor="header">Заголовок</label>
-                                    <input type="text" className="form-control" id="header" placeholder="Введите заголовок"/>
+                                    <input type="text" className="form-control" id="header"
+                                           placeholder="Введите заголовок"/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="text">Текст</label>
