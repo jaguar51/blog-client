@@ -1,8 +1,18 @@
-import React from "react";
+export default class Api {
 
-export default class Api extends React.Component {
+    constructor(baseUrl) {
+        this.baseUrl = baseUrl;
+    }
 
-	getUrl(){
-		return "http://localhost:8080"
-	}
+    static getDefault() {
+        return new Api('http://localhost:8080')
+    }
+
+    makeRequest(params) {
+        if (NODE_ENV == 'development') {
+            debugger;
+        }
+        console.log(params);
+        console.log(this.baseUrl)
+    }
 }

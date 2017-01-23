@@ -4,7 +4,6 @@ import LogForm from "../sign/LogForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../assets/css/styles.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-// import "../../assets/js/tags.js";
 
 export default class MainLayout extends React.Component {
 

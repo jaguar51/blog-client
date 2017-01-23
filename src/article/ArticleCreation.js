@@ -1,11 +1,8 @@
 import React from "react";
 import ReactSummernote from "react-summernote";
-import request from "es6-request";
 import TagContainer from "./TagContainer";
-import {Api} from "../api/Api";
-
-import 'react-summernote/dist/react-summernote.css';
-import 'react-summernote/lang/summernote-ru-RU';
+import "react-summernote/dist/react-summernote.css";
+import "react-summernote/lang/summernote-ru-RU";
 
 export default class ArticleCreation extends React.Component {
 
@@ -34,20 +31,20 @@ export default class ArticleCreation extends React.Component {
             data: data,
             type: "POST",
             url: "http://localhost:8080/api/images",
-            headers: { 
-                Authorization : "Bearer 4e7e1b12-cd43-4ae7-bf3f-fa9c1ef30626",
+            headers: {
+                Authorization: "Bearer 4e7e1b12-cd43-4ae7-bf3f-fa9c1ef30626",
             },
             cache: false,
             contentType: false,
             processData: false,
-            success: function(json) {
+            success: function (json) {
                 // var img = $('<img>').attr('src', 'http://localhost:8080/api/images/file/' + json.data.result.originalPath);
                 // $('#text').summernote("insertNode", img[0]);
                 ReactSummernote.insertImage("http://localhost:8080/api/images/file/" + json.data.result.originalPath, $image => {
                     $image.attr("alt", image.name);
                 });
             },
-            error: function(data) {
+            error: function (data) {
                 console.log(data);
             }
         });
@@ -63,8 +60,7 @@ export default class ArticleCreation extends React.Component {
                                 <h3>Создание статьи</h3>
                                 <div className="form-group">
                                     <label htmlFor="header">Заголовок</label>
-                                    <input type="text" className="form-control" id="header"
-                                           placeholder="Введите заголовок"/>
+                                    <input type="text" className="form-control" id="header" placeholder="Введите заголовок"/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="text">Текст</label>
@@ -75,7 +71,7 @@ export default class ArticleCreation extends React.Component {
                                                 ["font", ["bold", "italic", "underline", "clear"]],
                                                 ["fontsize", ["fontsize"]],
                                                 ["para", ["ul", "ol", "paragraph"]],
-                                                ["insert", ["link", "picture", "video" , "hr"]],
+                                                ["insert", ["link", "picture", "video", "hr"]],
                                                 ['view', ['fullscreen', 'codeview']],
                                             ],
                                             lang: 'ru-RU',
