@@ -33,7 +33,7 @@ class TagContainer extends React.Component {
         let tag = this.state.currentTag.trim();
         if (event.key == 'Enter' && tag !== '') {
             if (!this.state.tagList.includes(tag)) {
-                this.setState((prevState, props) => {
+                this.setState((prevState) => {
                     let newTagList = prevState.tagList.concat(tag);
                     this.callbacks.onChange(newTagList);
                     return {
