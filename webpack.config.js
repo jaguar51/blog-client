@@ -30,9 +30,9 @@ module.exports = {
         new webpack.NoErrorsPlugin()
     ],
 
-    // devServer: {
-    // historyApiFallback: true
-    // },
+    devServer: {
+        historyApiFallback: true
+    },
 
     module: {
         loaders: [
