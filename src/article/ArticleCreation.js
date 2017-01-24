@@ -10,6 +10,7 @@ export default class ArticleCreation extends React.Component {
         super(props);
 
         this.uploadImage = this.uploadImage.bind(this);
+        this.onChangeTagList = this.onChangeTagList.bind(this);
     }
 
     uploadImage(files) {
@@ -50,6 +51,10 @@ export default class ArticleCreation extends React.Component {
         });
     }
 
+    onChangeTagList(val) {
+        // здесь ловим обновление списка тегов
+    }
+
     render() {
         return (
             <div className="wrap">
@@ -82,7 +87,7 @@ export default class ArticleCreation extends React.Component {
                                         onImageUpload={this.uploadImage}
                                     />
                                 </div>
-                                <TagContainer />
+                                <TagContainer onChange={this.onChangeTagList}/>
                                 <button type="submit" className="btn btn-default custom-button">Отправить</button>
                                 <button type="submit" className="btn btn-default custom-changes-btn">Сохранить</button>
                             </div>
