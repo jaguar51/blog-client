@@ -1,7 +1,6 @@
-import React from "react";
-import {Link} from "react-router";
+import React, {PropTypes} from "react";
 
-export default class LogForm extends React.Component {
+class LogForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,7 +31,7 @@ export default class LogForm extends React.Component {
             <div className="popup" id="login-dialog">
                 <div className="login-wrap">
                     <div className="login-html">
-                        <button type="button" className="close custom-close" onClick={this.props.close}>×</button>
+                        <button type="button" className="close custom-close" onClick={this.props.onClose}>×</button>
 
                         <input checked={this.state.showLogin} onChange={this.logInClick} id="tab-1" type="radio" name="tab" className="login"/>
                         <label htmlFor="tab-1" className="tab">Вход</label>
@@ -83,4 +82,11 @@ export default class LogForm extends React.Component {
             </div>
         );
     }
+}
+
+LogForm.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    checked: PropTypes.string.isRequired
 };
+
+export default LogForm;
