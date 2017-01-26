@@ -1,7 +1,7 @@
 import React from "react";
 import ReactSummernote from "react-summernote";
 import TagContainer from "./TagContainer";
-import ApiArticleImage from "../api/methods/ApiImage";
+import Api from "../api/Api";
 import "react-summernote/dist/react-summernote.css";
 import "react-summernote/lang/summernote-ru-RU";
 
@@ -9,32 +9,59 @@ export default class ArticleCreation extends React.Component {
 
     constructor(props) {
         super(props);
-        this.requestResult = new ApiArticleImage();
+        this.state = {
+            imagesId: [],
+            tagList: [],
+        };
+
         this.uploadImage = this.uploadImage.bind(this);
+        this.onChangeText = this.onChangeText.bind(this);
         this.onChangeTagList = this.onChangeTagList.bind(this);
     }
 
     uploadImage(files) {
-        let data = new FormData();
-        data.append("image", files[0]);
-        this.requestResult.uploadFile(data);
-        console.log(this.requestResult.result);
-        // ReactSummernote.insertImage(ApiImage.imagesFileUrl + res.body.data.result.originalPath);
-        // request
-        //     .post('http://localhost:8080/api/images')
-        //     .send(data)
-        //     .set('Authorization', 'Bearer 5e7c8a58-ca70-4709-a10f-9bccca386527')
-        //     .end(function(err, res){
-        //         if (err || !res.ok) {
-        //             console.log(res.body)
-        //         } else {
-        //             ReactSummernote.insertImage("http://localhost:8080/api/images/file/" + res.body.data.result.originalPath);
-        //         }
-        //     });
+        let api = Api.getDefault();
+        api.image.upload(files[0]).execute({
+            success: ((body) => {
+                ReactSummernote.insertImage(api.image.getUrl(body.data.result.originalPath), $image => {
+                    $image.attr("id", body.data.result.id);});
+
+                this.setState({
+                    imagesId: this.state.imagesId.concat([body.data.result.id])
+                });
+            }),
+            error: ((body) => {
+                console.log('error');
+                console.log(body);
+            })
+        });
     }
 
-    onChangeTagList(val) {
-        // здесь ловим обновление списка тегов
+    onChangeText(text) {
+        let api = Api.getDefault();
+        this.state.imagesId.map((id, index) => {
+            if (document.getElementById(id) == null) {
+                api.image.remove(id).execute({
+                    success: (() => {
+                        let newImagesId = this.state.imagesId;
+                        newImagesId.splice(index, 1);
+                        this.setState({
+                            imagesId: newImagesId
+                        });
+                    }),
+                    error: ((body) => {
+                        console.log('error');
+                        console.log(body);
+                    })
+                });
+            }
+        });
+    }
+
+    onChangeTagList(tagList) {
+        this.setState({
+            tagList: tagList
+        });
     }
 
     render() {
@@ -68,6 +95,7 @@ export default class ArticleCreation extends React.Component {
                                             maxHeight: null,
                                         }}
                                         onImageUpload={this.uploadImage}
+                                        onChange={this.onChangeText}
                                     />
                                 </div>
                                 <TagContainer onChange={this.onChangeTagList}/>

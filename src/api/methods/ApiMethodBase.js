@@ -8,7 +8,7 @@ export default class ApiMethodBase {
 
     getToken() {
         // @TODO потом нужна более сложная логика получения токена из хранилища какого нибудь
-        return 'Bearer ' + '0a5d52dd-2704-4adb-a5b5-3e9d6672e3b1';
+        return 'Bearer ' + '821992dc-e000-4041-bbdf-a4b8dbb89036';
     }
 
     prepareRequest(methodName, params) {
