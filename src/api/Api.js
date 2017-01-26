@@ -1,6 +1,6 @@
 import ApiAccount from "./methods/ApiAccount";
 import ApiArticle from "./methods/ApiArticle";
-import ApiArticleImage from "./methods/ApiArticleImage";
+import ApiImage from "./methods/ApiImage";
 import ApiAvatar from "./methods/ApiAvatar";
 import ApiComment from "./methods/ApiComment";
 import ApiTag from "./methods/ApiTag";
@@ -10,9 +10,9 @@ export default class Api {
     constructor(baseUrl) {
         this.account = new ApiAccount(baseUrl);
         this.article = new ApiArticle(baseUrl);
-        this.articleImage = new ApiArticleImage(baseUrl);
         this.avatar = new ApiAvatar(baseUrl);
         this.comment = new ApiComment(baseUrl);
+        this.image = new ApiImage(baseUrl);
         this.tag = new ApiTag(baseUrl);
     }
 
