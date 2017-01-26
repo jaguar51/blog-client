@@ -1,7 +1,7 @@
 import React from "react";
 import ReactSummernote from "react-summernote";
 import TagContainer from "./TagContainer";
-import ApiArticleImages from "../api/ApiArticleImage";
+import ApiArticleImage from "../api/methods/ApiArticleImage";
 import "react-summernote/dist/react-summernote.css";
 import "react-summernote/lang/summernote-ru-RU";
 
@@ -9,7 +9,7 @@ export default class ArticleCreation extends React.Component {
 
     constructor(props) {
         super(props);
-        this.requestResult = new ApiArticleImages();
+        this.requestResult = new ApiArticleImage();
         this.uploadImage = this.uploadImage.bind(this);
         this.onChangeTagList = this.onChangeTagList.bind(this);
     }

@@ -1,4 +1,4 @@
-export default class ApiBase {
+export default class ApiMethodBase {
 
     constructor(baseUrl) {
         this.baseUrl = baseUrl;

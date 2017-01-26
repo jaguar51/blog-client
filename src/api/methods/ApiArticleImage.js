@@ -1,7 +1,7 @@
-import ApiBase from "./ApiBase";
+import ApiMethodBase from "./ApiMethodBase";
 import request from "superagent";
 
-export default class ApiArticleImage extends ApiBase {
+export default class ApiArticleImage extends ApiMethodBase {
 
     constructor(baseUrl) {
         super(baseUrl);

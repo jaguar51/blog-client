@@ -1,4 +1,4 @@
-import ApiArticleImage from "./ApiArticleImage";
+import ApiArticleImage from "./methods/ApiArticleImage";
 
 export default class Api {
 
