@@ -1,12 +1,19 @@
+import ApiAccount from "./methods/ApiAccount";
+import ApiArticle from "./methods/ApiArticle";
 import ApiArticleImage from "./methods/ApiArticleImage";
+import ApiAvatar from "./methods/ApiAvatar";
+import ApiComment from "./methods/ApiComment";
+import ApiTag from "./methods/ApiTag";
 
 export default class Api {
 
     constructor(baseUrl) {
-        this.baseUrl = baseUrl;
-
+        this.account = new ApiAccount(baseUrl);
+        this.article = new ApiArticle(baseUrl);
         this.articleImage = new ApiArticleImage(baseUrl);
-        // аналогичным образом сюда добавляй другие группы методов
+        this.avatar = new ApiAvatar(baseUrl);
+        this.comment = new ApiComment(baseUrl);
+        this.tag = new ApiTag(baseUrl);
     }
 
     static getDefault() {
