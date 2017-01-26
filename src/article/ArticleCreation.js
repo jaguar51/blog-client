@@ -1,7 +1,7 @@
 import React from "react";
 import ReactSummernote from "react-summernote";
 import TagContainer from "./TagContainer";
-import ApiArticleImages from "../api/ApiArticleImages";
+import ApiArticleImages from "../api/ApiArticleImage";
 import "react-summernote/dist/react-summernote.css";
 import "react-summernote/lang/summernote-ru-RU";
 
@@ -18,7 +18,7 @@ export default class ArticleCreation extends React.Component {
         data.append("image", files[0]);
         this.requestResult.uploadFile(data);
         console.log(this.requestResult.result);
-        // ReactSummernote.insertImage(ApiArticleImages.imagesFileUrl + res.body.data.result.originalPath);
+        // ReactSummernote.insertImage(ApiArticleImage.imagesFileUrl + res.body.data.result.originalPath);
         // request
         //     .post('http://localhost:8080/api/images')
         //     .send(data)
