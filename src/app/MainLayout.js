@@ -77,7 +77,7 @@ export default class MainLayout extends React.Component {
                 </nav>
                 <main>
                     {this.props.children}
-                    {this.state.showSign ? <LogForm checked={this.state.checked} close={this.hideSignWindow}/> : null}
+                    {this.state.showSign ? <LogForm checked={this.state.checked} onClose={this.hideSignWindow}/> : null}
                 </main>
             </div>
         );

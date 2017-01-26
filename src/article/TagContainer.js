@@ -1,6 +1,6 @@
-import React from "react";
+import React, {PropTypes} from "react";
 
-export default class TagContainer extends React.Component {
+class TagContainer extends React.Component {
 
     constructor(props) {
         super(props);
@@ -9,32 +9,35 @@ export default class TagContainer extends React.Component {
             tagList: [],
         };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.tagInputHandleChange = this.tagInputHandleChange.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.removeTag = this.removeTag.bind(this);
     }
 
-    handleChange(event) {
+    tagInputHandleChange(event) {
         this.setState({
             currentTag: event.target.value
         });
     }
 
     removeTag(index) {
-        let array = this.state.tagList;
-        array.splice(index, 1);
+        let newTagList = this.state.tagList;
+        newTagList.splice(index, 1);
         this.setState({
-            tagList: array
+            tagList: newTagList
         });
+        this.callbacks.onChange(newTagList);
     }
 
     handleKeyPress(event) {
         let tag = this.state.currentTag.trim();
         if (event.key == 'Enter' && tag !== '') {
             if (!this.state.tagList.includes(tag)) {
-                this.setState((prevState, props) => {
+                this.setState((prevState) => {
+                    let newTagList = prevState.tagList.concat(tag);
+                    this.callbacks.onChange(newTagList);
                     return {
-                        tagList: prevState.tagList.concat(tag),
+                        tagList: newTagList,
                         currentTag: ''
                     }
                 })
@@ -44,6 +47,18 @@ export default class TagContainer extends React.Component {
                 })
             }
         }
+    }
+
+    get callbacks() {
+        const props = this.props;
+
+        return {
+            onChange: function (val) {
+                if (props.onChange != undefined) {
+                    props.onChange(val);
+                }
+            }
+        };
     }
 
     render() {
@@ -58,10 +73,16 @@ export default class TagContainer extends React.Component {
                         </li>
                     )}
                     <li className="tagAdd">
-                        <input type="text" onKeyPress={this.handleKeyPress} onChange={this.handleChange} value={this.state.currentTag}/>
+                        <input type="text" onKeyPress={this.handleKeyPress} onChange={this.tagInputHandleChange} value={this.state.currentTag}/>
                     </li>
                 </ul>
             </div>
         );
     }
 }
+
+TagContainer.propTypes = {
+    onChange: PropTypes.func
+};
+
+export default TagContainer;

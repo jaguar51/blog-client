@@ -11,6 +11,7 @@ export default class ArticleCreation extends React.Component {
         super(props);
         this.requestResult = new ApiArticleImages();
         this.uploadImage = this.uploadImage.bind(this);
+        this.onChangeTagList = this.onChangeTagList.bind(this);
     }
 
     uploadImage(files) {
@@ -30,6 +31,10 @@ export default class ArticleCreation extends React.Component {
         //             ReactSummernote.insertImage("http://localhost:8080/api/images/file/" + res.body.data.result.originalPath);
         //         }
         //     });
+    }
+
+    onChangeTagList(val) {
+        // здесь ловим обновление списка тегов
     }
 
     render() {
@@ -65,7 +70,7 @@ export default class ArticleCreation extends React.Component {
                                         onImageUpload={this.uploadImage}
                                     />
                                 </div>
-                                <TagContainer />
+                                <TagContainer onChange={this.onChangeTagList}/>
                                 <button type="submit" className="btn btn-default custom-button">Отправить</button>
                                 <button type="submit" className="btn btn-default custom-changes-btn">Сохранить</button>
                             </div>
