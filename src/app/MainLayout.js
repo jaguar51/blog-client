@@ -15,7 +15,7 @@ export default class MainLayout extends React.Component {
             checked: 'login'
         };
         let api = Api.getDefault();
-        api.account.list({page: 0}).execute({
+        api.account.getById('952f9f11-2dfe-4aea-bd9c-6a30004f315f').execute({
             success: function (body) {
                 console.log('success');
                 console.log(body);
