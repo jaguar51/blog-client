@@ -11,6 +11,13 @@ export default class ApiAccount extends ApiMethodBase {
         super(baseUrl);
     }
 
+    list(query) {
+        return this.prepareRequest('list', {
+            method: 'GET',
+            query: query,
+        });
+    }
+
     getMethodsGroup() {
         return 'accounts';
     }

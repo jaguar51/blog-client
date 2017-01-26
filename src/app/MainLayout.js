@@ -4,6 +4,7 @@ import LogForm from "../sign/LogForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../assets/css/styles.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+import Api from "../api/Api";
 
 export default class MainLayout extends React.Component {
 
@@ -13,6 +14,18 @@ export default class MainLayout extends React.Component {
             showSign: false,
             checked: 'login'
         };
+        let api = Api.getDefault();
+        api.account.list({page: 0}).execute({
+            success: function (body) {
+                console.log('success');
+                console.log(body);
+            },
+            error: function (body) {
+                console.log('error');
+                console.log(body);
+            }
+        });
+
         this.logInButtonClick = this.logInButtonClick.bind(this);
         this.signUpButtonClick = this.signUpButtonClick.bind(this);
         this.hideSignWindow = this.hideSignWindow.bind(this);
