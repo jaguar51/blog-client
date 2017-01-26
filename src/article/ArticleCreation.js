@@ -1,7 +1,7 @@
 import React from "react";
 import ReactSummernote from "react-summernote";
 import TagContainer from "./TagContainer";
-import request from "superagent";
+import ApiArticleImages from "../api/ApiArticleImages";
 import "react-summernote/dist/react-summernote.css";
 import "react-summernote/lang/summernote-ru-RU";
 
@@ -9,24 +9,27 @@ export default class ArticleCreation extends React.Component {
 
     constructor(props) {
         super(props);
-
+        this.requestResult = new ApiArticleImages();
         this.uploadImage = this.uploadImage.bind(this);
     }
 
     uploadImage(files) {
         let data = new FormData();
         data.append("image", files[0]);
-        request
-            .post('http://localhost:8080/api/images')
-            .send(data)
-            .set('Authorization', 'Bearer 5e7c8a58-ca70-4709-a10f-9bccca386527')
-            .end(function(err, res){
-                if (err || !res.ok) {
-                    console.log(res.body)
-                } else {
-                    ReactSummernote.insertImage("http://localhost:8080/api/images/file/" + res.body.data.result.originalPath);
-                }
-            });
+        this.requestResult.uploadFile(data);
+        console.log(this.requestResult.result);
+        // ReactSummernote.insertImage(ApiArticleImages.imagesFileUrl + res.body.data.result.originalPath);
+        // request
+        //     .post('http://localhost:8080/api/images')
+        //     .send(data)
+        //     .set('Authorization', 'Bearer 5e7c8a58-ca70-4709-a10f-9bccca386527')
+        //     .end(function(err, res){
+        //         if (err || !res.ok) {
+        //             console.log(res.body)
+        //         } else {
+        //             ReactSummernote.insertImage("http://localhost:8080/api/images/file/" + res.body.data.result.originalPath);
+        //         }
+        //     });
     }
 
     render() {
