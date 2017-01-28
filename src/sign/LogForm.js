@@ -16,11 +16,11 @@ class LogForm extends React.Component {
         };
         this.render = this.render.bind(this);
         this.logInClick = this.logInClick.bind(this);
-        this.singUpClick = this.singUpClick.bind(this);
-        this.singUpLogin = this.singUpLogin.bind(this);
-        this.singUpPassword = this.singUpPassword.bind(this);
-        this.singUpRepeatedPassword = this.singUpRepeatedPassword.bind(this);
-        this.singUpEmail = this.singUpEmail.bind(this);
+        this.signUpClick = this.signUpClick.bind(this);
+        this.signUpLogin = this.signUpLogin.bind(this);
+        this.signUpPassword = this.signUpPassword.bind(this);
+        this.signUpRepeatedPassword = this.signUpRepeatedPassword.bind(this);
+        this.signUpEmail = this.signUpEmail.bind(this);
     }
 
     logInClick() {
@@ -30,46 +30,46 @@ class LogForm extends React.Component {
         });
     }
 
-    singUpClick() {
+    signUpClick() {
         this.setState({
             showLogin: false,
             showSignUp: true
         });
     }
 
-    singUpLogin(element) {
+    signUpLogin(element) {
         this.setState({
             login: element.target.value
         });
     }
 
-    singUpPassword(element) {
+    signUpPassword(element) {
         this.setState({
             password: element.target.value
         });
     }
 
-    singUpRepeatedPassword(element) {
+    signUpRepeatedPassword(element) {
         this.setState({
             repeatedPassword: element.target.value
         });
     }
 
-    singUpEmail(element) {
+    signUpEmail(element) {
         this.setState({
             email: element.target.value
         });
     }
 
-    getPasswordCompare() {
-        if (this.state.repeatedPassword != this.state.password) {
+    isPasswordsEquals() {
+        if (this.state.repeatedPassword !== this.state.password) {
             return "error";
         } else {
             return null;
         }
     }
 
-    singUp() {
+    signUp() {
         this.setState({
             show: !this.state.show
         });
@@ -113,7 +113,7 @@ class LogForm extends React.Component {
                                name="tab" className="login"/>
                         <label htmlFor="tab-1" className="tab">Вход</label>
 
-                        <input checked={this.state.showSignUp} onChange={this.singUpClick} id="tab-2" type="radio"
+                        <input checked={this.state.showSignUp} onChange={this.signUpClick} id="tab-2" type="radio"
                                name="tab" className="sign-up"/>
                         <label htmlFor="tab-2" className="tab">Регистрация</label>
 
@@ -123,12 +123,12 @@ class LogForm extends React.Component {
                                     <FormGroup controlId="LoginFormLogin">
                                         <ControlLabel>Имя пользователя</ControlLabel>
                                         <FormControl className="text-login" type="text"
-                                                     onChange={this.singUpLogin} required/>
+                                                     onChange={this.signUpLogin} required/>
                                     </FormGroup>
                                     <FormGroup controlId="LoginFormPassword">
                                         <ControlLabel>Пароль</ControlLabel>
                                         <FormControl className="text-login" type="password"
-                                                     onChange={this.singUpPassword} required/>
+                                                     onChange={this.signUpPassword} required/>
                                     </FormGroup>
                                     <Checkbox inline>
                                         Запомнить меня
@@ -148,25 +148,25 @@ class LogForm extends React.Component {
                                     <FormGroup controlId="signUpFormLogin">
                                         <ControlLabel>Имя пользователя</ControlLabel>
                                         <FormControl className="text-login" type="text"
-                                                     onChange={this.singUpLogin} required/>
+                                                     onChange={this.signUpLogin} required/>
                                     </FormGroup>
                                     <FormGroup controlId="signUpFormPassword">
                                         <ControlLabel>Пароль</ControlLabel>
                                         <FormControl className="text-login" type="password"
-                                                     onChange={this.singUpPassword} required/>
+                                                     onChange={this.signUpPassword} required/>
                                     </FormGroup>
                                     <FormGroup controlId="signUpFormRepeatedPassword"
-                                               validationState={this.getPasswordCompare()}>
+                                               validationState={this.isPasswordsEquals()}>
                                         <ControlLabel>Повторите пароль</ControlLabel>
                                         <FormControl className="text-login" type="password"
-                                                     onChange={this.singUpRepeatedPassword} required
+                                                     onChange={this.signUpRepeatedPassword} required
                                                      value={this.state.repeatedPassword}/>
                                         <FormControl.Feedback />
                                     </FormGroup>
                                     <FormGroup controlId="signUpFormEmail">
                                         <ControlLabel>E-mail</ControlLabel>
                                         <FormControl className="text-login" type="email"
-                                                     onChange={this.singUpRepeatedPassword} required/>
+                                                     onChange={this.signUpEmail} required/>
                                     </FormGroup>
 
                                     <Button type="submit" className="custom-button" block bsStyle="primary"
