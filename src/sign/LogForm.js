@@ -1,5 +1,5 @@
 import React, {PropTypes} from "react";
-import {Button, FormGroup, ControlLabel, FormControl, Checkbox} from 'react-bootstrap';
+import {Button, FormGroup, ControlLabel, FormControl, Checkbox, HelpBlock} from 'react-bootstrap';
 import Api from "../api/Api";
 
 class LogForm extends React.Component {
@@ -66,6 +66,15 @@ class LogForm extends React.Component {
             return "error";
         } else {
             return null;
+        }
+    }
+
+    isPasswordLength() {
+        const length = this.state.password.length;
+        if (length > 3 && length < 256) {
+            return 'success';
+        } else {
+            return 'error';
         }
     }
 
@@ -150,10 +159,12 @@ class LogForm extends React.Component {
                                         <FormControl className="text-login" type="text"
                                                      onChange={this.signUpLogin} required/>
                                     </FormGroup>
-                                    <FormGroup controlId="signUpFormPassword">
+                                    <FormGroup controlId="signUpFormPassword" validationState={this.isPasswordLength()}>
                                         <ControlLabel>Пароль</ControlLabel>
                                         <FormControl className="text-login" type="password"
                                                      onChange={this.signUpPassword} required/>
+                                        <FormControl.Feedback />
+                                        <HelpBlock>Динна пароля от 4 до 255 символов</HelpBlock>
                                     </FormGroup>
                                     <FormGroup controlId="signUpFormRepeatedPassword"
                                                validationState={this.isPasswordsEquals()}>
