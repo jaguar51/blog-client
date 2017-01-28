@@ -14,17 +14,17 @@ export default class MainLayout extends React.Component {
             showSign: false,
             checked: 'login'
         };
-        let api = Api.getDefault();
-        api.account.getById('f99a4a24-4a72-45c6-b854-036aff3929ad').execute({
-            success: function (body) {
-                console.log('success');
-                console.log(body);
-            },
-            error: function (body) {
-                console.log('error');
-                console.log(body);
-            }
-        });
+        // let api = Api.getDefault();
+        // api.account.getById('f99a4a24-4a72-45c6-b854-036aff3929ad').execute({
+        //     success: function (body) {
+        //         console.log('success');
+        //         console.log(body);
+        //     },
+        //     error: function (body) {
+        //         console.log('error');
+        //         console.log(body);
+        //     }
+        // });
 
         this.logInButtonClick = this.logInButtonClick.bind(this);
         this.signUpButtonClick = this.signUpButtonClick.bind(this);

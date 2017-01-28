@@ -480,12 +480,16 @@ a {
 }
 
 /* Login Dialog */
+.has-feedback label~.form-control-feedback {
+    top: 28px;
+}
+
 .login-wrap {
     width: 100%;
     margin: auto;
     top: 25%;
     max-width: 420px;
-    min-height: 420px;
+    min-height: 450px;
     position: relative;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
 }
