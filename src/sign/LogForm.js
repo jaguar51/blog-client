@@ -73,6 +73,8 @@ class LogForm extends React.Component {
         const length = this.state.password.length;
         if (length > 3 && length < 256) {
             return 'success';
+        } else if (length === 0) {
+            return null;
         } else {
             return 'error';
         }
