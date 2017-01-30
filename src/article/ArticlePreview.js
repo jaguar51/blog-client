@@ -1,9 +1,9 @@
-import React from "react";
+import React, {PropTypes} from "react";
 import {browserHistory, Link} from "react-router";
 import {Col} from 'react-bootstrap';
 import TextTruncate from "react-text-truncate";
 
-export default class ArticlePreview extends React.Component {
+class ArticlePreview extends React.Component {
 
     constructor(props) {
         super(props);
@@ -28,7 +28,7 @@ export default class ArticlePreview extends React.Component {
             "которых используется Lorem Ipsum."
     }
 
-    getSize() {
+    get size() {
         if (this.props.size === "small") {
             return 3;
         } else if (this.props.size === "big") {
@@ -42,7 +42,7 @@ export default class ArticlePreview extends React.Component {
 
     render() {
         return (
-            <Col lg={this.getSize()} md={this.getSize()} sm={12} xs={12}>
+            <Col lg={this.size} md={this.size} sm={12} xs={12}>
                 <div className="article">
                     <figure className="article-image is-3by2" onClick={this.handleClick}>
                         <img src={require('../../assets/img/default-article-img/default-img1.png')} alt=""/>
@@ -66,3 +66,9 @@ export default class ArticlePreview extends React.Component {
         );
     }
 }
+
+ArticlePreview.propTypes = {
+    size: PropTypes.string
+};
+
+export default ArticlePreview;
