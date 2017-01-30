@@ -1,6 +1,7 @@
 import React from "react";
 import ReactSummernote from "react-summernote";
 import TagContainer from "./TagContainer";
+import {Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import Api from "../api/Api";
 import "react-summernote/dist/react-summernote.css";
 import "react-summernote/lang/summernote-ru-RU";
@@ -67,16 +68,15 @@ export default class ArticleCreation extends React.Component {
     render() {
         return (
             <div className="wrap">
-                <div className="container main">
-                    <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <Grid className="main">
+                    <Row>
+                        <Col lg={12} md={12} sm={12} xs={12}>
                             <div className="profile">
                                 <h3>Создание статьи</h3>
-                                <div className="form-group">
-                                    <label htmlFor="header">Заголовок</label>
-                                    <input type="text" className="form-control" id="header"
-                                           placeholder="Введите заголовок"/>
-                                </div>
+                                <FormGroup>
+                                    <ControlLabel>Заголовок</ControlLabel>
+                                    <FormControl placeholder="Введите заголовок"/>
+                                </FormGroup>
                                 <div className="form-group">
                                     <label htmlFor="text">Текст</label>
                                     <ReactSummernote
@@ -99,12 +99,12 @@ export default class ArticleCreation extends React.Component {
                                     />
                                 </div>
                                 <TagContainer onChange={this.onChangeTagList}/>
-                                <button type="submit" className="btn btn-default custom-button">Отправить</button>
-                                <button type="submit" className="btn btn-default custom-changes-btn">Сохранить</button>
+                                <Button className="custom-button">Отправить</Button>
+                                <Button className="custom-changes-btn">Сохранить</Button>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </Col>
+                    </Row>
+                </Grid>
             </div>
         );
     }

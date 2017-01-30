@@ -1,5 +1,6 @@
 import React from "react";
 import {browserHistory} from "react-router";
+import {Row, Col, Grid, Button, ButtonGroup} from 'react-bootstrap';
 import ArticlePreview from "../article/ArticlePreview";
 
 export default class UserProfile extends React.Component {
@@ -19,9 +20,9 @@ export default class UserProfile extends React.Component {
     render() {
         return (
             <div className="wrap">
-                <div className="container main">
-                    <div className="row">
-                        <aside className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <Grid className="main">
+                    <Row>
+                        <Col lg={3} md={3} sm={12} xs={12}>
                             <div className="profile">
                                 <img className="profile-avatar" src={require('../../assets/img/default-avatars/avatar-01.png')} alt=""/>
                                 <div>
@@ -30,27 +31,31 @@ export default class UserProfile extends React.Component {
                                     <span>Фамилия: Smith</span>
                                 </div>
 
-                                <button type="button" className="btn btn-primary btn-sm btn-block custom-button custom-btn-group" onClick={this.createArticleClick}>
+                                <Button block bsSize="sm" className="custom-button custom-btn-group" onClick={this.createArticleClick}>
                                     Создать статью
-                                </button>
+                                </Button>
 
-                                <div className="btn-group-vertical custom-btn-group">
-                                    <button type="button" className="btn btn-primary btn-sm btn-block custom-button">Всестатьи</button>
-                                    <button type="button" className="btn btn-primary btn-sm btn-block custom-button">Черновики</button>
-                                </div>
+                                <ButtonGroup vertical block className="custom-btn-group">
+                                    <Button bsSize="sm" className="custom-button" onClick={this.createArticleClick}>
+                                        Все статьи
+                                    </Button>
+                                    <Button bsSize="sm" className="custom-button" onClick={this.createArticleClick}>
+                                        Черновики
+                                    </Button>
+                                </ButtonGroup>
 
-                                <button type="submit" className="btn btn-primary btn-sm btn-block custom-changes-btn" onClick={this.settingsClick}>Настройки
-                                </button>
-
+                                <Button block bsSize="sm" className="custom-button custom-changes-btn" onClick={this.settingsClick}>
+                                    Настройки
+                                </Button>
                             </div>
-                        </aside>
+                        </Col>
 
-                        <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                        <Col lg={9} md={9} sm={12} xs={12}>
                             <ArticlePreview />
                             <ArticlePreview />
-                        </div>
-                    </div>
-                </div>
+                        </Col>
+                    </Row>
+                </Grid>
             </div>
         );
     }

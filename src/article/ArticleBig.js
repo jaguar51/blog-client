@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router";
+import {Col} from 'react-bootstrap';
 import ArticlePreview from "./ArticlePreview";
 
 export default class ArticleBig extends React.Component {
@@ -10,9 +11,9 @@ export default class ArticleBig extends React.Component {
 
     render() {
         return (
-            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <Col lg={6} md={6} sm={12} xs={12}>
                 <ArticlePreview />
-            </div>
+            </Col>
         );
     }
 }
