@@ -24,14 +24,16 @@ export default class UserProfile extends React.Component {
                     <Row>
                         <Col lg={3} md={3} sm={12} xs={12}>
                             <div className="profile">
-                                <img className="profile-avatar" src={require('../../assets/img/default-avatars/avatar-01.png')} alt=""/>
+                                <img className="profile-avatar"
+                                     src={require('../../assets/img/default-avatars/avatar-01.png')} alt=""/>
                                 <div>
                                     <h2 className="login">Joe Smith</h2>
                                     <span>Имя: Joe</span><br/>
                                     <span>Фамилия: Smith</span>
                                 </div>
 
-                                <Button block bsSize="sm" className="custom-button custom-btn-group" onClick={this.createArticleClick}>
+                                <Button block bsSize="sm" className="custom-button custom-btn-group"
+                                        onClick={this.createArticleClick}>
                                     Создать статью
                                 </Button>
 
@@ -44,15 +46,18 @@ export default class UserProfile extends React.Component {
                                     </Button>
                                 </ButtonGroup>
 
-                                <Button block bsSize="sm" className="custom-button custom-changes-btn" onClick={this.settingsClick}>
+                                <Button block bsSize="sm" className="custom-button custom-changes-btn"
+                                        onClick={this.settingsClick}>
                                     Настройки
                                 </Button>
                             </div>
                         </Col>
 
                         <Col lg={9} md={9} sm={12} xs={12}>
-                            <ArticlePreview />
-                            <ArticlePreview />
+                            <Row>
+                                <ArticlePreview size="max"/>
+                                <ArticlePreview size="max"/>
+                            </Row>
                         </Col>
                     </Row>
                 </Grid>

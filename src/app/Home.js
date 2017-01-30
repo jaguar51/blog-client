@@ -1,7 +1,6 @@
 import React from "react";
-import ArticleBig from "../article/ArticleBig";
 import {Row, Grid} from 'react-bootstrap';
-import ArticleStandard from "../article/ArticleStandard";
+import ArticlePreview from "../article/ArticlePreview";
 
 export default class Home extends React.Component {
 
@@ -14,14 +13,14 @@ export default class Home extends React.Component {
             <div className="wrap">
                 <Grid className="main">
                     <Row>
-                        <ArticleBig/>
-                        <ArticleBig/>
+                        <ArticlePreview size="big"/>
+                        <ArticlePreview size="big"/>
                     </Row>
 
                     <Row>
-                        <ArticleStandard/>
-                        <ArticleStandard/>
-                        <ArticleStandard/>
+                        <ArticlePreview/>
+                        <ArticlePreview/>
+                        <ArticlePreview/>
                     </Row>
                 </Grid>
             </div>
