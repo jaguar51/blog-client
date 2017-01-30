@@ -61,7 +61,7 @@ export default class MainLayout extends React.Component {
                         <Navbar.Toggle className="custom-button"/>
                     </Navbar.Header>
                     <Navbar.Collapse>
-                        <form className="nav navbar-form navbar-left" role="search">
+                        <Navbar.Form pullLeft>
                             <FormGroup>
                                 <InputGroup>
                                     <FormControl type="text" className="search"/>
@@ -72,7 +72,7 @@ export default class MainLayout extends React.Component {
                                     </InputGroup.Button>
                                 </InputGroup>
                             </FormGroup>
-                        </form>
+                        </Navbar.Form>
                         <Nav pullRight>
                             <NavItem onClick={this.logInButtonClick}>Вход</NavItem>
                             <NavItem onClick={this.signUpButtonClick}>Регистрация</NavItem>

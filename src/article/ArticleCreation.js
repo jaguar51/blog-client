@@ -77,7 +77,7 @@ export default class ArticleCreation extends React.Component {
                                     <ControlLabel>Заголовок</ControlLabel>
                                     <FormControl placeholder="Введите заголовок"/>
                                 </FormGroup>
-                                <div className="form-group">
+                                <FormGroup>
                                     <label htmlFor="text">Текст</label>
                                     <ReactSummernote
                                         options={{
@@ -97,7 +97,7 @@ export default class ArticleCreation extends React.Component {
                                         onImageUpload={this.uploadImage}
                                         onChange={this.onChangeText}
                                     />
-                                </div>
+                                </FormGroup>
                                 <TagContainer onChange={this.onChangeTagList}/>
                                 <Button className="custom-button">Отправить</Button>
                                 <Button className="custom-changes-btn">Сохранить</Button>
