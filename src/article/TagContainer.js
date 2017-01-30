@@ -1,4 +1,5 @@
 import React, {PropTypes} from "react";
+import {FormGroup} from 'react-bootstrap';
 
 class TagContainer extends React.Component {
 
@@ -63,7 +64,7 @@ class TagContainer extends React.Component {
 
     render() {
         return (
-            <div className="form-group tags-form">
+            <FormGroup className="tags-form">
                 <label htmlFor="tag">Теги</label>
                 <ul className="tags" id="tag">
                     {this.state.tagList.map((item, index) =>
@@ -76,7 +77,7 @@ class TagContainer extends React.Component {
                         <input type="text" onKeyPress={this.handleKeyPress} onChange={this.tagInputHandleChange} value={this.state.currentTag}/>
                     </li>
                 </ul>
-            </div>
+            </FormGroup>
         );
     }
 }

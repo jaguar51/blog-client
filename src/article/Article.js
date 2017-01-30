@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router";
+import {Row, Col, Grid} from 'react-bootstrap';
 import ArticleBody from "./ArticleBody";
 import Comments from "../comment/Comments";
 
@@ -12,14 +13,14 @@ export default class Article extends React.Component {
     render() {
         return (
             <div className="wrap">
-                <div className="container main">
-                    <div className="row">
-                        <div className="col-lg-9 col-md-10 col-sm-12 col-xs-12 block-center-alignment">
+                <Grid className="main">
+                    <Row>
+                        <Col lg={9} md={10} sm={12} xs={12} className="block-center-alignment">
                             <ArticleBody />
                             <Comments/>
-                        </div>
-                    </div>
-                </div>
+                        </Col>
+                    </Row>
+                </Grid>
             </div>
         );
     }

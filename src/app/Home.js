@@ -1,6 +1,6 @@
 import React from "react";
-import ArticleBig from "../article/ArticleBig";
-import ArticleStandard from "../article/ArticleStandard";
+import {Row, Grid} from 'react-bootstrap';
+import ArticlePreview from "../article/ArticlePreview";
 
 export default class Home extends React.Component {
 
@@ -11,18 +11,18 @@ export default class Home extends React.Component {
     render() {
         return (
             <div className="wrap">
-                <div className="container main">
-                    <div className="row">
-                        <ArticleBig/>
-                        <ArticleBig/>
-                    </div>
+                <Grid className="main">
+                    <Row>
+                        <ArticlePreview size="big"/>
+                        <ArticlePreview size="big"/>
+                    </Row>
 
-                    <div className="row">
-                        <ArticleStandard/>
-                        <ArticleStandard/>
-                        <ArticleStandard/>
-                    </div>
-                </div>
+                    <Row>
+                        <ArticlePreview/>
+                        <ArticlePreview/>
+                        <ArticlePreview/>
+                    </Row>
+                </Grid>
             </div>
         );
     }
