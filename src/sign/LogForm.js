@@ -1,6 +1,6 @@
 import React, {PropTypes} from "react";
 import ReactDOM from "react-dom";
-import {Button, FormGroup, ControlLabel, FormControl, Checkbox, HelpBlock, Overlay, Popover} from "react-bootstrap";
+import {Button, FormGroup, ControlLabel, FormControl, Checkbox, Overlay, Popover} from "react-bootstrap";
 import Api from "../api/Api";
 
 class LogForm extends React.Component {
@@ -157,14 +157,28 @@ class LogForm extends React.Component {
                 "password": this.state.password
             };
             this.api.account.create(data).execute({
-                success: function (body) {
+                success: ((body) => {
                     console.log('success');
                     console.log(body);
-                },
-                error: function (body) {
+                    this.props.onClose();
+                }),
+                error: ((body) => {
                     console.log('error');
                     console.log(body);
-                }
+                    if (/login/.test(body.message)) {
+                        this.setState({
+                            show: true,
+                            message: "Данный логин уже используется.",
+                            target: this.refs.login
+                        })
+                    } else if (/mail/.test(body.message)) {
+                        this.setState({
+                            show: true,
+                            message: "Данная почта уже используется.",
+                            target: this.refs.email
+                        })
+                    }
+                })
             });
         }
     }
@@ -233,7 +247,6 @@ class LogForm extends React.Component {
                                         <FormControl className="text-login" type="password"
                                                      onChange={this.signUpPasswordChange} ref="password"/>
                                         <FormControl.Feedback />
-                                        <HelpBlock>Динна пароля от 4 до 255 символов</HelpBlock>
                                     </FormGroup>
                                     <FormGroup controlId="signUpFormRepeatedPassword">
                                         <ControlLabel>Повторите пароль</ControlLabel>
