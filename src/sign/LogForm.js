@@ -8,6 +8,7 @@ class LogForm extends React.Component {
         super(props);
 
         this.state = {
+            remember: false,
             show: false,
             target: this.refs.email,
             message: '',
@@ -29,6 +30,7 @@ class LogForm extends React.Component {
         this.signUpPasswordChange = this.signUpPasswordChange.bind(this);
         this.signUpRepeatedPasswordChange = this.signUpRepeatedPasswordChange.bind(this);
         this.signUpEmailChange = this.signUpEmailChange.bind(this);
+        this.rememberChange = this.rememberChange.bind(this);
 
         this.signUp = this.signUp.bind(this);
         this.login = this.login.bind(this);
@@ -69,6 +71,12 @@ class LogForm extends React.Component {
     signUpEmailChange(element) {
         this.setState({
             email: element.target.value
+        });
+    }
+
+    rememberChange() {
+        this.setState({
+            remember: !this.state.remember
         });
     }
 
@@ -188,7 +196,30 @@ class LogForm extends React.Component {
         if (validationRes) {
             this.setState(validationRes);
         } else {
-            // @TODO дописать вход, на бэкенде вход делается через только почту покачто
+            let data = {
+                "username": this.state.login,
+                "password": this.state.password,
+                "scope": "read write",
+                "grant_type": "password"
+            };
+            this.api.oauth.authorization(data).execute({
+                success: ((body) => {
+                    console.log('success');
+                    console.log(body);
+                    this.props.onClose();
+                }),
+                error: ((body) => {
+                    console.log('error');
+                    console.log(body);
+                    if (/login/.test(body.message)) {
+                        this.setState({
+                            show: true,
+                            message: "Неверный логин или пароль.",
+                            target: this.refs.login
+                        })
+                    }
+                })
+            });
         }
     }
 
@@ -214,18 +245,18 @@ class LogForm extends React.Component {
                                     <FormGroup controlId="LoginFormLogin">
                                         <ControlLabel>Имя пользователя</ControlLabel>
                                         <FormControl className="text-login" type="text"
-                                                     onChange={this.signUpLoginChange} required/>
+                                                     onChange={this.signUpLoginChange} ref="login"/>
                                     </FormGroup>
                                     <FormGroup controlId="LoginFormPassword">
                                         <ControlLabel>Пароль</ControlLabel>
                                         <FormControl className="text-login" type="password"
-                                                     onChange={this.signUpPasswordChange} required/>
+                                                     onChange={this.signUpPasswordChange} ref="password"/>
                                     </FormGroup>
-                                    <Checkbox inline>
+                                    <Checkbox inline onChange={this.rememberChange}>
                                         Запомнить меня
                                     </Checkbox>
-                                    <Button type="submit" className="custom-button" block bsStyle="primary"
-                                            bsSize="large">
+                                    <Button className="custom-button" block bsStyle="primary"
+                                            bsSize="large" onClick={this.login}>
                                         Войти
                                     </Button>
                                 </form>

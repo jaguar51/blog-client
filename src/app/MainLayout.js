@@ -64,7 +64,7 @@ export default class MainLayout extends React.Component {
                         <Navbar.Form pullLeft>
                             <FormGroup>
                                 <InputGroup>
-                                    <FormControl type="text" className="search"/>
+                                    <FormControl type="text" className="search" placeholder="Найти"/>
                                     <InputGroup.Button>
                                         <Button className="custom-button search-btn">
                                             <Glyphicon glyph="search"/>

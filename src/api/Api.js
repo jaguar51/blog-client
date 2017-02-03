@@ -2,6 +2,7 @@ import ApiAccount from "./methods/ApiAccount";
 import ApiArticle from "./methods/ApiArticle";
 import ApiImage from "./methods/ApiImage";
 import ApiAvatar from "./methods/ApiAvatar";
+import ApiOauth from "./methods/ApiOauth";
 import ApiComment from "./methods/ApiComment";
 import ApiTag from "./methods/ApiTag";
 
@@ -10,6 +11,7 @@ export default class Api {
     constructor(baseUrl) {
         this.account = new ApiAccount(baseUrl);
         this.article = new ApiArticle(baseUrl);
+        this.oauth = new ApiOauth(baseUrl);
         this.avatar = new ApiAvatar(baseUrl);
         this.comment = new ApiComment(baseUrl);
         this.image = new ApiImage(baseUrl);

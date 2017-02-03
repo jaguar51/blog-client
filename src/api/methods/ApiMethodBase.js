@@ -7,8 +7,13 @@ export default class ApiMethodBase {
     }
 
     getToken() {
+        if (localStorage.getItem('access_token')) {
+            return 'Bearer ' + localStorage.getItem('access_token');
+        } else {
+            return btoa('web_app:secret_key');
+        }
         // @TODO потом нужна более сложная логика получения токена из хранилища какого нибудь
-        return 'Bearer ' + '81f09ac6-0988-43db-b74c-b48bfe70b667';
+        // return 'Bearer ' + '81f09ac6-0988-43db-b74c-b48bfe70b667';
     }
 
     prepareRequest(methodName, params) {
