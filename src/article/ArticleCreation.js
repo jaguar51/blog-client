@@ -15,16 +15,17 @@ export default class ArticleCreation extends React.Component {
             tagList: [],
         };
 
+        this.api = Api.getDefault();
+
         this.uploadImage = this.uploadImage.bind(this);
         this.onChangeText = this.onChangeText.bind(this);
         this.onChangeTagList = this.onChangeTagList.bind(this);
     }
 
     uploadImage(files) {
-        let api = Api.getDefault();
-        api.image.upload(files[0]).execute({
+        this.api.image.upload(files[0]).execute({
             success: ((body) => {
-                ReactSummernote.insertImage(api.image.getUrl(body.data.result.originalPath), $image => {
+                ReactSummernote.insertImage(this.api.image.getUrl(body.data.result.originalPath), $image => {
                     $image.attr("id", body.data.result.id);});
 
                 this.setState({

@@ -19,7 +19,7 @@ export default class ApiOauth {
 
     authorization(params) {
         return this.prepareRequest({
-            method: 'GET',
+            method: 'POST',
             query: params
         });
     }

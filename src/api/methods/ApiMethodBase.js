@@ -1,24 +1,16 @@
 import ApiRequest from "../ApiRequest";
+import TokenService from "../TokenService";
 
 export default class ApiMethodBase {
 
     constructor(baseUrl) {
         this.baseUrl = baseUrl;
-    }
-
-    getToken() {
-        if (localStorage.getItem('access_token')) {
-            return 'Bearer ' + localStorage.getItem('access_token');
-        } else {
-            return btoa('web_app:secret_key');
-        }
-        // @TODO потом нужна более сложная логика получения токена из хранилища какого нибудь
-        // return 'Bearer ' + '81f09ac6-0988-43db-b74c-b48bfe70b667';
+        this.tikenService = new TokenService;
     }
 
     prepareRequest(methodName, params) {
         params.header = {
-            'Authorization': this.getToken()
+            'Authorization': this.tikenService.getToken()
         };
         return new ApiRequest(
             this.constructPath(methodName),

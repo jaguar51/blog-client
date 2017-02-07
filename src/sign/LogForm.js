@@ -206,6 +206,10 @@ class LogForm extends React.Component {
                 success: ((body) => {
                     console.log('success');
                     console.log(body);
+                    localStorage.setItem('refresh_token', body.refresh_token);
+                    localStorage.setItem('access_token', body.access_token);
+                    localStorage.setItem('account_id', body.account_id);
+                    this.props.login();
                     this.props.onClose();
                 }),
                 error: ((body) => {
