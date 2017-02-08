@@ -21,29 +21,14 @@ export default class MainLayout extends React.Component {
             showSign: false,
             checked: 'login'
         };
-        if (this.tokenService.isTokenExist()) {
-            let data = {
-                "refresh_token": localStorage.getItem('refresh_token'),
-                "grant_type": "refresh_token"
-            };
-            this.api.oauth.authorization(data).execute({
-                success: ((body) => {
-                    console.log('success');
-                    console.log(body);
-                    localStorage.setItem('refresh_token', body.refresh_token);
-                    localStorage.setItem('access_token', body.access_token);
-                    localStorage.setItem('account_id', body.account_id);
-                    this.setState({
-                        auth: true
-                    })
-                }),
-                error: ((body) => {
-                    console.log('error');
-                    console.log(body);
-                })
-            });
-        }
-
+        this.tokenService.refreshToken({
+            login: (() =>{
+                this.setState({
+                    auth: true,
+                });
+            })
+        });
+        console.log(this.state.auth);
         this.logInButtonClick = this.logInButtonClick.bind(this);
         this.signUpButtonClick = this.signUpButtonClick.bind(this);
         this.hideSignWindow = this.hideSignWindow.bind(this);
@@ -70,9 +55,7 @@ export default class MainLayout extends React.Component {
     }
 
     quit() {
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('account_id');
+        this.api.oauth.quit();
         this.setState({
             auth: false
         })

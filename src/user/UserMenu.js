@@ -7,7 +7,7 @@ export default class UserMenu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            profileImg: "../../assets/img/default-avatars/avatar-01.png",
+            profileImg: null,
         };
         this.api = Api.getDefault();
         this.api.account.getById(localStorage.getItem('account_id')).execute({
@@ -17,6 +17,10 @@ export default class UserMenu extends React.Component {
                 if (body.data.result.avatar !== null) {
                     this.setState({
                         profileImg: this.api.avatar.getUrl(body.data.result.avatar.thumbnailPath)
+                    })
+                } else {
+                    this.setState({
+                        profileImg: "../../assets/img/default-avatars/avatar-01.png"
                     })
                 }
             }),

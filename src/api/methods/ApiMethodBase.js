@@ -5,12 +5,12 @@ export default class ApiMethodBase {
 
     constructor(baseUrl) {
         this.baseUrl = baseUrl;
-        this.tikenService = new TokenService;
     }
 
     prepareRequest(methodName, params) {
+        let tokenService = new TokenService;
         params.header = {
-            'Authorization': this.tikenService.getToken()
+            'Authorization': tokenService.getToken()
         };
         return new ApiRequest(
             this.constructPath(methodName),
