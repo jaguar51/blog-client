@@ -9,9 +9,16 @@ export default class ApiMethodBase {
 
     prepareRequest(methodName, params) {
         let tokenService = new TokenService;
-        params.header = {
-            'Authorization': tokenService.getToken()
-        };
+        if (params.header == null) {
+            params.header = {};
+        }
+        if (tokenService.isTokenExist()) {
+            console.log("заходим");
+            params.header['Authorization'] = tokenService.getToken();
+            // params.header = {
+            //     'Authorization': tokenService.getToken()
+            // };
+        }
         return new ApiRequest(
             this.constructPath(methodName),
             params

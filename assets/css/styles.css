@@ -189,15 +189,19 @@ a {
     height: 30px;
 }
 
-.dropdown-menu {
-    min-width: 143px;
-}
-
 @media (max-width: 767px) {
     .right-profile {
         width: 100%;
         float: left;
         margin-left: 0;
+    }
+
+    .user-menu {
+        width: 100%;
+        float: left;
+    }
+    .profile-name {
+        float: left;
     }
 
     .navbar-default .navbar-nav .open .dropdown-menu > li > a {
@@ -409,6 +413,58 @@ a {
 
 .navbar-default .navbar-collapse {
     border: 0;
+}
+
+.profile-name .caret {
+    margin-left: 3px;
+}
+
+.user-menu,
+.user-menu:focus {
+    color: #fff;
+    height: 50px;
+    border-radius: 0;
+    background-color: #6995c7;
+    border: 0;
+}
+
+.user-menu:hover,
+.user-menu:active {
+    color: #fff;
+    background-color: #35649a;
+    border-color: #2c5c92;
+}
+
+.open>.dropdown-toggle.btn-default.user-menu,
+.open>.dropdown-toggle.btn-default.user-menu {
+    color: #fff;
+    background-color: #214369 !important;
+    border-color: #1e3c5d !important;
+}
+
+.open>.dropdown-toggle.btn-default.user-menu:hover,
+.open>.dropdown-toggle.btn-default.user-menu:focus {
+    color: #fff;
+    background-color: #214369 !important;
+    border-color: #1e3c5d !important;
+}
+
+.btn-default.user-menu.active.focus,
+.btn-default.user-menu.active:focus,
+.btn-default.user-menu.active:hover,
+.btn-default.user-menu:active.focus,
+.btn-default.user-menu:active:focus,
+.btn-default.user-menu:active:hover,
+.open>.dropdown-toggle.btn-default.user-menu.focus,
+.open>.dropdown-toggle.btn-default.user-menu:focus,
+.open>.dropdown-toggle.btn-default.user-menu:hover {
+    color: #fff;
+    background-color: #214369;
+    border-color: #1e3c5d;
+}
+
+.user-menu-list {
+    border-radius: 0;
 }
 
 .search-btn {

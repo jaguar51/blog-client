@@ -33,6 +33,12 @@ export default class TokenService {
         }
     }
 
+    quit() {
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('account_id');
+    }
+
     isTokenExist() {
         return localStorage.getItem('access_token') !== null;
     }

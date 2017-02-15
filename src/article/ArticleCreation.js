@@ -3,7 +3,6 @@ import ReactSummernote from "react-summernote";
 import TagContainer from "./TagContainer";
 import {Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import Api from "../api/Api";
-import "react-summernote/dist/react-summernote.css";
 import "react-summernote/lang/summernote-ru-RU";
 
 export default class ArticleCreation extends React.Component {

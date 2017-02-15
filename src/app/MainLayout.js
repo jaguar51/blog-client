@@ -6,8 +6,9 @@ import LoginNav from "../sign/LoginNav";
 import UserMenu from "../user/UserMenu";
 import TokenService from "../api/TokenService";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../assets/css/styles.css";
+import "react-summernote/dist/react-summernote.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+import "../../assets/css/styles.css";
 import Api from "../api/Api";
 
 export default class MainLayout extends React.Component {
@@ -55,7 +56,7 @@ export default class MainLayout extends React.Component {
     }
 
     quit() {
-        this.api.oauth.quit();
+        this.tokenService.quit();
         this.setState({
             auth: false
         })
