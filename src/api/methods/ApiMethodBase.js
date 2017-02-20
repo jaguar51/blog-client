@@ -13,7 +13,6 @@ export default class ApiMethodBase {
             params.header = {};
         }
         if (tokenService.isTokenExist()) {
-            console.log("заходим");
             params.header['Authorization'] = tokenService.getToken();
             // params.header = {
             //     'Authorization': tokenService.getToken()

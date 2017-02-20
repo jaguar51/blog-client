@@ -29,7 +29,6 @@ export default class MainLayout extends React.Component {
                 });
             })
         });
-        console.log(this.state.auth);
         this.logInButtonClick = this.logInButtonClick.bind(this);
         this.signUpButtonClick = this.signUpButtonClick.bind(this);
         this.hideSignWindow = this.hideSignWindow.bind(this);
@@ -98,7 +97,7 @@ export default class MainLayout extends React.Component {
                     </Navbar.Collapse>
                 </Navbar>
                 <main>
-                    {this.props.children}
+                    {this.state.auth ? this.props.children : null}
                     {this.state.showSign ? <LogForm checked={this.state.checked} onClose={this.hideSignWindow} login={this.login}/> : null}
                 </main>
             </div>

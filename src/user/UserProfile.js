@@ -55,8 +55,8 @@ export default class UserProfile extends React.Component {
 
                         <Col lg={9} md={9} sm={12} xs={12}>
                             <Row>
-                                <ArticlePreview size="max"/>
-                                <ArticlePreview size="max"/>
+                                {/*<ArticlePreview size="max"/>*/}
+                                {/*<ArticlePreview size="max"/>*/}
                             </Row>
                         </Col>
                     </Row>

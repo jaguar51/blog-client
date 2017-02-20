@@ -10,7 +10,7 @@ export default class ArticleCreation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            imagesId: [],
+            images: [],
             tagList: [],
         };
 
@@ -28,7 +28,7 @@ export default class ArticleCreation extends React.Component {
                     $image.attr("id", body.data.result.id);});
 
                 this.setState({
-                    imagesId: this.state.imagesId.concat([body.data.result.id])
+                    images: this.state.images.concat([body.data.result])
                 });
             }),
             error: ((body) => {
@@ -40,14 +40,14 @@ export default class ArticleCreation extends React.Component {
 
     onChangeText(text) {
         let api = Api.getDefault();
-        this.state.imagesId.map((id, index) => {
-            if (document.getElementById(id) == null) {
-                api.image.remove(id).execute({
+        this.state.images.map((image, index) => {
+            if (document.getElementById(image.id) == null) {
+                api.image.remove(image.id).execute({
                     success: (() => {
-                        let newImagesId = this.state.imagesId;
-                        newImagesId.splice(index, 1);
+                        let newImages = this.state.images;
+                        newImages.splice(index, 1);
                         this.setState({
-                            imagesId: newImagesId
+                            images: newImages
                         });
                     }),
                     error: ((body) => {

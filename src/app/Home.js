@@ -1,7 +1,9 @@
 import React from "react";
 import {Row, Grid} from 'react-bootstrap';
 import ArticlePreview from "../article/ArticlePreview";
+import InfiniteScroll from 'react-infinite-scroller';
 import Api from "../api/Api";
+import Field from "./Field";
 
 export default class Home extends React.Component {
 
@@ -9,27 +11,44 @@ export default class Home extends React.Component {
         super(props);
         this.api = Api.getDefault();
         this.state = {
+            page: 0,
             articles: [],
+            hasMore: true,
         };
-        this.data = {
-            "limit": 2
-        };
-        this.api.article.list(this.data).execute({
-            success: ((body) => {
-                console.log('success');
-                console.log(body);
-                this.setState({
-                    articles: body.data.result,
-                })
-            }),
-            error: ((body) => {
-                console.error('error');
-                console.error(body);
-            })
-        });
+        this.loadItems = this.loadItems.bind(this);
     }
 
-
+    loadItems() {
+            let data = {
+                "page": this.state.page,
+                "limit": 6
+            };
+            this.api.article.list(data).execute({
+                success: ((body) => {
+                    console.log('success');
+                    console.log(body);
+                    if (body.data.result.length === 0) {
+                        this.setState({
+                            hasMore: false,
+                        });
+                        if (this.state.articles.length === 0) {
+                            this.setState({
+                                articles: this.state.articles.concat([<Field key="emptyField" text="Нет статей"/>]),
+                            })
+                        }
+                    } else {
+                        this.setState({
+                            page: this.state.page + 1,
+                            articles: this.state.articles.concat(body.data.result),
+                        })
+                    }
+                }),
+                error: ((body) => {
+                    console.error('error');
+                    console.error(body);
+                })
+            });
+    }
 
 
     render() {
@@ -50,9 +69,15 @@ export default class Home extends React.Component {
                     <Row>
                         {bigArticles}
                     </Row>
-
                     <Row>
-                        {standardArticles}
+                        <InfiniteScroll
+                            pageStart={0}
+                            loadMore={this.loadItems}
+                            hasMore={this.state.hasMore}
+                            loader={<div className="loader">Loading ...</div>}
+                        >
+                            {standardArticles}
+                        </InfiniteScroll>
                     </Row>
                 </Grid>
             </div>
