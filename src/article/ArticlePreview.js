@@ -25,7 +25,6 @@ class ArticlePreview extends React.Component {
     }
 
     getImage() {
-        debugger;
         if (this.props.data.images.length !== 0) {
             return this.api.image.getUrl(this.props.data.images[0].originalPath);
         } else {

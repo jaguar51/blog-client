@@ -18,17 +18,26 @@ export default class MainLayout extends React.Component {
         this.api = Api.getDefault();
         this.tokenService = new TokenService();
         this.state = {
-            auth: false,
+            auth: "loading",
             showSign: false,
             checked: 'login'
         };
-        this.tokenService.refreshToken({
-            login: (() =>{
-                this.setState({
-                    auth: true,
-                });
-            })
-        });
+        if (this.tokenService.isTokenExist()) {
+            this.tokenService.refreshToken({
+                auth: (() => {
+                    this.setState({
+                        auth: "auth",
+                    });
+                }),
+                notAuth: (() => {
+                    this.setState({
+                        auth: "not auth",
+                    });
+                })
+            });
+        } else {
+            this.state.auth = "not auth";
+        }
         this.logInButtonClick = this.logInButtonClick.bind(this);
         this.signUpButtonClick = this.signUpButtonClick.bind(this);
         this.hideSignWindow = this.hideSignWindow.bind(this);
@@ -57,17 +66,36 @@ export default class MainLayout extends React.Component {
     quit() {
         this.tokenService.quit();
         this.setState({
-            auth: false
+            auth: "not auth"
         })
     }
 
     login() {
         this.setState({
-            auth: true
+            auth: "auth"
         })
     }
 
+    getMain() {
+        if (this.state.auth === "loading") {
+            return null;
+        } else {
+            return this.props.children;
+        }
+    }
+
+    getUserMenu() {
+        if (this.state.auth === "loading") {
+            return null;
+        } else if (this.state.auth === "not auth") {
+            return <LoginNav login={this.logInButtonClick} signup={this.signUpButtonClick}/>;
+        } else {
+            return <UserMenu quit={this.quit}/>;
+        }
+    }
+
     render() {
+        console.log(this.state.auth);
         return (
             <div className="app">
                 <Navbar className="navbar-style custom-navbar" fixedTop>
@@ -91,14 +119,16 @@ export default class MainLayout extends React.Component {
                             </FormGroup>
                         </Navbar.Form>
                         <Nav className="right-profile">
-                            {this.state.auth ? <UserMenu quit={this.quit}/> :
-                                <LoginNav login={this.logInButtonClick} signup={this.signUpButtonClick}/>}
+                            {this.getUserMenu()}
+                            {/*{this.state.auth ? <UserMenu quit={this.quit}/> :*/}
+                            {/*<LoginNav login={this.logInButtonClick} signup={this.signUpButtonClick}/>}*/}
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
                 <main>
-                    {this.state.auth ? this.props.children : null}
-                    {this.state.showSign ? <LogForm checked={this.state.checked} onClose={this.hideSignWindow} login={this.login}/> : null}
+                    {this.getMain()}
+                    {this.state.showSign ?
+                        <LogForm checked={this.state.checked} onClose={this.hideSignWindow} login={this.login}/> : null}
                 </main>
             </div>
         );
