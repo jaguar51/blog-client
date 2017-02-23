@@ -7,7 +7,7 @@ export default class UserMenu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            profileImg: require("../../assets/img/default-avatars/avatar-01.png"),
+            profileImg: "/assets/img/default-avatars/avatar-01.png",
         };
         this.api = Api.getDefault();
         this.api.account.getById(localStorage.getItem('account_id')).execute({

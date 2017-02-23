@@ -31,7 +31,7 @@ class ArticlePreview extends React.Component {
         if (this.props.data.images.length !== 0) {
             return this.api.image.getUrl(this.props.data.images[0].originalPath);
         } else {
-            return require('../../assets/img/default-article-img/default-img1.png');
+            return '/assets/img/default-article-img/default-img1.png';
         }
     }
 
@@ -43,7 +43,7 @@ class ArticlePreview extends React.Component {
         if (this.props.data.author.avatar !== null) {
             return this.api.avatar.getUrl(this.props.data.author.avatar.originalPath);
         } else {
-            return require('../../assets/img/default-avatars/avatar-01.png');
+            return '/assets/img/default-avatars/avatar-01.png';
         }
     }
 

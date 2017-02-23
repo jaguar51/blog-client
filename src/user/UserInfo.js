@@ -6,7 +6,6 @@ export default class UserInfo extends React.Component {
     constructor(props) {
         super(props);
         this.api = Api.getDefault();
-        console.log(this.props.info);
     }
 
     getUserAvatar() {
@@ -16,10 +15,6 @@ export default class UserInfo extends React.Component {
             return '/assets/img/default-avatars/avatar-01.png';
         }
     }
-
-    // getAvatar() {
-    //     return this.props.info.avatar === null ? require('../../assets/img/default-article-img/default-img1.png') : this.api.avatar.getUrl(this.props.info.avatar.originalPath)
-    // }
 
     render() {
         return (

@@ -39,28 +39,6 @@ export default class UserProfile extends React.Component {
         browserHistory.push('/settings');
     }
 
-    // getUserAvatar() {
-    //     let avatar = require('../../assets/img/default-avatars/avatar-01.png');
-    //     if (this.state.author !== null) {
-    //         if (this.state.author.avatar !== null) {
-    //             return this.api.avatar.getUrl(this.state.author.avatar.originalPath);
-    //         }
-    //     }
-    //     return avatar;
-    // }
-    //
-    // getLogin() {
-    //     if (this.state.author !== null) {
-    //         return this.state.author.login;
-    //     }
-    // }
-    //
-    // getName(){
-    //     if (this.state.author !== null) {
-    //         return this.state.author.login;
-    //     }
-    // }
-
     render() {
         return (
             <div className="wrap">

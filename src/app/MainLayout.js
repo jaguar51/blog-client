@@ -112,7 +112,7 @@ export default class MainLayout extends React.Component {
                                     <FormControl type="text" className="search" placeholder="Найти"/>
                                     <InputGroup.Button>
                                         <Button className="custom-button search-btn">
-                                            <span className="glyphicon glyphicon-search"></span>
+                                            <Glyphicon glyph="search" />
                                         </Button>
                                     </InputGroup.Button>
                                 </InputGroup>

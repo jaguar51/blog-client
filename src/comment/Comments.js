@@ -20,7 +20,7 @@ export default class Comments extends React.Component {
                         </p>
                         <footer className="article-info author">
                             <Link className="author-content" to="/profile">
-                                <img src={require('../../assets/img/default-avatars/avatar-01.png')} width="40px" height="40px" alt=""/>
+                                <img src={'/assets/img/default-avatars/avatar-01.png'} width="40px" height="40px" alt=""/>
                                 <span> By Joe Smith</span>
                             </Link>
                             <span className="comments">1 Aug at 4:20 pm</span>
@@ -32,7 +32,7 @@ export default class Comments extends React.Component {
                         </p>
                         <footer className="article-info author">
                             <Link className="author-content" to="/profile">
-                                <img src={require('../../assets/img/default-avatars/avatar-01.png')} width="40px" height="40px" alt=""/>
+                                <img src={'/assets/img/default-avatars/avatar-01.png'} width="40px" height="40px" alt=""/>
                                 <span> By Joe Smith</span>
                             </Link>
                             <span className="comments">1 Aug at 4:20 pm</span>
