@@ -24,8 +24,8 @@ export default (
     <Router history={browserHistory}>
         <Route component={MainLayout}>
             <Route path="/" component={Home}/>
-            <Route path="article" component={Article}/>
-            <Route path="/profile" component={UserProfile}/>
+            <Route path="/article" component={Article}/>
+            <Route path="/profile/:userId" component={UserProfile}/>
             <Route path="/settings" component={UserSettings} onEnter={requireAuth}/>
             <Route path="/article-creation" component={ArticleCreation} onEnter={requireAuth}/>
         </Route>

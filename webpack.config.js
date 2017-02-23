@@ -7,7 +7,9 @@ const BUILD_DIR = path.resolve(__dirname, './build');
 const APP_DIR = path.resolve(__dirname, './src');
 
 module.exports = {
-    entry: APP_DIR + '/app/App.js',
+    entry: [
+        APP_DIR + '/app/App.js',
+    ],
     output: {
         path: BUILD_DIR,
         filename: 'bundle.js'
@@ -53,7 +55,7 @@ module.exports = {
             {
                 test: /\.(png|jpg|svg|[ot]tf|eot|woff|woff2)$/,
                 loader: 'file?name=[path][name].[ext]'
-            }
+            },
         ]
     }
 };

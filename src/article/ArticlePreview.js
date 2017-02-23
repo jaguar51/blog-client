@@ -10,6 +10,9 @@ class ArticlePreview extends React.Component {
         super(props);
         this.api = Api.getDefault();
         this.commentDeclensions = [" комментарий", " комментария", " комментариев"];
+
+        this.handleClick = this.handleClick.bind(this);
+        this.handleFooterClick = this.handleFooterClick.bind(this);
     }
 
     handleClick() {
@@ -17,7 +20,7 @@ class ArticlePreview extends React.Component {
     }
 
     handleFooterClick() {
-        browserHistory.push('/profile');
+        browserHistory.push('/profile/' + this.props.data.author.id);
     }
 
     getTitle() {

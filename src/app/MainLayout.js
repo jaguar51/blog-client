@@ -112,7 +112,7 @@ export default class MainLayout extends React.Component {
                                     <FormControl type="text" className="search" placeholder="Найти"/>
                                     <InputGroup.Button>
                                         <Button className="custom-button search-btn">
-                                            <Glyphicon glyph="search"/>
+                                            <span className="glyphicon glyphicon-search"></span>
                                         </Button>
                                     </InputGroup.Button>
                                 </InputGroup>
@@ -120,8 +120,6 @@ export default class MainLayout extends React.Component {
                         </Navbar.Form>
                         <Nav className="right-profile">
                             {this.getUserMenu()}
-                            {/*{this.state.auth ? <UserMenu quit={this.quit}/> :*/}
-                            {/*<LoginNav login={this.logInButtonClick} signup={this.signUpButtonClick}/>}*/}
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

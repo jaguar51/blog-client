@@ -1,7 +1,7 @@
 import React from "react";
 import {NavItem, Nav} from 'react-bootstrap';
 
-export default class LiginNav extends React.Component {
+export default class LoginNav extends React.Component {
 
     constructor(props) {
         super(props);

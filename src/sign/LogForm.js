@@ -185,12 +185,6 @@ class LogForm extends React.Component {
                             message: "Данная почта уже используется.",
                             target: this.refs.email
                         })
-                    } else if (/credentials/.test(body.error_description)) {
-                        this.setState({
-                            show: true,
-                            message: "Неверный e-mail или пароль.",
-                            target: this.refs.email
-                        })
                     }
                 })
             });
@@ -221,10 +215,10 @@ class LogForm extends React.Component {
                 error: ((body) => {
                     console.log('error');
                     console.log(body);
-                    if (/login/.test(body.message)) {
+                    if (/credentials/.test(body.error_description)) {
                         this.setState({
                             show: true,
-                            message: "Неверный логин или пароль.",
+                            message: "Неверный e-mail или пароль.",
                             target: this.refs.login
                         })
                     }

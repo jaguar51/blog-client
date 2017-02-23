@@ -19,17 +19,17 @@ header, nav, article, aside, footer, section {
 
 @font-face {
     font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Regular.ttf');
+    src: url('/assets/fonts/Montserrat-Regular.ttf');
 }
 
 @font-face {
     font-family: 'Museo';
-    src: url('../fonts/Museo-Cyrl-900.otf');
+    src: url('/assets/fonts/Museo-Cyrl-900.otf');
 }
 
 @font-face {
     font-family: 'OpenSans';
-    src: url('../fonts/OpenSans-Regular.ttf');
+    src: url('/assets/fonts/OpenSans-Regular.ttf');
 }
 
 html {
@@ -163,7 +163,6 @@ a {
 .profile-avatar {
     width: 100%;
     border-radius: 3%;
-    margin-bottom: 10px;
 }
 
 .navbar-default .navbar-nav > .open > a,
