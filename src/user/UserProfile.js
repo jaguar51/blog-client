@@ -6,6 +6,7 @@ import UserInfo from "./UserInfo";
 import InfiniteScroll from 'react-infinite-scroller';
 import TokenService from "../api/TokenService";
 import UserProfileMenu from "./UserProfileMenu";
+import Field from "../app/Field";
 import ArticlePreview from "../article/ArticlePreview";
 
 export default class UserProfile extends React.Component {
@@ -17,6 +18,7 @@ export default class UserProfile extends React.Component {
         this.state = {
             page: 0,
             author: null,
+            status: null, //@TODO
             articles: [],
             hasMore: true,
         };
@@ -35,13 +37,14 @@ export default class UserProfile extends React.Component {
         });
 
         this.loadItems = this.loadItems.bind(this);
+        this.settings = this.settings.bind(this);
     }
 
     loadItems() {
         let data = {
             "page": this.state.page,
             "limit": 4,
-            "status": "PUBLISHED",
+            "status": this.state.status === null ? "PUBLISHED" : this.state.status,
             "authorId": this.props.params.userId,
         };
         this.api.article.list(data).execute({
@@ -71,9 +74,18 @@ export default class UserProfile extends React.Component {
         });
     }
 
+    settings(type) {
+        this.setState({
+            page: 0,
+            articles: [],
+            status: type,
+            hasMore: true,
+        });
+    }
+
     getUserProfileMenu() {
         if (this.tokenService.isTokenExist() && (this.tokenService.getId() === this.props.params.userId)) {
-            return <UserProfileMenu/>
+            return <UserProfileMenu settings={this.settings}/>
         } else {
             return null;
         }
@@ -92,7 +104,7 @@ export default class UserProfile extends React.Component {
                     <Row>
                         <Col lg={3} md={3} sm={12} xs={12}>
                             <div className="profile">
-                                {this.state.author === null ? null : <UserInfo info={this.state.author} />}
+                                {this.state.author === null ? null : <UserInfo info={this.state.author}/>}
                                 {this.getUserProfileMenu()}
                             </div>
                         </Col>

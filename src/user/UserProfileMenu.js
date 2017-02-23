@@ -9,6 +9,8 @@ export default class UserProfileMenu extends React.Component {
 
         this.createArticleClick = this.createArticleClick.bind(this);
         this.settingsClick = this.settingsClick.bind(this);
+        this.allArticlesClick = this.allArticlesClick.bind(this);
+        this.draftedArticlesClick = this.draftedArticlesClick.bind(this);
     }
 
     createArticleClick() {
@@ -17,6 +19,14 @@ export default class UserProfileMenu extends React.Component {
 
     settingsClick() {
         browserHistory.push('/settings');
+    }
+
+    allArticlesClick() {
+        this.props.settings("PUBLISHED");
+    }
+
+    draftedArticlesClick() {
+        this.props.settings("DRAFT");
     }
 
     render() {
@@ -28,10 +38,10 @@ export default class UserProfileMenu extends React.Component {
                 </Button>
 
                 <ButtonGroup vertical block className="custom-btn-group">
-                    <Button bsSize="sm" className="custom-button" onClick={this.createArticleClick}>
+                    <Button bsSize="sm" className="custom-button" onClick={this.allArticlesClick}>
                         Все статьи
                     </Button>
-                    <Button bsSize="sm" className="custom-button" onClick={this.createArticleClick}>
+                    <Button bsSize="sm" className="custom-button" onClick={this.draftedArticlesClick}>
                         Черновики
                     </Button>
                 </ButtonGroup>
