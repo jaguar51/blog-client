@@ -13,7 +13,7 @@ export default class ApiMethodBase {
             params.header = {};
         }
         if (tokenService.isTokenExist()) {
-            params.header['Authorization'] = tokenService.getToken();
+            params.header['Authorization'] = tokenService.getBearerToken();
             // params.header = {
             //     'Authorization': tokenService.getToken()
             // };

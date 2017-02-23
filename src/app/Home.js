@@ -19,35 +19,35 @@ export default class Home extends React.Component {
     }
 
     loadItems() {
-            let data = {
-                "page": this.state.page,
-                "limit": 6
-            };
-            this.api.article.list(data).execute({
-                success: ((body) => {
-                    console.log('success');
-                    console.log(body);
-                    if (body.data.result.length === 0) {
+        let data = {
+            "page": this.state.page,
+            "limit": 6
+        };
+        this.api.article.list(data).execute({
+            success: ((body) => {
+                console.log('success');
+                console.log(body);
+                if (body.data.result.length === 0) {
+                    this.setState({
+                        hasMore: false,
+                    });
+                    if (this.state.articles.length === 0) {
                         this.setState({
-                            hasMore: false,
-                        });
-                        if (this.state.articles.length === 0) {
-                            this.setState({
-                                articles: this.state.articles.concat([<Field key="emptyField" text="Нет статей"/>]),
-                            })
-                        }
-                    } else {
-                        this.setState({
-                            page: this.state.page + 1,
-                            articles: this.state.articles.concat(body.data.result),
+                            articles: this.state.articles.concat([<Field key="emptyField" text="Нет статей"/>]),
                         })
                     }
-                }),
-                error: ((body) => {
-                    console.error('error');
-                    console.error(body);
-                })
-            });
+                } else {
+                    this.setState({
+                        page: this.state.page + 1,
+                        articles: this.state.articles.concat(body.data.result),
+                    })
+                }
+            }),
+            error: ((body) => {
+                console.error('error');
+                console.error(body);
+            })
+        });
     }
 
 
@@ -74,7 +74,14 @@ export default class Home extends React.Component {
                             pageStart={0}
                             loadMore={this.loadItems}
                             hasMore={this.state.hasMore}
-                            loader={<div className="loader">Loading ...</div>}
+                            loader={
+                                <div>
+                                    <span className="loader">
+                                        <span></span>
+                                    </span>
+                                    Loading ...
+                                </div>
+                            }
                         >
                             {standardArticles}
                         </InfiniteScroll>

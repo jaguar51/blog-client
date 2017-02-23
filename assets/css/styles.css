@@ -751,5 +751,30 @@ span.tagRemove:hover {
     margin-left: auto;
     margin-right: auto;
     float: none;
-
 }
+
+/* Loader */
+.loader:before, .loader:after, .loader span {
+    content:'';
+    width: 5px;
+    height: 1.5em;
+    margin-right: 0px;
+    vertical-align: middle;
+    display: inline-block;
+    background-color: #333;
+    animation: grow 1.2s infinite;
+}
+.loader:after {
+    animation: grow 1.2s -.4s infinite;
+    margin-right: 10px;
+}
+.loader span {
+    animation: grow 1.2s -.8s infinite;
+}
+
+@keyframes grow {
+    0% { transform:scaleY(1);opacity:1; }
+    50% { transform:scaleY(0.5);opacity:0.5; }
+    100% { transform:scaleY(1);opacity:1; }
+}
+

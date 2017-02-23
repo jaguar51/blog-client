@@ -49,23 +49,6 @@ export default class UserMenu extends React.Component {
                         <MenuItem eventKey="5" onClick={this.props.quit}>Выход</MenuItem>
                     </Dropdown.Menu>
                 </Dropdown>
-                {/*<li className="dropdown">*/}
-                    {/*<a className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"*/}
-                       {/*aria-expanded="false">*/}
-                        {/*<img className="img-circle profile-img" src={this.state.profileImg}*/}
-                             {/*alt=""/>*/}
-                        {/*<div className="profile-name">Профиль</div>*/}
-                        {/*<span className="caret"></span>*/}
-                    {/*</a>*/}
-                    {/*<ul className="dropdown-menu">*/}
-                        {/*<li><a href="article_creation.html">Создать</a></li>*/}
-                        {/*<li><a href="#">Все статьи</a></li>*/}
-                        {/*<li><a href="#">Черновики</a></li>*/}
-                        {/*<li><a href="personal_changes.html">Настройки</a></li>*/}
-                        {/*<li role="separator" className="divider"></li>*/}
-                        {/*<li onClick={this.props.quit}><a href="#">Выход</a></li>*/}
-                    {/*</ul>*/}
-                {/*</li>*/}
             </Nav>
         );
     }

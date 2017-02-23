@@ -4,10 +4,19 @@ export default class TokenService {
 
     constructor() {
         this.api = new Api.getDefault();
+        this.getToken = this.getToken.bind(this);
+    }
+
+    getBearerToken() {
+        return 'Bearer ' + this.getToken();
     }
 
     getToken() {
-        return 'Bearer ' + localStorage.getItem('access_token');
+        return localStorage.getItem('access_token');
+    }
+
+    getId() {
+        return localStorage.getItem('account_id');
     }
 
     refreshToken(callback) {

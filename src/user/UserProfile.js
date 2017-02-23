@@ -3,6 +3,9 @@ import {browserHistory} from "react-router";
 import {Row, Col, Grid, Button, ButtonGroup} from 'react-bootstrap';
 import Api from "../api/Api";
 import UserInfo from "./UserInfo";
+import InfiniteScroll from 'react-infinite-scroller';
+import TokenService from "../api/TokenService";
+import UserProfileMenu from "./UserProfileMenu";
 import ArticlePreview from "../article/ArticlePreview";
 
 export default class UserProfile extends React.Component {
@@ -10,8 +13,12 @@ export default class UserProfile extends React.Component {
     constructor(props) {
         super(props);
         this.api = Api.getDefault();
+        this.tokenService = new TokenService();
         this.state = {
+            page: 0,
             author: null,
+            articles: [],
+            hasMore: true,
         };
         this.api.account.getById(this.props.params.userId).execute({
             success: ((body) => {
@@ -27,19 +34,58 @@ export default class UserProfile extends React.Component {
             })
         });
 
-        this.createArticleClick = this.createArticleClick.bind(this);
-        this.settingsClick = this.settingsClick.bind(this);
+        this.loadItems = this.loadItems.bind(this);
     }
 
-    createArticleClick() {
-        browserHistory.push('/article-creation');
+    loadItems() {
+        let data = {
+            "page": this.state.page,
+            "limit": 4,
+            "status": "PUBLISHED",
+            "authorId": this.props.params.userId,
+        };
+        this.api.article.list(data).execute({
+            success: ((body) => {
+                console.log('success');
+                console.log(body);
+                if (body.data.result.length === 0) {
+                    this.setState({
+                        hasMore: false,
+                    });
+                    if (this.state.articles.length === 0) {
+                        this.setState({
+                            articles: this.state.articles.concat([<Field key="emptyField" text="Нет статей"/>]),
+                        })
+                    }
+                } else {
+                    this.setState({
+                        page: this.state.page + 1,
+                        articles: this.state.articles.concat(body.data.result),
+                    })
+                }
+            }),
+            error: ((body) => {
+                console.error('error');
+                console.error(body);
+            })
+        });
     }
 
-    settingsClick() {
-        browserHistory.push('/settings');
+    getUserProfileMenu() {
+        if (this.tokenService.isTokenExist() && (this.tokenService.getId() === this.props.params.userId)) {
+            return <UserProfileMenu/>
+        } else {
+            return null;
+        }
     }
 
     render() {
+        let articles = this.state.articles;
+        let standardArticles = [];
+        for (let i = 0; i < articles.length; i++) {
+            standardArticles.push(<ArticlePreview key={articles[i].id} data={articles[i]} size="max"/>);
+        }
+
         return (
             <div className="wrap">
                 <Grid className="main">
@@ -47,31 +93,27 @@ export default class UserProfile extends React.Component {
                         <Col lg={3} md={3} sm={12} xs={12}>
                             <div className="profile">
                                 {this.state.author === null ? null : <UserInfo info={this.state.author} />}
-                                <Button block bsSize="sm" className="custom-button custom-btn-group"
-                                        onClick={this.createArticleClick}>
-                                    Создать статью
-                                </Button>
-
-                                <ButtonGroup vertical block className="custom-btn-group">
-                                    <Button bsSize="sm" className="custom-button" onClick={this.createArticleClick}>
-                                        Все статьи
-                                    </Button>
-                                    <Button bsSize="sm" className="custom-button" onClick={this.createArticleClick}>
-                                        Черновики
-                                    </Button>
-                                </ButtonGroup>
-
-                                <Button block bsSize="sm" className="custom-button custom-changes-btn"
-                                        onClick={this.settingsClick}>
-                                    Настройки
-                                </Button>
+                                {this.getUserProfileMenu()}
                             </div>
                         </Col>
 
                         <Col lg={9} md={9} sm={12} xs={12}>
                             <Row>
-                                {/*<ArticlePreview size="max"/>*/}
-                                {/*<ArticlePreview size="max"/>*/}
+                                {this.state.author === null ? null : <InfiniteScroll
+                                        pageStart={0}
+                                        loadMore={this.loadItems}
+                                        hasMore={this.state.hasMore}
+                                        loader={
+                                            <div>
+                                                <span className="loader">
+                                                    <span></span>
+                                                </span>
+                                                Loading ...
+                                            </div>
+                                        }
+                                    >
+                                        {standardArticles}
+                                    </InfiniteScroll>}
                             </Row>
                         </Col>
                     </Row>

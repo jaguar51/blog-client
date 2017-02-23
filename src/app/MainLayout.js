@@ -80,7 +80,7 @@ export default class MainLayout extends React.Component {
         if (this.state.auth === "loading") {
             return null;
         } else {
-            return this.props.children;
+            return React.cloneElement(this.props.children, {auth: this.state.auth});
         }
     }
 
