@@ -54,12 +54,16 @@ export default class Home extends React.Component {
     render() {
         let articles = this.state.articles;
         let bigArticles = [];
-        for (let i = 0; i < articles.length && i < 2; i++) {
-            bigArticles.push(<ArticlePreview key={articles[i].id} size="big" data={articles[i]}/>);
-        }
         let standardArticles = [];
-        for (let i = 2; i < articles.length; i++) {
-            standardArticles.push(<ArticlePreview key={articles[i].id} data={articles[i]}/>);
+        if (articles.length !== 0 && articles[0].key !== "emptyField") {
+            for (let i = 0; i < articles.length && i < 2; i++) {
+                bigArticles.push(<ArticlePreview key={articles[i].id} size="big" data={articles[i]}/>);
+            }
+            for (let i = 2; i < articles.length; i++) {
+                standardArticles.push(<ArticlePreview key={articles[i].id} data={articles[i]}/>);
+            }
+        } else {
+            bigArticles.push(articles[0]);
         }
 
 

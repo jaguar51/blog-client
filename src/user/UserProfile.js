@@ -93,9 +93,14 @@ export default class UserProfile extends React.Component {
 
     render() {
         let articles = this.state.articles;
+        console.log(articles);
         let standardArticles = [];
-        for (let i = 0; i < articles.length; i++) {
-            standardArticles.push(<ArticlePreview key={articles[i].id} data={articles[i]} size="max"/>);
+        if (articles.length !== 0 && articles[0].key !== "emptyField") {
+            for (let i = 0; i < articles.length; i++) {
+                standardArticles.push(<ArticlePreview key={articles[i].id} data={articles[i]} size="max"/>);
+            }
+        } else {
+            standardArticles.push(articles[0]);
         }
 
         return (
