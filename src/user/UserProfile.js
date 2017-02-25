@@ -18,7 +18,7 @@ export default class UserProfile extends React.Component {
         this.state = {
             page: 0,
             author: null,
-            status: null, //@TODO
+            status: this.props.params.status !== undefined ? this.props.params.status : "PUBLISHED", //@TODO
             articles: [],
             hasMore: true,
         };
@@ -44,7 +44,7 @@ export default class UserProfile extends React.Component {
         let data = {
             "page": this.state.page,
             "limit": 4,
-            "status": this.state.status === null ? "PUBLISHED" : this.state.status,
+            "status": this.state.status,
             "authorId": this.props.params.userId,
         };
         this.api.article.list(data).execute({

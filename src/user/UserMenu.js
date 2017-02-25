@@ -1,6 +1,8 @@
 import React from "react";
 import {Nav, Dropdown, MenuItem} from 'react-bootstrap';
+import {browserHistory} from "react-router";
 import Api from "../api/Api";
+import TokenService from "../api/TokenService";
 
 export default class UserMenu extends React.Component {
 
@@ -10,7 +12,8 @@ export default class UserMenu extends React.Component {
             profileImg: "/assets/img/default-avatars/avatar-01.png",
         };
         this.api = Api.getDefault();
-        this.api.account.getById(localStorage.getItem('account_id')).execute({
+        this.tokenService = new TokenService();
+        this.api.account.getById(this.tokenService.getId()).execute({
             success: ((body) => {
                 console.log('success');
                 console.log(body);
@@ -25,9 +28,28 @@ export default class UserMenu extends React.Component {
                 console.log(body);
             })
         });
+
+        this.createArticleClick = this.createArticleClick.bind(this);
+        this.settingsClick = this.settingsClick.bind(this);
+        this.allArticlesClick = this.allArticlesClick.bind(this);
+        this.draftedArticlesClick = this.draftedArticlesClick.bind(this);
     }
 
+    createArticleClick() {
+        browserHistory.push('/article-creation');
+    }
 
+    settingsClick() {
+        browserHistory.push('/settings');
+    }
+
+    allArticlesClick() {
+        browserHistory.push('/profile/' + this.tokenService.getId() + "/PUBLISHED");
+    }
+
+    draftedArticlesClick() {
+        browserHistory.push('/profile/' + this.tokenService.getId() + "/DRAFT");
+    }
 
     render() {
         return (
@@ -41,10 +63,10 @@ export default class UserMenu extends React.Component {
                         </div>
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="user-menu-list right-profile">
-                        <MenuItem eventKey="1">Создать</MenuItem>
-                        <MenuItem eventKey="2">Все статьи</MenuItem>
-                        <MenuItem eventKey="3">Черновики</MenuItem>
-                        <MenuItem eventKey="4">Настройки</MenuItem>
+                        <MenuItem eventKey="1" onClick={this.createArticleClick}>Создать</MenuItem>
+                        <MenuItem eventKey="2" onClick={this.allArticlesClick}>Все статьи</MenuItem>
+                        <MenuItem eventKey="3" onClick={this.draftedArticlesClick}>Черновики</MenuItem>
+                        <MenuItem eventKey="4" onClick={this.settingsClick}>Настройки</MenuItem>
                         <MenuItem divider />
                         <MenuItem eventKey="5" onClick={this.props.quit}>Выход</MenuItem>
                     </Dropdown.Menu>
