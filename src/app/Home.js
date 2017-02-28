@@ -21,7 +21,8 @@ export default class Home extends React.Component {
     loadItems() {
         let data = {
             "page": this.state.page,
-            "limit": 6
+            "limit": 6,
+            "orderBy": "creationDate:desc",
         };
         this.api.article.list(data).execute({
             success: ((body) => {
@@ -31,11 +32,6 @@ export default class Home extends React.Component {
                     this.setState({
                         hasMore: false,
                     });
-                    if (this.state.articles.length === 0) {
-                        this.setState({
-                            articles: this.state.articles.concat([<Field key="emptyField" text="Нет статей"/>]),
-                        })
-                    }
                 } else {
                     this.setState({
                         page: this.state.page + 1,
@@ -55,15 +51,11 @@ export default class Home extends React.Component {
         let articles = this.state.articles;
         let bigArticles = [];
         let standardArticles = [];
-        if (articles.length !== 0 && articles[0].key !== "emptyField") {
-            for (let i = 0; i < articles.length && i < 2; i++) {
-                bigArticles.push(<ArticlePreview key={articles[i].id} size="big" data={articles[i]}/>);
-            }
-            for (let i = 2; i < articles.length; i++) {
-                standardArticles.push(<ArticlePreview key={articles[i].id} data={articles[i]}/>);
-            }
-        } else {
-            bigArticles.push(articles[0]);
+        for (let i = 0; i < articles.length && i < 2; i++) {
+            bigArticles.push(<ArticlePreview key={articles[i].id} size="big" data={articles[i]}/>);
+        }
+        for (let i = 2; i < articles.length; i++) {
+            standardArticles.push(<ArticlePreview key={articles[i].id} data={articles[i]}/>);
         }
 
 
@@ -71,7 +63,7 @@ export default class Home extends React.Component {
             <div className="wrap">
                 <Grid className="main">
                     <Row>
-                        {bigArticles}
+                        {bigArticles.length === 0 ? <Field key="emptyField" text="Нет статей"/> : bigArticles}
                     </Row>
                     <Row>
                         <InfiniteScroll

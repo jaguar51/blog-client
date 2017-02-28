@@ -31,8 +31,8 @@ export default class ApiCrudBase extends ApiMethodBase {
         });
     }
 
-    update(entity) {
-        return this.prepareRequest('', {
+    update(id, entity) {
+        return this.prepareRequest(id, {
             method: 'PUT',
             body: entity
         });

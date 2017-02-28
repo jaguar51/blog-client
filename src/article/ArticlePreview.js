@@ -58,7 +58,7 @@ class ArticlePreview extends React.Component {
         if (this.props.data.author.name !== null) {
             userName = this.props.data.author.name;
             if (this.props.data.author.surname !== null) {
-                userName = userName + this.props.data.author.surname;
+                userName = userName + " " + this.props.data.author.surname;
             }
         } else {
             userName = this.props.data.author.login;

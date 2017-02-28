@@ -1,11 +1,13 @@
 import React from "react";
 import {Button, ButtonGroup} from 'react-bootstrap';
 import {browserHistory} from "react-router";
+import TokenService from "../api/TokenService";
 
 export default class UserProfileMenu extends React.Component {
 
     constructor(props) {
         super(props);
+        this.tokenService = new TokenService();
 
         this.createArticleClick = this.createArticleClick.bind(this);
         this.settingsClick = this.settingsClick.bind(this);
@@ -18,7 +20,7 @@ export default class UserProfileMenu extends React.Component {
     }
 
     settingsClick() {
-        browserHistory.push('/settings');
+        browserHistory.push('/settings/' + this.tokenService.getId());
     }
 
     allArticlesClick() {

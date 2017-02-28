@@ -40,7 +40,7 @@ export default class UserMenu extends React.Component {
     }
 
     settingsClick() {
-        browserHistory.push('/settings');
+        browserHistory.push('/settings/' + this.tokenService.getId());
     }
 
     allArticlesClick() {

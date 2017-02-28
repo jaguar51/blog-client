@@ -46,6 +46,7 @@ export default class UserProfile extends React.Component {
             "limit": 4,
             "status": this.state.status,
             "authorId": this.props.params.userId,
+            "orderBy": "creationDate:desc",
         };
         this.api.article.list(data).execute({
             success: ((body) => {
@@ -55,11 +56,6 @@ export default class UserProfile extends React.Component {
                     this.setState({
                         hasMore: false,
                     });
-                    if (this.state.articles.length === 0) {
-                        this.setState({
-                            articles: this.state.articles.concat([<Field key="emptyField" text="Нет статей"/>]),
-                        })
-                    }
                 } else {
                     this.setState({
                         page: this.state.page + 1,
@@ -93,14 +89,9 @@ export default class UserProfile extends React.Component {
 
     render() {
         let articles = this.state.articles;
-        console.log(articles);
         let standardArticles = [];
-        if (articles.length !== 0 && articles[0].key !== "emptyField") {
-            for (let i = 0; i < articles.length; i++) {
-                standardArticles.push(<ArticlePreview key={articles[i].id} data={articles[i]} size="max"/>);
-            }
-        } else {
-            standardArticles.push(articles[0]);
+        for (let i = 0; i < articles.length; i++) {
+            standardArticles.push(<ArticlePreview key={articles[i].id} data={articles[i]} size="max"/>);
         }
 
         return (
@@ -129,7 +120,8 @@ export default class UserProfile extends React.Component {
                                             </div>
                                         }
                                     >
-                                        {standardArticles}
+                                        {standardArticles.length === 0 ?
+                                            <Field key="emptyField" text="Нет статей"/> : standardArticles}
                                     </InfiniteScroll>}
                             </Row>
                         </Col>
