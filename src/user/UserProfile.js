@@ -33,6 +33,10 @@ export default class UserProfile extends React.Component {
             error: ((body) => {
                 console.error('error');
                 console.error(body);
+                this.setState({
+                    author: "not found",
+                    hasMore: false,
+                })
             })
         });
 
@@ -81,9 +85,17 @@ export default class UserProfile extends React.Component {
 
     getUserProfileMenu() {
         if (this.tokenService.isTokenExist() && (this.tokenService.getId() === this.props.params.userId)) {
-            return <UserProfileMenu settings={this.settings}/>
+            return <UserProfileMenu settings={this.settings}/>;
         } else {
             return null;
+        }
+    }
+
+    getUserInfo() {
+        if (this.state.author === "not found") {
+            return <h2>Страница удалена либо ещё не создана.</h2>;
+        } else if (this.state.author !== null) {
+            return <UserInfo info={this.state.author}/>;
         }
     }
 
@@ -100,7 +112,7 @@ export default class UserProfile extends React.Component {
                     <Row>
                         <Col lg={3} md={3} sm={12} xs={12}>
                             <div className="profile">
-                                {this.state.author === null ? null : <UserInfo info={this.state.author}/>}
+                                {this.getUserInfo()}
                                 {this.getUserProfileMenu()}
                             </div>
                         </Col>

@@ -295,6 +295,10 @@ a {
     padding: 20px;
 }
 
+.article-body img {
+    max-width: 100%;
+}
+
 .article-body-preview {
     padding-left: 20px;
     padding-right: 20px;

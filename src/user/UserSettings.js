@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router";
-import {Row, Col, Grid, Form, Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import ReactDOM from "react-dom";
+import {Row, Col, Grid, Form, Button, FormGroup, FormControl, ControlLabel, Overlay, Popover} from 'react-bootstrap';
 import {browserHistory} from "react-router";
 import Api from "../api/Api";
 import TokenService from "../api/TokenService";
@@ -158,7 +159,7 @@ export default class UserSettings extends React.Component {
                 show: true,
                 message: "Введите логин",
                 target: this.refs.login
-            }
+            };
         }
 
         if (!this.isNameValid()) {
@@ -166,7 +167,7 @@ export default class UserSettings extends React.Component {
                 show: true,
                 message: "Имя должно быть до 255 символов",
                 target: this.refs.name
-            }
+            };
         }
 
         if (!this.isSurnameValid()) {
@@ -174,7 +175,7 @@ export default class UserSettings extends React.Component {
                 show: true,
                 message: "Фамилия должна быть до 255 символов",
                 target: this.refs.surname
-            }
+            };
         }
 
         // if (!this.isPasswordValid()) {
@@ -199,13 +200,15 @@ export default class UserSettings extends React.Component {
     update() {
         let validationRes = this.validateForm();
         if (validationRes) {
-            console.log(validationRes);
             this.setState(validationRes);
-        } else {
+            console.log(this.state.target);
+        }
+        else {
             this.api.account.update(this.tokenService.getId(), this.state.author).execute({
                 success: ((body) => {
                     console.log('success');
                     console.log(body);
+                    browserHistory.push('/profile/' + this.tokenService.getId());
                 }),
                 error: ((body) => {
                     console.log('error');
@@ -215,12 +218,6 @@ export default class UserSettings extends React.Component {
                             show: true,
                             message: "Данный логин уже используется.",
                             target: this.refs.login
-                        })
-                    } else if (/mail/.test(body.message)) {
-                        this.setState({
-                            show: true,
-                            message: "Данная почта уже используется.",
-                            target: this.refs.email
                         })
                     }
                 })
@@ -303,7 +300,7 @@ export default class UserSettings extends React.Component {
                                                 <FormGroup>
                                                     <Col componentClass={ControlLabel} md={9}/>
                                                     <Col md={3}>
-                                                        <Button type="submit" className="settings-btn custom-button"
+                                                        <Button className="settings-btn custom-button"
                                                                 onClick={this.update}>
                                                             Сохранить
                                                         </Button>
@@ -312,6 +309,18 @@ export default class UserSettings extends React.Component {
                                             </Row>
                                         </Form>
                                     </div>
+
+                                    <Overlay
+                                        show={this.state.show}
+                                        onHide={() => this.setState({show: false})}
+                                        placement="top"
+                                        container={this}
+                                        target={() => ReactDOM.findDOMNode(this.state.target)}
+                                    >
+                                        <Popover id="popover-positioned-scrolling-top">
+                                            {this.state.message}
+                                        </Popover>
+                                    </Overlay>
                                 </Col>
                             </div>
                         </Col>

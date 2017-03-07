@@ -16,7 +16,7 @@ class ArticlePreview extends React.Component {
     }
 
     handleClick() {
-        browserHistory.push('/article');
+        browserHistory.push('/article/' + this.props.data.id);
     }
 
     handleFooterClick() {
@@ -30,9 +30,8 @@ class ArticlePreview extends React.Component {
     getImage() {
         if (this.props.data.images.length !== 0) {
             return this.api.image.getUrl(this.props.data.images[0].originalPath);
-        } else {
-            return '/assets/img/default-article-img/default-img1.png';
         }
+        return '/assets/img/default-article-img/default-img1.png';
     }
 
     getText() {
@@ -40,11 +39,12 @@ class ArticlePreview extends React.Component {
     }
 
     getUserAvatar() {
-        if (this.props.data.author.avatar !== null) {
-            return this.api.avatar.getUrl(this.props.data.author.avatar.originalPath);
-        } else {
-            return '/assets/img/default-avatars/avatar-01.png';
+        if (this.props.data.author !== null) {
+            if (this.props.data.author.avatar !== null) {
+                return this.api.avatar.getUrl(this.props.data.author.avatar.originalPath);
+            }
         }
+        return '/assets/img/default-avatars/avatar-01.png';
     }
 
     getComments() {
@@ -54,14 +54,16 @@ class ArticlePreview extends React.Component {
     }
 
     getUserName() {
-        let userName = null;
-        if (this.props.data.author.name !== null) {
-            userName = this.props.data.author.name;
-            if (this.props.data.author.surname !== null) {
-                userName = userName + " " + this.props.data.author.surname;
+        let userName = "DELETED";
+        if (this.props.data.author !== null) {
+            if (this.props.data.author.name !== null) {
+                userName = this.props.data.author.name;
+                if (this.props.data.author.surname !== null) {
+                    userName = userName + " " + this.props.data.author.surname;
+                }
+            } else {
+                userName = this.props.data.author.login;
             }
-        } else {
-            userName = this.props.data.author.login;
         }
         return userName;
     }
@@ -95,7 +97,7 @@ class ArticlePreview extends React.Component {
                         <div className="author-content">
                             <img src={this.getUserAvatar()} width="40px"
                                  height="40px" alt=""/>
-                            <span> By {this.getUserName()}</span>
+                            <span>{this.getUserName()}</span>
                         </div>
                         <span className="comments">{this.getComments()}</span>
                     </footer>
