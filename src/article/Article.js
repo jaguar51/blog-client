@@ -46,7 +46,7 @@ export default class Article extends React.Component {
             return <Field key="emptyField" text={this.state.message}/>
         }
         else if (this.state.article !== null) {
-            return <div><ArticleBody article={this.state.article}/><Comments/></div>;
+            return <div><ArticleBody article={this.state.article}/><Comments articleId={this.props.params.articleId}/></div>;
         }
         return null;
     }

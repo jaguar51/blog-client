@@ -1,5 +1,6 @@
 import React from "react";
 import ReactSummernote from "react-summernote";
+import {browserHistory} from "react-router";
 import ReactDOM from "react-dom";
 import TagContainer from "./TagContainer";
 import {Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl, Overlay, Popover} from 'react-bootstrap';
@@ -18,6 +19,7 @@ export default class ArticleCreation extends React.Component {
             text: "",
             images: [],
             tagList: [],
+            tagIdList: [],
         };
 
         this.api = Api.getDefault();
@@ -116,23 +118,45 @@ export default class ArticleCreation extends React.Component {
         if (validationRes) {
             this.setState(validationRes);
         } else {
-            let data = {
-                title: this.state.title,
-                text: this.state.text,
-                status: status,
-                tags: this.state.tagList,
-                images: this.state.images,
-            };
-            this.api.article.create(data).execute({
-                success: ((body) => {
-                    console.log('success');
-                    console.log(body);
-                }),
-                error: ((body) => {
-                    console.log('error');
-                    console.log(body);
+            {this.state.tagList.map((item, index) =>
+                this.api.tag.create({value: item}).execute({
+                    success: ((body) => {
+                        console.log('success');
+                        console.log(body);
+                        let data = {
+                            id: body.data.result.id,
+                            value: body.data.result.value,
+                        };
+                        this.setState({
+                            tagIdList: this.state.tagIdList.concat(data),
+                        });
+                        if (this.state.tagIdList.length === this.state.tagList.length) {
+                            let data = {
+                                title: this.state.title,
+                                text: this.state.text,
+                                status: status,
+                                tags: this.state.tagIdList,
+                                images: this.state.images,
+                            };
+                            this.api.article.create(data).execute({
+                                success: ((body) => {
+                                    console.log('success');
+                                    console.log(body);
+                                    browserHistory.push('/article/' + body.data.result.id);
+                                }),
+                                error: ((body) => {
+                                    console.log('error');
+                                    console.log(body);
+                                })
+                            });
+                        }
+                    }),
+                    error: ((body) => {
+                        console.error('error');
+                        console.error(body);
+                    })
                 })
-            });
+            )}
         }
     }
 

@@ -12,14 +12,14 @@ class ArticlePreview extends React.Component {
         this.commentDeclensions = [" комментарий", " комментария", " комментариев"];
 
         this.handleClick = this.handleClick.bind(this);
-        this.handleFooterClick = this.handleFooterClick.bind(this);
+        this.handleAuthorClick = this.handleAuthorClick.bind(this);
     }
 
     handleClick() {
         browserHistory.push('/article/' + this.props.data.id);
     }
 
-    handleFooterClick() {
+    handleAuthorClick() {
         browserHistory.push('/profile/' + this.props.data.author.id);
     }
 
@@ -35,6 +35,9 @@ class ArticlePreview extends React.Component {
     }
 
     getText() {
+        if (this.props.data.text === "") {
+            return "Текст отсутствует";
+        }
         return this.props.data.text;
     }
 
@@ -89,12 +92,12 @@ class ArticlePreview extends React.Component {
                     </figure>
                     <div className="article-body-preview" onClick={this.handleClick}>
                         <h2 className="article-title">
-                            {this.getTitle()}
+                            <TextTruncate line={1} truncateText="…" text={this.getTitle()} />
                         </h2>
                         <TextTruncate line={1} truncateText="…" text={this.getText()} className="article-content"/>
                     </div>
-                    <footer className="article-info-preview author" onClick={this.handleFooterClick}>
-                        <div className="author-content">
+                    <footer className="article-info-preview author" >
+                        <div className="author-content" onClick={this.handleAuthorClick}>
                             <img src={this.getUserAvatar()} width="40px"
                                  height="40px" alt=""/>
                             <span>{this.getUserName()}</span>

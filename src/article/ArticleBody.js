@@ -1,10 +1,38 @@
 import React from "react";
-import {Link} from "react-router";
+import { Link} from "react-router";
+import Api from "../api/Api";
 
 export default class ArticleBody extends React.Component {
 
     constructor(props) {
         super(props);
+        this.api = Api.getDefault();
+    }
+
+    getUserAvatar() {
+        let author = this.props.article.author;
+        if (author !== null) {
+            if (author.avatar !== null) {
+                return this.api.avatar.getUrl(author.avatar.originalPath);
+            }
+        }
+        return '/assets/img/default-avatars/avatar-01.png';
+    }
+
+    getUserName() {
+        let userName = "DELETED";
+        let author = this.props.article.author;
+        if (author !== null) {
+            if (author.name !== null) {
+                userName = author.name;
+                if (author.surname !== null) {
+                    userName = userName + " " + author.surname;
+                }
+            } else {
+                userName = author.login;
+            }
+        }
+        return userName;
     }
 
     render() {
@@ -18,13 +46,14 @@ export default class ArticleBody extends React.Component {
                     <div dangerouslySetInnerHTML={{__html: this.props.article.text}}/>
                     <footer>
                         <span>Теги: </span>
-                        <li className="addedTag"><span>Peppa</span></li>
-                        <li className="addedTag"><span>test</span></li>
+                        {this.props.article.tags.map((item, index) =>
+                            <li className="addedTag" key={item.id}><span>{item.value}</span></li>
+                        )}
                     </footer>
                     <footer className="article-info author">
-                        <Link className="author-content" to="/profile">
-                            <img src={'/assets/img/default-avatars/avatar-01.png'} width="40px" height="40px" alt=""/>
-                            <span> By Joe Smith</span>
+                        <Link className="author-content" to={'/profile/' + this.props.article.author.id}>
+                            <img src={this.getUserAvatar()} width="40px" height="40px" alt=""/>
+                            <span>{this.getUserName()}</span>
                         </Link>
                         <span className="comments">1 Aug at 4:20 pm</span>
                     </footer>
