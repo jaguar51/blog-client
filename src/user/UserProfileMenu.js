@@ -9,18 +9,8 @@ export default class UserProfileMenu extends React.Component {
         super(props);
         this.tokenService = new TokenService();
 
-        this.createArticleClick = this.createArticleClick.bind(this);
-        this.settingsClick = this.settingsClick.bind(this);
         this.allArticlesClick = this.allArticlesClick.bind(this);
         this.draftedArticlesClick = this.draftedArticlesClick.bind(this);
-    }
-
-    createArticleClick() {
-        browserHistory.push('/article-creation');
-    }
-
-    settingsClick() {
-        browserHistory.push('/settings/' + this.tokenService.getId());
     }
 
     allArticlesClick() {
@@ -34,8 +24,7 @@ export default class UserProfileMenu extends React.Component {
     render() {
         return (
             <div>
-                <Button block bsSize="sm" className="custom-button custom-btn-group"
-                        onClick={this.createArticleClick}>
+                <Button block bsSize="sm" className="custom-button custom-btn-group" href="/article-creation">
                     Создать статью
                 </Button>
 
@@ -48,8 +37,7 @@ export default class UserProfileMenu extends React.Component {
                     </Button>
                 </ButtonGroup>
 
-                <Button block bsSize="sm" className="custom-button custom-changes-btn"
-                        onClick={this.settingsClick}>
+                <Button block bsSize="sm" className="custom-button custom-changes-btn" href="/settings">
                     Настройки
                 </Button>
             </div>

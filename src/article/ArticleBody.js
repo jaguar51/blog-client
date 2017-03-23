@@ -1,5 +1,5 @@
 import React from "react";
-import { Link} from "react-router";
+import {Link} from "react-router";
 import Api from "../api/Api";
 
 export default class ArticleBody extends React.Component {

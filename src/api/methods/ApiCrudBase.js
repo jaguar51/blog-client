@@ -18,6 +18,13 @@ export default class ApiCrudBase extends ApiMethodBase {
         });
     }
 
+    search(params) {
+        return this.prepareRequest('search', {
+            method: 'GET',
+            query: params
+        });
+    }
+
     getById(id) {
         return this.prepareRequest(id, {
             method: 'GET'

@@ -36,6 +36,9 @@ export default class TokenService {
             error: ((body) => {
                 console.log('error');
                 console.log(body);
+                if (this.isTokenExist()) {
+                    this.quit();
+                }
                 callback.notAuth();
             })
         });

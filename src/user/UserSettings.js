@@ -12,7 +12,6 @@ export default class UserSettings extends React.Component {
         super(props);
         this.api = Api.getDefault();
         this.tokenService = new TokenService();
-        this.checkCurrentId();
         this.state = {
             author: null,
             password: "",
@@ -21,7 +20,7 @@ export default class UserSettings extends React.Component {
             message: "",
             target: this.refs.login,
         };
-        this.api.account.getById(this.props.params.userId).execute({
+        this.api.account.getById(this.tokenService.getId()).execute({
             success: ((body) => {
                 console.log('success');
                 console.log(body);
@@ -48,10 +47,6 @@ export default class UserSettings extends React.Component {
         this.repeatedPasswordChange = this.repeatedPasswordChange.bind(this);
 
         this.update = this.update.bind(this);
-    }
-
-    checkCurrentId() {
-        this.tokenService.getId() !== this.props.params.userId ? browserHistory.push('/') : null;
     }
 
     getUserAvatar() {

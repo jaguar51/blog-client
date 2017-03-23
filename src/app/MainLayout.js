@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router";
+import {browserHistory, Link} from "react-router";
 import {Nav, Navbar, NavItem, FormGroup, InputGroup, FormControl, Button, Glyphicon, Row, Col} from 'react-bootstrap';
 import LogForm from "../sign/LogForm";
 import LoginNav from "../sign/LoginNav";
@@ -18,6 +18,7 @@ export default class MainLayout extends React.Component {
         this.api = Api.getDefault();
         this.tokenService = new TokenService();
         this.state = {
+            request: "",
             auth: "loading",
             showSign: false,
             checked: 'login'
@@ -41,6 +42,8 @@ export default class MainLayout extends React.Component {
         this.logInButtonClick = this.logInButtonClick.bind(this);
         this.signUpButtonClick = this.signUpButtonClick.bind(this);
         this.hideSignWindow = this.hideSignWindow.bind(this);
+        this.searchOnChange = this.searchOnChange.bind(this);
+        this.onClickSearch = this.onClickSearch.bind(this);
         this.quit = this.quit.bind(this);
         this.login = this.login.bind(this);
     }
@@ -67,7 +70,8 @@ export default class MainLayout extends React.Component {
         this.tokenService.quit();
         this.setState({
             auth: "not auth"
-        })
+        });
+        browserHistory.push('/');
     }
 
     login() {
@@ -94,6 +98,18 @@ export default class MainLayout extends React.Component {
         }
     }
 
+    searchOnChange(event) {
+        this.setState({
+            request: event.target.value
+        });
+    }
+
+    onClickSearch() {
+        if (this.state.request !== "") {
+            browserHistory.push('/' + this.state.request);
+        }
+    }
+
     render() {
         console.log(this.state.auth);
         return (
@@ -101,7 +117,7 @@ export default class MainLayout extends React.Component {
                 <Navbar className="navbar-style custom-navbar" fixedTop>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <Link to="/" className="logo">Blog</Link>
+                            <a className="logo" href="/">Blog</a>
                         </Navbar.Brand>
                         <Navbar.Toggle className="custom-button"/>
                     </Navbar.Header>
@@ -109,11 +125,12 @@ export default class MainLayout extends React.Component {
                         <Navbar.Form pullLeft>
                             <FormGroup>
                                 <InputGroup>
-                                    <FormControl type="text" className="search" placeholder="Найти"/>
+                                    <FormControl type="text" className="search" placeholder="Найти"
+                                                 onChange={this.searchOnChange} value={this.state.request}/>
                                     <InputGroup.Button>
-                                        <Button className="custom-button search-btn">
-                                            <Glyphicon glyph="search" />
-                                        </Button>
+                                            <Button className="custom-button search-btn" href={'/?q=' + this.state.request}>
+                                                <Glyphicon glyph="search"/>
+                                            </Button>
                                     </InputGroup.Button>
                                 </InputGroup>
                             </FormGroup>
