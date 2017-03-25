@@ -241,6 +241,10 @@ a {
     margin-bottom: 10px;
 }
 
+.delete-btn {
+    margin-top: 10px;
+}
+
 .changes-text {
     width: 100%;
 }

@@ -48,6 +48,7 @@ export default class TokenService {
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('access_token');
         localStorage.removeItem('account_id');
+        localStorage.removeItem('roles');
     }
 
     isTokenExist() {

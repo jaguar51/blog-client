@@ -43,7 +43,6 @@ export default class MainLayout extends React.Component {
         this.signUpButtonClick = this.signUpButtonClick.bind(this);
         this.hideSignWindow = this.hideSignWindow.bind(this);
         this.searchOnChange = this.searchOnChange.bind(this);
-        this.onClickSearch = this.onClickSearch.bind(this);
         this.quit = this.quit.bind(this);
         this.login = this.login.bind(this);
     }
@@ -106,6 +105,9 @@ export default class MainLayout extends React.Component {
 
     onClickSearch() {
         if (this.state.request !== "") {
+            if (this.state.request.indexOf("tag:") != 0) {
+                browserHistory.push('/' + this.state.request);
+            }
             browserHistory.push('/' + this.state.request);
         }
     }

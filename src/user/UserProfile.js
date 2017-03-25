@@ -42,6 +42,7 @@ export default class UserProfile extends React.Component {
 
         this.loadItems = this.loadItems.bind(this);
         this.settings = this.settings.bind(this);
+        this.deleteOnClick = this.deleteOnClick.bind(this);
     }
 
     loadItems() {
@@ -91,6 +92,36 @@ export default class UserProfile extends React.Component {
         }
     }
 
+    deleteOnClick() {
+        this.api.account.remove(this.props.params.userId).execute({
+            success: ((body) => {
+                console.log('success');
+                console.log(body);
+                browserHistory.push('/');
+            }),
+            error: ((body) => {
+                console.error('error');
+                console.error(body);
+            })
+        });
+    }
+
+    getAdminMenu() {
+        if (this.tokenService.isTokenExist()) {
+            let roles = JSON.parse(localStorage.getItem('roles'));
+            console.log(roles);
+            for (let i = 0; i < roles.length; i++) {
+                console.log(roles[i]);
+                if (roles[i] === "ROLE_ADMIN" || roles[i] === "ROLE_MODERATOR") {
+                    return <Button block bsSize="sm" bsStyle="danger" onClick={this.deleteOnClick}
+                                   className="delete-btn">Удалить пользователя</Button>;
+                }
+            }
+        } else {
+            return null;
+        }
+    }
+
     getUserInfo() {
         if (this.state.author === "not found") {
             return <h2>Страница удалена либо ещё не создана.</h2>;
@@ -114,6 +145,7 @@ export default class UserProfile extends React.Component {
                             <div className="profile">
                                 {this.getUserInfo()}
                                 {this.getUserProfileMenu()}
+                                {this.getAdminMenu()}
                             </div>
                         </Col>
 

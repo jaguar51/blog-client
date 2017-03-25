@@ -26,35 +26,68 @@ export default class Home extends React.Component {
             "orderBy": "creationDate:desc",
         };
         if (this.state.request !== undefined) {
-            data = {
-                "q": this.state.request,
-                "page": this.state.page,
-                "limit": 6,
-                "orderBy": "creationDate:desc",
-            };
-            this.api.article.search(data).execute({
-                success: ((body) => {
-                    console.log('success');
-                    console.log(body);
-                    if (body.data.result.length === 0) {
+            if (this.state.request.indexOf("tag:") === 0) {
+                console.log(this.state.request.split('tag:'));
+                data = {
+                    "tag": this.state.request.split('tag:')[1],
+                    "page": this.state.page,
+                    "limit": 6,
+                    "orderBy": "creationDate:desc",
+                };
+                this.api.article.list(data).execute({
+                    success: ((body) => {
+                        console.log('success');
+                        console.log(body);
+                        if (body.data.result.length === 0) {
+                            this.setState({
+                                hasMore: false,
+                            });
+                        } else {
+                            this.setState({
+                                page: this.state.page + 1,
+                                articles: this.state.articles.concat(body.data.result),
+                            })
+                        }
+                    }),
+                    error: ((body) => {
+                        console.error('error');
+                        console.error(body);
                         this.setState({
                             hasMore: false,
                         });
-                    } else {
+                    })
+                });
+            } else {
+                data = {
+                    "q": this.state.request,
+                    "page": this.state.page,
+                    "limit": 6,
+                    "orderBy": "creationDate:desc",
+                };
+                this.api.article.search(data).execute({
+                    success: ((body) => {
+                        console.log('success');
+                        console.log(body);
+                        if (body.data.result.length === 0) {
+                            this.setState({
+                                hasMore: false,
+                            });
+                        } else {
+                            this.setState({
+                                page: this.state.page + 1,
+                                articles: this.state.articles.concat(body.data.result),
+                            })
+                        }
+                    }),
+                    error: ((body) => {
+                        console.error('error');
+                        console.error(body);
                         this.setState({
-                            page: this.state.page + 1,
-                            articles: this.state.articles.concat(body.data.result),
-                        })
-                    }
-                }),
-                error: ((body) => {
-                    console.error('error');
-                    console.error(body);
-                    this.setState({
-                        hasMore: false,
-                    });
-                })
-            });
+                            hasMore: false,
+                        });
+                    })
+                });
+            }
         } else {
             this.api.article.list(data).execute({
                 success: ((body) => {

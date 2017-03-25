@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router";
+import {browserHistory, Link} from "react-router";
 import Api from "../api/Api";
 
 export default class ArticleBody extends React.Component {
@@ -35,6 +35,10 @@ export default class ArticleBody extends React.Component {
         return userName;
     }
 
+    tagOnClick(value) {
+        browserHistory.push('/?q=tag:' + value);
+    }
+
     render() {
         return (
             <div className="article-form">
@@ -47,7 +51,7 @@ export default class ArticleBody extends React.Component {
                     <footer>
                         <span>Теги: </span>
                         {this.props.article.tags.map((item, index) =>
-                            <li className="addedTag" key={item.id}><span>{item.value}</span></li>
+                            <li className="addedTag" key={item.id} onClick={this.tagOnClick.bind(this, item.value)}><span>{item.value}</span></li>
                         )}
                     </footer>
                     <footer className="article-info author">

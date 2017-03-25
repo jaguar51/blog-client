@@ -11,6 +11,13 @@ export default class ApiArticle extends ApiCrudBase {
         super(baseUrl);
     }
 
+    search(params) {
+        return this.prepareRequest('search', {
+            method: 'GET',
+            query: params
+        });
+    }
+
     getMethodsGroup() {
         return 'articles';
     }

@@ -33,7 +33,11 @@ export default class ApiMethodBase {
     }
 
     constructPath(methodName) {
-        return this.baseUrl + '/api/' + this.getMethodsGroup() + '/' + methodName;
+        let path = this.baseUrl + '/api/' + this.getMethodsGroup();
+        if (methodName !== "") {
+            path += '/' + methodName;
+        }
+        return path;
     }
 
     getMethodsGroup() {

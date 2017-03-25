@@ -12,6 +12,7 @@ class ArticlePreview extends React.Component {
         this.commentDeclensions = [" комментарий", " комментария", " комментариев"];
 
         this.handleClick = this.handleClick.bind(this);
+        this.authorOnClick = this.authorOnClick.bind(this);
     }
 
     handleClick() {
@@ -78,6 +79,12 @@ class ArticlePreview extends React.Component {
         }
     }
 
+    authorOnClick() {
+        if (this.props.data.author !== null) {
+            browserHistory.push('/profile/' + this.props.data.author.id);
+        }
+    }
+
     render() {
         return (
             <Col lg={this.size} md={this.size} sm={12} xs={12}>
@@ -92,11 +99,11 @@ class ArticlePreview extends React.Component {
                         <TextTruncate line={1} truncateText="…" text={this.getText()} className="article-content"/>
                     </div>
                     <footer className="article-info-preview author" >
-                        <Link className="author-content" to={'/profile/' + this.props.data.author.id}>
+                        <div className="author-content" onClick={this.authorOnClick}>
                             <img src={this.getUserAvatar()} width="40px"
                                  height="40px" alt=""/>
                             <span>{this.getUserName()}</span>
-                        </Link>
+                        </div>
                         <span className="comments">{this.getComments()}</span>
                     </footer>
                 </div>
