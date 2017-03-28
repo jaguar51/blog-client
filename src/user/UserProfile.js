@@ -43,6 +43,10 @@ export default class UserProfile extends React.Component {
         this.loadItems = this.loadItems.bind(this);
         this.settings = this.settings.bind(this);
         this.deleteOnClick = this.deleteOnClick.bind(this);
+        this.blockOnClick = this.blockOnClick.bind(this);
+        this.getModerButtons = this.getModerButtons.bind(this);
+        this.getAdminButtons = this.getAdminButtons.bind(this);
+        this.getAdminMenu = this.getAdminMenu.bind(this);
     }
 
     loadItems() {
@@ -106,20 +110,67 @@ export default class UserProfile extends React.Component {
         });
     }
 
+    blockOnClick() {
+        let data = [];
+        data.push(this.props.params.userId);
+        if (this.state.author.enable) {
+            this.api.account.block(data).execute({
+                success: ((body) => {
+                    console.log('success');
+                    console.log(body);
+                    let newAuthor = this.state.author;
+                    newAuthor.enable = !newAuthor.enable;
+                    this.setState({
+                        author: newAuthor,
+                    });
+                }),
+                error: ((body) => {
+                    console.error('error');
+                    console.error(body);
+                })
+            });
+        } else {
+            this.api.account.unlock(data).execute({
+                success: ((body) => {
+                    console.log('success');
+                    console.log(body);
+                    let newAuthor = this.state.author;
+                    newAuthor.enable = !newAuthor.enable;
+                    this.setState({
+                        author: newAuthor,
+                    });
+                }),
+                error: ((body) => {
+                    console.error('error');
+                    console.error(body);
+                })
+            });
+        }
+    }
+
     getAdminMenu() {
-        if (this.tokenService.isTokenExist()) {
+        let menu = null;
+        if (this.tokenService.isTokenExist() && this.state.author !== null && this.tokenService.getId() !== this.props.params.userId) {
             let roles = JSON.parse(localStorage.getItem('roles'));
-            console.log(roles);
             for (let i = 0; i < roles.length; i++) {
-                console.log(roles[i]);
-                if (roles[i] === "ROLE_ADMIN" || roles[i] === "ROLE_MODERATOR") {
-                    return <Button block bsSize="sm" bsStyle="danger" onClick={this.deleteOnClick}
-                                   className="delete-btn">Удалить пользователя</Button>;
+                if (roles[i] === "ROLE_ADMIN") {
+                    menu = <ButtonGroup vertical block>{this.getAdminButtons()}{this.getModerButtons()}</ButtonGroup>;
+                } else if (roles[i] === "ROLE_MODERATOR") {
+                    menu = this.getModerButtons();
                 }
             }
-        } else {
-            return null;
         }
+        return menu;
+    }
+
+    getAdminButtons() {
+        return <Button block bsSize="sm" bsStyle="danger" onClick={this.deleteOnClick}
+                       className="delete-btn">Удалить пользователя</Button>;
+    }
+
+    getModerButtons() {
+        return <Button block bsSize="sm" bsStyle="danger" onClick={this.blockOnClick}
+                       className="delete-btn">{this.state.author.enable ? "Заблокировать пользователя" : "Разблокировать пользователя"}</Button>;
     }
 
     getUserInfo() {

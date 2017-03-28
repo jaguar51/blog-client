@@ -245,6 +245,10 @@ a {
     margin-top: 10px;
 }
 
+.right-btn {
+    margin-left: 5px;
+}
+
 .changes-text {
     width: 100%;
 }

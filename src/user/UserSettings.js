@@ -141,7 +141,11 @@ export default class UserSettings extends React.Component {
 
     isPasswordValid() {
         const length = this.state.password.length;
-        return length > 3 && length < 256;
+        if (length !== 0) {
+            return length > 3 && length < 256;
+        } else {
+            return true;
+        }
     }
 
     isPasswordsEquals() {
@@ -173,21 +177,21 @@ export default class UserSettings extends React.Component {
             };
         }
 
-        // if (!this.isPasswordValid()) {
-        //     return {
-        //         show: true,
-        //         message: "Пароль должен быть от 4 до 255 символов",
-        //         target: this.refs.password
-        //     }
-        // }
-        //
-        // if (!this.isPasswordsEquals()) {
-        //     return {
-        //         show: true,
-        //         message: "Пароли не совпадают",
-        //         target: this.refs.repeatedPassword
-        //     }
-        // }
+        if (!this.isPasswordValid()) {
+            return {
+                show: true,
+                message: "Пароль должен быть от 4 до 255 символов",
+                target: this.refs.password
+            }
+        }
+
+        if (!this.isPasswordsEquals()) {
+            return {
+                show: true,
+                message: "Пароли не совпадают",
+                target: this.refs.repeatedPassword
+            }
+        }
 
         return null;
     }
@@ -199,7 +203,9 @@ export default class UserSettings extends React.Component {
             console.log(this.state.target);
         }
         else {
-            this.api.account.update(this.tokenService.getId(), this.state.author).execute({
+            let author = this.state.author;
+            author['password'] = this.state.password;
+            this.api.account.update(this.tokenService.getId(), author).execute({
                 success: ((body) => {
                     console.log('success');
                     console.log(body);

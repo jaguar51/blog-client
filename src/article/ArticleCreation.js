@@ -118,45 +118,68 @@ export default class ArticleCreation extends React.Component {
         if (validationRes) {
             this.setState(validationRes);
         } else {
-            {this.state.tagList.map((item, index) =>
-                this.api.tag.create({value: item}).execute({
+            if (this.state.tagIdList.length !== 0) {
+
+                {
+                    this.state.tagList.map((item, index) =>
+                        this.api.tag.create({value: item}).execute({
+                            success: ((body) => {
+                                console.log('success');
+                                console.log(body);
+                                let data = {
+                                    id: body.data.result.id,
+                                    value: body.data.result.value,
+                                };
+                                this.setState({
+                                    tagIdList: this.state.tagIdList.concat(data),
+                                });
+                                if (this.state.tagIdList.length === this.state.tagList.length) {
+                                    let data = {
+                                        title: this.state.title,
+                                        text: this.state.text,
+                                        status: status,
+                                        tags: this.state.tagIdList,
+                                        images: this.state.images,
+                                    };
+                                    this.api.article.create(data).execute({
+                                        success: ((body) => {
+                                            console.log('success');
+                                            console.log(body);
+                                            browserHistory.push('/article/' + body.data.result.id);
+                                        }),
+                                        error: ((body) => {
+                                            console.log('error');
+                                            console.log(body);
+                                        })
+                                    });
+                                }
+                            }),
+                            error: ((body) => {
+                                console.error('error');
+                                console.error(body);
+                            })
+                        })
+                    )
+                }
+            } else {
+                let data = {
+                    title: this.state.title,
+                    text: this.state.text,
+                    status: status,
+                    images: this.state.images,
+                };
+                this.api.article.create(data).execute({
                     success: ((body) => {
                         console.log('success');
                         console.log(body);
-                        let data = {
-                            id: body.data.result.id,
-                            value: body.data.result.value,
-                        };
-                        this.setState({
-                            tagIdList: this.state.tagIdList.concat(data),
-                        });
-                        if (this.state.tagIdList.length === this.state.tagList.length) {
-                            let data = {
-                                title: this.state.title,
-                                text: this.state.text,
-                                status: status,
-                                tags: this.state.tagIdList,
-                                images: this.state.images,
-                            };
-                            this.api.article.create(data).execute({
-                                success: ((body) => {
-                                    console.log('success');
-                                    console.log(body);
-                                    browserHistory.push('/article/' + body.data.result.id);
-                                }),
-                                error: ((body) => {
-                                    console.log('error');
-                                    console.log(body);
-                                })
-                            });
-                        }
+                        browserHistory.push('/article/' + body.data.result.id);
                     }),
                     error: ((body) => {
-                        console.error('error');
-                        console.error(body);
+                        console.log('error');
+                        console.log(body);
                     })
-                })
-            )}
+                });
+            }
         }
     }
 
@@ -202,7 +225,7 @@ export default class ArticleCreation extends React.Component {
                                 </FormGroup>
                                 <TagContainer onChange={this.onChangeTagList}/>
                                 <Button className="custom-button" onClick={this.sendClick}>Отправить</Button>
-                                <Button className="custom-changes-btn" onClick={this.draftClick}>Сохранить</Button>
+                                <Button className="custom-changes-btn right-btn" onClick={this.draftClick}>Сохранить</Button>
 
                                 <Overlay
                                     show={this.state.show}

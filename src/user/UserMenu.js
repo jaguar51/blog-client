@@ -47,9 +47,12 @@ export default class UserMenu extends React.Component {
                             статьи</MenuItem>
                         <MenuItem eventKey="3"
                                   href={'/profile/' + this.tokenService.getId() + "/DRAFT"}>Черновики</MenuItem>
-                        <MenuItem eventKey="4" href={'/settings'}>Настройки</MenuItem>
+                        <MenuItem eventKey="4"
+                                  href={'/profile/' + this.tokenService.getId() + "/LOCKED"}>Заблокированные
+                            статьи</MenuItem>
+                        <MenuItem eventKey="5" href={'/settings'}>Настройки</MenuItem>
                         <MenuItem divider/>
-                        <MenuItem eventKey="5" onClick={this.props.quit}>Выход</MenuItem>
+                        <MenuItem eventKey="6" onClick={this.props.quit}>Выход</MenuItem>
                     </Dropdown.Menu>
                 </Dropdown>
             </Nav>

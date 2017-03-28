@@ -11,6 +11,7 @@ export default class UserProfileMenu extends React.Component {
 
         this.allArticlesClick = this.allArticlesClick.bind(this);
         this.draftedArticlesClick = this.draftedArticlesClick.bind(this);
+        this.lockedArticlesClick = this.lockedArticlesClick.bind(this);
     }
 
     allArticlesClick() {
@@ -19,6 +20,10 @@ export default class UserProfileMenu extends React.Component {
 
     draftedArticlesClick() {
         this.props.settings("DRAFT");
+    }
+
+    lockedArticlesClick() {
+        this.props.settings("LOCKED");
     }
 
     render() {
@@ -34,6 +39,9 @@ export default class UserProfileMenu extends React.Component {
                     </Button>
                     <Button bsSize="sm" className="custom-button" onClick={this.draftedArticlesClick}>
                         Черновики
+                    </Button>
+                    <Button bsSize="sm" className="custom-button" onClick={this.lockedArticlesClick}>
+                        Заблокированные статьи
                     </Button>
                 </ButtonGroup>
 
