@@ -5,9 +5,10 @@ class TagContainer extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(this.props.tagList);
         this.state = {
             currentTag: '',
-            tagList: [],
+            tagList: this.props.tagList,
         };
 
         this.tagInputHandleChange = this.tagInputHandleChange.bind(this);

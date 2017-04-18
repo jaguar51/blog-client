@@ -789,3 +789,36 @@ span.tagRemove:hover {
     100% { transform:scaleY(1);opacity:1; }
 }
 
+.upload-container {
+    width: 136px;
+    height: 34px;
+    margin: 10px auto 0;
+}
+
+.upload {
+    position: relative;
+}
+
+.upload > input[type=file] {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.upload > .btn {
+    position: absolute;
+    z-index: 0;
+}
+
+.upload:hover > .btn {
+    color: #fff;
+    background-color: #35649a;
+    border-color: #2c5c92;
+}
+
+.upload:active > .btn {
+    color: #fff;
+    background-color: #214369;
+    border-color: #1e3c5d;
+}

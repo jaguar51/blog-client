@@ -27,7 +27,7 @@ export default (
             <Route path="/article/:articleId" component={Article}/>
             <Route path="/profile/:userId(/:status)" component={UserProfile}/>
             <Route path="/settings" component={UserSettings} onEnter={requireAuth}/>
-            <Route path="/article-creation" component={ArticleCreation} onEnter={requireAuth}/>
+            <Route path="/article-creation(/:articleId)" component={ArticleCreation} onEnter={requireAuth}/>
         </Route>
     </Router>
 );

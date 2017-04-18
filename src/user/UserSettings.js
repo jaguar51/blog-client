@@ -44,6 +44,7 @@ export default class UserSettings extends React.Component {
         this.loginChange = this.loginChange.bind(this);
         this.surnameChange = this.surnameChange.bind(this);
         this.passwordChange = this.passwordChange.bind(this);
+        this.avatarChange = this.avatarChange.bind(this);
         this.repeatedPasswordChange = this.repeatedPasswordChange.bind(this);
 
         this.update = this.update.bind(this);
@@ -51,7 +52,7 @@ export default class UserSettings extends React.Component {
 
     getUserAvatar() {
         if (this.state.author !== null && this.state.author.avatar !== null) {
-            return this.api.image.getUrl(this.state.author.avatar.originalPath);
+            return this.api.avatar.getUrl(this.state.author.avatar.originalPath);
         } else {
             return '/assets/img/default-avatars/avatar-01.png';
         }
@@ -112,6 +113,24 @@ export default class UserSettings extends React.Component {
         newAuthor.surname = element.target.value;
         this.setState({
             author: newAuthor,
+        });
+    }
+
+    avatarChange(event) {
+        console.log(event.target.files);
+        this.api.avatar.upload(event.target.files[0]).execute({
+            success: ((body) => {
+                console.log(body);
+                let newAuthor = this.state.author;
+                newAuthor.avatar = body.data.result;
+                this.setState({
+                    author: newAuthor,
+                });
+            }),
+            error: ((body) => {
+                console.log('error');
+                console.log(body);
+            })
         });
     }
 
@@ -239,6 +258,10 @@ export default class UserSettings extends React.Component {
                                 <Col lg={4} md={4} sm={12} xs={12}>
                                     <img className="img-thumbnail profile-avatar"
                                          src={this.getUserAvatar()} alt=""/>
+                                    <div className="upload-container upload">
+                                        <span className="btn settings-btn custom-button btn btn-default">Выбрать аватар</span>
+                                        <input type="file" accept="image/jpeg, image/png" onChange={this.avatarChange}/>
+                                    </div>
                                 </Col>
                                 <Col lg={8} md={8} sm={12} xs={12}>
                                     <div className="col-md-9 personal-info">

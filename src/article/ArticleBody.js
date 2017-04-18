@@ -1,6 +1,6 @@
 import React from "react";
 import {browserHistory, Link} from "react-router";
-import {Button} from 'react-bootstrap';
+import {Button, ButtonGroup} from 'react-bootstrap';
 import TokenService from "../api/TokenService";
 import Api from "../api/Api";
 
@@ -10,11 +10,16 @@ export default class ArticleBody extends React.Component {
         super(props);
         this.tokenService = new TokenService();
         this.api = Api.getDefault();
+        this.state = {
+            status: this.props.article.status,
+        };
 
         this.deleteOnClick = this.deleteOnClick.bind(this);
         this.blockOnClick = this.blockOnClick.bind(this);
+        this.changeOnClick = this.changeOnClick.bind(this);
         this.getModerButtons = this.getModerButtons.bind(this);
         this.getAdminButtons = this.getAdminButtons.bind(this);
+        this.getChangeButtons = this.getChangeButtons.bind(this);
         this.authorOnClick = this.authorOnClick.bind(this);
         this.getAdminMenu = this.getAdminMenu.bind(this);
     }
@@ -72,11 +77,14 @@ export default class ArticleBody extends React.Component {
     blockOnClick() {
         let data = [];
         data.push(this.props.article.id);
-        if (this.props.article.status !== "LOCKED") {
+        if (this.state.status !== "LOCKED") {
             this.api.article.block(data).execute({
                 success: ((body) => {
                     console.log('success');
                     console.log(body);
+                    this.setState({
+                        status: "LOCKED",
+                    });
                 }),
                 error: ((body) => {
                     console.error('error');
@@ -88,6 +96,9 @@ export default class ArticleBody extends React.Component {
                 success: ((body) => {
                     console.log('success');
                     console.log(body);
+                    this.setState({
+                        status: "UNLOCKED",
+                    });
                 }),
                 error: ((body) => {
                     console.error('error');
@@ -97,15 +108,22 @@ export default class ArticleBody extends React.Component {
         }
     }
 
+    changeOnClick() {
+        browserHistory.push('/article-creation/' + this.props.article.id);
+    }
+
     getAdminMenu() {
         let menu = null;
         if (this.tokenService.isTokenExist() && this.props.article !== null) {
             let roles = JSON.parse(localStorage.getItem('roles'));
             for (let i = 0; i < roles.length; i++) {
                 if (roles[i] === "ROLE_ADMIN") {
-                    menu = <div>{this.getAdminButtons()}{this.getModerButtons()}</div>;
+                    menu =
+                        <ButtonGroup>{this.getAdminButtons()}{this.getModerButtons()}{this.getChangeButtons()}</ButtonGroup>;
                 } else if (roles[i] === "ROLE_MODERATOR") {
-                    menu = this.getModerButtons();
+                    menu = <ButtonGroup>{this.getModerButtons()}{this.getChangeButtons()}</ButtonGroup>;
+                } else if (this.tokenService.getId() === this.props.article.author.id) {
+                    menu = this.getChangeButtons();
                 }
             }
         }
@@ -119,7 +137,12 @@ export default class ArticleBody extends React.Component {
 
     getModerButtons() {
         return <Button bsSize="sm" bsStyle="danger" onClick={this.blockOnClick}
-                       className="delete-btn right-btn">{this.props.article.status !== "LOCKED" ? "Заблокировать статью" : "Разблокировать статью"}</Button>;
+                       className="delete-btn">{this.state.status !== "LOCKED" ? "Заблокировать статью" : "Разблокировать статью"}</Button>;
+    }
+
+    getChangeButtons() {
+        return <Button bsSize="sm" bsStyle="danger" onClick={this.changeOnClick} className="delete-btn">Изменить
+            статью</Button>;
     }
 
     render() {
@@ -134,7 +157,8 @@ export default class ArticleBody extends React.Component {
                     <footer>
                         <span>Теги: </span>
                         {this.props.article.tags.map((item, index) =>
-                            <li className="addedTag" key={item.id} onClick={this.tagOnClick.bind(this, item.value)}><span>{item.value}</span></li>
+                            <li className="addedTag" key={item.id} onClick={this.tagOnClick.bind(this, item.value)}>
+                                <span>{item.value}</span></li>
                         )}
                     </footer>
                     <footer className="article-info author">

@@ -15,6 +15,7 @@ export default class ArticleCreation extends React.Component {
             target: this.refs.title,
             message: "",
             show: false,
+            status: null,
             title: "",
             text: "",
             images: [],
@@ -23,6 +24,27 @@ export default class ArticleCreation extends React.Component {
         };
 
         this.api = Api.getDefault();
+
+        if (this.props.params.articleId !== undefined) {
+            this.api.article.getById(this.props.params.articleId).execute({
+                success: ((body) => {
+                    console.log('success');
+                    console.log(body);
+                    this.setState({
+                        status: 'created',
+                        text: body.data.result.text,
+                        images: body.data.result.images,
+                        tagList: body.data.result.tags,
+                        title: body.data.result.title,
+                    });
+                    console.log(this.state);
+                }),
+                error: ((body) => {
+                    console.log('error');
+                    console.log(body);
+                })
+            });
+        }
 
         this.uploadImage = this.uploadImage.bind(this);
         this.onChangeText = this.onChangeText.bind(this);
@@ -35,6 +57,7 @@ export default class ArticleCreation extends React.Component {
     }
 
     uploadImage(files) {
+        console.log(files);
         this.api.image.upload(files[0]).execute({
             success: ((body) => {
                 ReactSummernote.insertImage(this.api.image.getUrl(body.data.result.originalPath), $image => {
@@ -119,48 +142,45 @@ export default class ArticleCreation extends React.Component {
             this.setState(validationRes);
         } else {
             if (this.state.tagIdList.length !== 0) {
-
-                {
-                    this.state.tagList.map((item, index) =>
-                        this.api.tag.create({value: item}).execute({
-                            success: ((body) => {
-                                console.log('success');
-                                console.log(body);
+                this.state.tagList.map((item, index) =>
+                    this.api.tag.create({value: item}).execute({
+                        success: ((body) => {
+                            console.log('success');
+                            console.log(body);
+                            let data = {
+                                id: body.data.result.id,
+                                value: body.data.result.value,
+                            };
+                            this.setState({
+                                tagIdList: this.state.tagIdList.concat(data),
+                            });
+                            if (this.state.tagIdList.length === this.state.tagList.length) {
                                 let data = {
-                                    id: body.data.result.id,
-                                    value: body.data.result.value,
+                                    title: this.state.title,
+                                    text: this.state.text,
+                                    status: status,
+                                    tags: this.state.tagIdList,
+                                    images: this.state.images,
                                 };
-                                this.setState({
-                                    tagIdList: this.state.tagIdList.concat(data),
+                                this.api.article.create(data).execute({
+                                    success: ((body) => {
+                                        console.log('success');
+                                        console.log(body);
+                                        browserHistory.push('/article/' + body.data.result.id);
+                                    }),
+                                    error: ((body) => {
+                                        console.log('error');
+                                        console.log(body);
+                                    })
                                 });
-                                if (this.state.tagIdList.length === this.state.tagList.length) {
-                                    let data = {
-                                        title: this.state.title,
-                                        text: this.state.text,
-                                        status: status,
-                                        tags: this.state.tagIdList,
-                                        images: this.state.images,
-                                    };
-                                    this.api.article.create(data).execute({
-                                        success: ((body) => {
-                                            console.log('success');
-                                            console.log(body);
-                                            browserHistory.push('/article/' + body.data.result.id);
-                                        }),
-                                        error: ((body) => {
-                                            console.log('error');
-                                            console.log(body);
-                                        })
-                                    });
-                                }
-                            }),
-                            error: ((body) => {
-                                console.error('error');
-                                console.error(body);
-                            })
+                            }
+                        }),
+                        error: ((body) => {
+                            console.error('error');
+                            console.error(body);
                         })
-                    )
-                }
+                    })
+                )
             } else {
                 let data = {
                     title: this.state.title,
@@ -205,6 +225,7 @@ export default class ArticleCreation extends React.Component {
                                 <FormGroup>
                                     <label htmlFor="text" ref="text">Текст</label>
                                     <ReactSummernote
+                                        value={this.state.text}
                                         options={{
                                             toolbar: [
                                                 ["style", ["style"]],
@@ -223,9 +244,10 @@ export default class ArticleCreation extends React.Component {
                                         onChange={this.onChangeText}
                                     />
                                 </FormGroup>
-                                <TagContainer onChange={this.onChangeTagList}/>
+                                <TagContainer onChange={this.onChangeTagList} tagList={this.state.tagList}/>
                                 <Button className="custom-button" onClick={this.sendClick}>Отправить</Button>
-                                <Button className="custom-changes-btn right-btn" onClick={this.draftClick}>Сохранить</Button>
+                                <Button className="custom-changes-btn right-btn"
+                                        onClick={this.draftClick}>Сохранить</Button>
 
                                 <Overlay
                                     show={this.state.show}
