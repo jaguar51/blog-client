@@ -1,12 +1,17 @@
 import React, {PropTypes} from "react";
-import {Button, FormGroup, ControlLabel, FormControl, Checkbox, HelpBlock} from 'react-bootstrap';
+import ReactDOM from "react-dom";
+import {Button, FormGroup, ControlLabel, FormControl, Checkbox, Overlay, Popover} from "react-bootstrap";
 import Api from "../api/Api";
 
 class LogForm extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
+            remember: false,
             show: false,
+            target: this.refs.email,
+            message: '',
             login: '',
             password: '',
             email: '',
@@ -14,105 +19,226 @@ class LogForm extends React.Component {
             showLogin: props.checked == 'login',
             showSignUp: props.checked == 'signup'
         };
+
+        this.api = Api.getDefault();
+
         this.render = this.render.bind(this);
-        this.logInClick = this.logInClick.bind(this);
-        this.signUpClick = this.signUpClick.bind(this);
-        this.signUpLogin = this.signUpLogin.bind(this);
-        this.signUpPassword = this.signUpPassword.bind(this);
-        this.signUpRepeatedPassword = this.signUpRepeatedPassword.bind(this);
-        this.signUpEmail = this.signUpEmail.bind(this);
+
+        this.changeFormClick = this.changeFormClick.bind(this);
+
+        this.signUpLoginChange = this.signUpLoginChange.bind(this);
+        this.signUpPasswordChange = this.signUpPasswordChange.bind(this);
+        this.signUpRepeatedPasswordChange = this.signUpRepeatedPasswordChange.bind(this);
+        this.signUpEmailChange = this.signUpEmailChange.bind(this);
+        this.rememberChange = this.rememberChange.bind(this);
+
+        this.signUp = this.signUp.bind(this);
+        this.login = this.login.bind(this);
+
+        this.isLoginValid = this.isLoginValid.bind(this);
+        this.isEmailValid = this.isEmailValid.bind(this);
+        this.isPasswordsEquals = this.isPasswordsEquals.bind(this);
+        this.isPasswordValid = this.isPasswordValid.bind(this);
     }
 
-    logInClick() {
-        this.setState({
-            showLogin: true,
-            showSignUp: false
-        });
+    changeFormClick() {
+        this.setState((prevState) => {
+            return {
+                showLogin: !prevState.showLogin,
+                showSignUp: !prevState.showSignUp
+            }
+        })
     }
 
-    signUpClick() {
-        this.setState({
-            showLogin: false,
-            showSignUp: true
-        });
-    }
-
-    signUpLogin(element) {
+    signUpLoginChange(element) {
         this.setState({
             login: element.target.value
         });
     }
 
-    signUpPassword(element) {
+    signUpPasswordChange(element) {
         this.setState({
             password: element.target.value
         });
     }
 
-    signUpRepeatedPassword(element) {
+    signUpRepeatedPasswordChange(element) {
         this.setState({
             repeatedPassword: element.target.value
         });
     }
 
-    signUpEmail(element) {
+    signUpEmailChange(element) {
         this.setState({
             email: element.target.value
         });
     }
 
-    isPasswordsEquals() {
-        if (this.state.repeatedPassword !== this.state.password) {
-            return "error";
-        } else {
-            return null;
-        }
+    rememberChange() {
+        this.setState({
+            remember: !this.state.remember
+        });
     }
 
-    isPasswordLength() {
+    isLoginValid() {
+        return this.state.login.length > 0
+    }
+
+    isEmailValid() {
+        const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return emailRegExp.test(this.state.email);
+    }
+
+    isPasswordValid() {
         const length = this.state.password.length;
-        if (length > 3 && length < 256) {
-            return 'success';
-        } else if (length === 0) {
-            return null;
-        } else {
-            return 'error';
+        return length > 3 && length < 256;
+    }
+
+    isPasswordsEquals() {
+        return this.state.repeatedPassword === this.state.password;
+    }
+
+    validateSignUpForm() {
+        if (!this.isLoginValid()) {
+            return {
+                show: true,
+                message: "Введите логин",
+                target: this.refs.login
+            }
         }
+
+        if (!this.isPasswordValid()) {
+            return {
+                show: true,
+                message: "Пароль должен быть от 4 до 255 символов",
+                target: this.refs.password
+            }
+        }
+
+        if (!this.isPasswordsEquals()) {
+            return {
+                show: true,
+                message: "Пароли не совпадают",
+                target: this.refs.repeatedPassword
+            }
+        }
+
+        if (!this.isEmailValid()) {
+            return {
+                show: true,
+                message: "Неверный email",
+                target: this.refs.email
+            };
+        }
+
+        return null;
+    }
+
+    validateLoginForm() {
+        if (!this.isLoginValid()) {
+            return {
+                show: true,
+                message: "Введите логин",
+                target: this.refs.login
+            }
+        }
+
+        if (!this.isPasswordValid()) {
+            return {
+                show: true,
+                message: "Пароль должен быть от 4 до 255 символов",
+                target: this.refs.password
+            }
+        }
+
+        return null;
     }
 
     signUp() {
-        this.setState({
-            show: !this.state.show
-        });
-        // let email = $("#email-sign-up-form");
-        // let login = $("#login-sign-up-form");
-        // let password = $("#password-sign-up-form");
-        // let passwordRepeated = $("#password-repeat-sign-up-form");
-        // let api = Api.getDefault();
-        //
-        // if (this.isEmpty(email) && this.isEmpty(login) && this.isEmpty(password)) {
-        //     if (this.checkRepeatedPassword(password, passwordRepeated) && this.checkEmail(email) && this.checkPassword(password)) {
-        //         let data = {
-        //             "email": email.val(),
-        //             "login": login.val(),
-        //             "password": password.val()
-        //         };
-        //         api.account.create(data).execute({
-        //             success: function (body) {
-        //                 console.log('success');
-        //                 console.log(body);
-        //             },
-        //             error: function (body) {
-        //                 console.log('error');
-        //                 console.log(body);
-        //             }
-        //         });
-        //     }
-        // }
+        let validationRes = this.validateSignUpForm();
+        if (validationRes) {
+            this.setState(validationRes);
+        } else {
+            let data = {
+                "email": this.state.email,
+                "login": this.state.login,
+                "password": this.state.password
+            };
+            this.api.account.create(data).execute({
+                success: ((body) => {
+                    console.log('success');
+                    console.log(body);
+                    this.props.onClose();
+                }),
+                error: ((body) => {
+                    console.log('error');
+                    console.log(body);
+                    if (/login/.test(body.message)) {
+                        this.setState({
+                            show: true,
+                            message: "Данный логин уже используется.",
+                            target: this.refs.login
+                        })
+                    } else if (/mail/.test(body.message)) {
+                        this.setState({
+                            show: true,
+                            message: "Данная почта уже используется.",
+                            target: this.refs.email
+                        })
+                    }
+                })
+            });
+        }
+    }
+
+    login() {
+        let validationRes = this.validateLoginForm();
+        if (validationRes) {
+            this.setState(validationRes);
+        } else {
+            let data = {
+                "username": this.state.login,
+                "password": this.state.password,
+                "scope": "read write",
+                "grant_type": "password"
+            };
+            this.api.oauth.authorization(data).execute({
+                success: ((body) => {
+                    console.log('success');
+                    console.log(body);
+                    localStorage.setItem('refresh_token', body.refresh_token);
+                    localStorage.setItem('access_token', body.access_token);
+                    localStorage.setItem('account_id', body.account_id);
+                    this.api.account.getById(body.account_id).execute({
+                        success: ((body) => {
+                            console.log('success');
+                            console.log(body);
+                            localStorage.setItem('roles', JSON.stringify(body.data.result.roles));
+                        }),
+                        error: ((body) => {
+                            console.log('error');
+                            console.log(body);
+                        })
+                    });
+                    this.props.login();
+                    this.props.onClose();
+                }),
+                error: ((body) => {
+                    console.log('error');
+                    console.log(body);
+                    if (/credentials/.test(body.error_description)) {
+                        this.setState({
+                            show: true,
+                            message: "Неверный e-mail или пароль.",
+                            target: this.refs.login
+                        })
+                    }
+                })
+            });
+        }
     }
 
     render() {
-
         return (
             <div className="popup" id="login-dialog">
                 <div className="login-wrap">
@@ -120,11 +246,11 @@ class LogForm extends React.Component {
                         <Button type="button" className="custom-close" bsClass="close" onClick={this.props.onClose}>
                             ×
                         </Button>
-                        <input checked={this.state.showLogin} onChange={this.logInClick} id="tab-1" type="radio"
+                        <input checked={this.state.showLogin} onChange={this.changeFormClick} id="tab-1" type="radio"
                                name="tab" className="login"/>
                         <label htmlFor="tab-1" className="tab">Вход</label>
 
-                        <input checked={this.state.showSignUp} onChange={this.signUpClick} id="tab-2" type="radio"
+                        <input checked={this.state.showSignUp} onChange={this.changeFormClick} id="tab-2" type="radio"
                                name="tab" className="sign-up"/>
                         <label htmlFor="tab-2" className="tab">Регистрация</label>
 
@@ -134,17 +260,18 @@ class LogForm extends React.Component {
                                     <FormGroup controlId="LoginFormLogin">
                                         <ControlLabel>Имя пользователя</ControlLabel>
                                         <FormControl className="text-login" type="text"
-                                                     onChange={this.signUpLogin} required/>
+                                                     onChange={this.signUpLoginChange} ref="login"/>
                                     </FormGroup>
                                     <FormGroup controlId="LoginFormPassword">
                                         <ControlLabel>Пароль</ControlLabel>
                                         <FormControl className="text-login" type="password"
-                                                     onChange={this.signUpPassword} required/>
+                                                     onChange={this.signUpPasswordChange} ref="password"/>
                                     </FormGroup>
-                                    <Checkbox inline>
+                                    <Checkbox inline onChange={this.rememberChange}>
                                         Запомнить меня
                                     </Checkbox>
-                                    <Button type="submit" className="custom-button" block bsStyle="primary" bsSize="large">
+                                    <Button className="custom-button" block bsStyle="primary"
+                                            bsSize="large" onClick={this.login}>
                                         Войти
                                     </Button>
                                 </form>
@@ -159,34 +286,43 @@ class LogForm extends React.Component {
                                     <FormGroup controlId="signUpFormLogin">
                                         <ControlLabel>Имя пользователя</ControlLabel>
                                         <FormControl className="text-login" type="text"
-                                                     onChange={this.signUpLogin} required/>
+                                                     onChange={this.signUpLoginChange} ref="login"/>
                                     </FormGroup>
-                                    <FormGroup controlId="signUpFormPassword" validationState={this.isPasswordLength()}>
+                                    <FormGroup controlId="signUpFormPassword">
                                         <ControlLabel>Пароль</ControlLabel>
                                         <FormControl className="text-login" type="password"
-                                                     onChange={this.signUpPassword} required/>
+                                                     onChange={this.signUpPasswordChange} ref="password"/>
                                         <FormControl.Feedback />
-                                        <HelpBlock>Динна пароля от 4 до 255 символов</HelpBlock>
                                     </FormGroup>
-                                    <FormGroup controlId="signUpFormRepeatedPassword"
-                                               validationState={this.isPasswordsEquals()}>
+                                    <FormGroup controlId="signUpFormRepeatedPassword">
                                         <ControlLabel>Повторите пароль</ControlLabel>
                                         <FormControl className="text-login" type="password"
-                                                     onChange={this.signUpRepeatedPassword} required
-                                                     value={this.state.repeatedPassword}/>
+                                                     onChange={this.signUpRepeatedPasswordChange}
+                                                     ref="repeatedPassword"/>
                                         <FormControl.Feedback />
                                     </FormGroup>
                                     <FormGroup controlId="signUpFormEmail">
                                         <ControlLabel>E-mail</ControlLabel>
                                         <FormControl className="text-login" type="email"
-                                                     onChange={this.signUpEmail} required/>
+                                                     onChange={this.signUpEmailChange} ref="email"/>
                                     </FormGroup>
 
-                                    <Button type="submit" className="custom-button" block bsStyle="primary"
-                                            bsSize="large">
+                                    <Button className="custom-button" block bsStyle="primary"
+                                            bsSize="large" onClick={this.signUp}>
                                         Зарегистрироваться
                                     </Button>
                                 </form>
+                                <Overlay
+                                    show={this.state.show}
+                                    onHide={() => this.setState({show: false})}
+                                    placement="right"
+                                    container={this}
+                                    target={() => ReactDOM.findDOMNode(this.state.target)}
+                                >
+                                    <Popover id="popover-positioned-scrolling-top">
+                                        {this.state.message}
+                                    </Popover>
+                                </Overlay>
                             </div>
                         </div>
                     </div>

@@ -18,6 +18,7 @@ export default class ApiRequest {
             .end(
                 function (error, result) {
                     if (error || !result.ok) {
+                        console.log(error);
                         callback.error(result.body);
                     } else {
                         callback.success(result.body);

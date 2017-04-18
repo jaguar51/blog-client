@@ -2,30 +2,69 @@ import React, {PropTypes} from "react";
 import {browserHistory, Link} from "react-router";
 import {Col} from 'react-bootstrap';
 import TextTruncate from "react-text-truncate";
+import Api from "../api/Api";
 
 class ArticlePreview extends React.Component {
 
     constructor(props) {
         super(props);
+        this.api = Api.getDefault();
+        this.commentDeclensions = [" комментарий", " комментария", " комментариев"];
+
+        this.handleClick = this.handleClick.bind(this);
+        this.authorOnClick = this.authorOnClick.bind(this);
     }
 
     handleClick() {
-        browserHistory.push('/article');
+        browserHistory.push('/article/' + this.props.data.id);
     }
 
-    testTitle() {
-        return "Test title"
+    getTitle() {
+        return this.props.data.title;
     }
 
-    testText() {
-        return "Lorem Ipsum - это текст-рыба, часто используемый в печати и вэб-дизайне. Lorem Ipsum" +
-            "является стандартной  рыбой для текстов на латинице с начала XVI века. В то время некий" +
-            "безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem" +
-            "Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных" +
-            "изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое" +
-            "время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в" +
-            "более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах" +
-            "которых используется Lorem Ipsum."
+    getImage() {
+        if (this.props.data.images.length !== 0) {
+            return this.api.image.getUrl(this.props.data.images[0].originalPath);
+        }
+        return '/assets/img/default-article-img/default-img1.png';
+    }
+
+    getText() {
+        if (this.props.data.text === "") {
+            return "Текст отсутствует";
+        }
+        return this.props.data.text;
+    }
+
+    getUserAvatar() {
+        if (this.props.data.author !== null) {
+            if (this.props.data.author.avatar !== null) {
+                return this.api.avatar.getUrl(this.props.data.author.avatar.originalPath);
+            }
+        }
+        return '/assets/img/default-avatars/avatar-01.png';
+    }
+
+    getComments() {
+        let number = this.props.data.commentsCount;
+        let cases = [2, 0, 1, 1, 1, 2];
+        return number + this.commentDeclensions[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
+    }
+
+    getUserName() {
+        let userName = "DELETED";
+        if (this.props.data.author !== null) {
+            if (this.props.data.author.name !== null) {
+                userName = this.props.data.author.name;
+                if (this.props.data.author.surname !== null) {
+                    userName = userName + " " + this.props.data.author.surname;
+                }
+            } else {
+                userName = this.props.data.author.login;
+            }
+        }
+        return userName;
     }
 
     get size() {
@@ -40,26 +79,32 @@ class ArticlePreview extends React.Component {
         }
     }
 
+    authorOnClick() {
+        if (this.props.data.author !== null) {
+            browserHistory.push('/profile/' + this.props.data.author.id);
+        }
+    }
+
     render() {
         return (
             <Col lg={this.size} md={this.size} sm={12} xs={12}>
                 <div className="article">
                     <figure className="article-image is-3by2" onClick={this.handleClick}>
-                        <img src={require('../../assets/img/default-article-img/default-img1.png')} alt=""/>
+                        <img src={this.getImage()} alt=""/>
                     </figure>
                     <div className="article-body-preview" onClick={this.handleClick}>
                         <h2 className="article-title">
-                            {this.testTitle()}
+                            <TextTruncate line={1} truncateText="…" text={this.getTitle()} />
                         </h2>
-                        <TextTruncate line={1} truncateText="…" text={this.testText()} className="article-content"/>
+                        <TextTruncate line={1} truncateText="…" text={this.getText()} className="article-content"/>
                     </div>
-                    <footer className="article-info-preview author">
-                        <Link to="/profile" className="author-content">
-                            <img src={require('../../assets/img/default-avatars/avatar-01.png')} width="40px"
+                    <footer className="article-info-preview author" >
+                        <div className="author-content" onClick={this.authorOnClick}>
+                            <img src={this.getUserAvatar()} width="40px"
                                  height="40px" alt=""/>
-                            <span> By Joe Smith</span>
-                        </Link>
-                        <span className="comments">42 comments</span>
+                            <span>{this.getUserName()}</span>
+                        </div>
+                        <span className="comments">{this.getComments()}</span>
                     </footer>
                 </div>
             </Col>

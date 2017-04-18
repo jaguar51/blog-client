@@ -1,4 +1,5 @@
 import ApiRequest from "../ApiRequest";
+import TokenService from "../TokenService";
 
 export default class ApiMethodBase {
 
@@ -6,15 +7,17 @@ export default class ApiMethodBase {
         this.baseUrl = baseUrl;
     }
 
-    getToken() {
-        // @TODO потом нужна более сложная логика получения токена из хранилища какого нибудь
-        return 'Bearer ' + '821992dc-e000-4041-bbdf-a4b8dbb89036';
-    }
-
     prepareRequest(methodName, params) {
-        params.header = {
-            'Authorization': this.getToken()
-        };
+        let tokenService = new TokenService;
+        if (params.header == null) {
+            params.header = {};
+        }
+        if (tokenService.isTokenExist()) {
+            params.header['Authorization'] = tokenService.getBearerToken();
+            // params.header = {
+            //     'Authorization': tokenService.getToken()
+            // };
+        }
         return new ApiRequest(
             this.constructPath(methodName),
             params
@@ -30,7 +33,11 @@ export default class ApiMethodBase {
     }
 
     constructPath(methodName) {
-        return this.baseUrl + '/api/' + this.getMethodsGroup() + '/' + methodName;
+        let path = this.baseUrl + '/api/' + this.getMethodsGroup();
+        if (methodName !== "") {
+            path += '/' + methodName;
+        }
+        return path;
     }
 
     getMethodsGroup() {
