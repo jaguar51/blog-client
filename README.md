@@ -1,6 +1,6 @@
 # Blog-client
 
-The client part of the blogging system implemented RectJS.
+The client part of the blogging system implemented RectJS.   
 Server part you can see [here](https://github.com/jaguar51/Blog-server).
 
 ## Install
