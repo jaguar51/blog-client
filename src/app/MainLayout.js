@@ -43,6 +43,7 @@ export default class MainLayout extends React.Component {
         this.signUpButtonClick = this.signUpButtonClick.bind(this);
         this.hideSignWindow = this.hideSignWindow.bind(this);
         this.searchOnChange = this.searchOnChange.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.quit = this.quit.bind(this);
         this.login = this.login.bind(this);
     }
@@ -97,19 +98,17 @@ export default class MainLayout extends React.Component {
         }
     }
 
+    handleKeyPress(event) {
+        if (event.key == 'Enter') {
+            browserHistory.push('/?q=' + this.state.request);
+            location.reload();
+        }
+    }
+
     searchOnChange(event) {
         this.setState({
             request: event.target.value
         });
-    }
-
-    onClickSearch() {
-        if (this.state.request !== "") {
-            if (this.state.request.indexOf("tag:") != 0) {
-                browserHistory.push('/' + this.state.request);
-            }
-            browserHistory.push('/' + this.state.request);
-        }
     }
 
     render() {
@@ -128,7 +127,7 @@ export default class MainLayout extends React.Component {
                             <FormGroup>
                                 <InputGroup>
                                     <FormControl type="text" className="search" placeholder="Найти"
-                                                 onChange={this.searchOnChange} value={this.state.request}/>
+                                                 onChange={this.searchOnChange} onKeyPress={this.handleKeyPress} value={this.state.request}/>
                                     <InputGroup.Button>
                                             <Button className="custom-button search-btn" href={'/?q=' + this.state.request}>
                                                 <Glyphicon glyph="search"/>

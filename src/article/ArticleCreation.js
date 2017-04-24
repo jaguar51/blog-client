@@ -141,7 +141,8 @@ export default class ArticleCreation extends React.Component {
         if (validationRes) {
             this.setState(validationRes);
         } else {
-            if (this.state.tagIdList.length !== 0) {
+            console.log(this.state.tagList);
+            if (this.state.tagList.length !== 0) {
                 this.state.tagList.map((item, index) =>
                     this.api.tag.create({value: item}).execute({
                         success: ((body) => {

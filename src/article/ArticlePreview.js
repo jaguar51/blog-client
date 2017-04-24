@@ -86,22 +86,35 @@ class ArticlePreview extends React.Component {
     }
 
     render() {
+        let mainImgStyle = {
+            'backgroundImage': 'url(' + this.getImage() + ')',
+            'backgroundRepeat': 'no-repeat',
+            'backgroundPosition': 'center',
+            'backgroundSize': 'cover',
+        };
+
+        let avatarImgStyle = {
+            'backgroundImage': 'url(' + this.getUserAvatar() + ')',
+            'backgroundRepeat': 'no-repeat',
+            'backgroundPosition': 'center',
+            'backgroundSize': 'cover',
+            'width': '40px',
+            'height': '40px',
+        };
+
         return (
             <Col lg={this.size} md={this.size} sm={12} xs={12}>
                 <div className="article">
-                    <figure className="article-image is-3by2" onClick={this.handleClick}>
-                        <img src={this.getImage()} alt=""/>
-                    </figure>
+                    <figure className="article-image is-3by2" onClick={this.handleClick} style={mainImgStyle}/>
                     <div className="article-body-preview" onClick={this.handleClick}>
                         <h2 className="article-title">
-                            <TextTruncate line={1} truncateText="…" text={this.getTitle()} />
+                            <TextTruncate line={1} truncateText="…" text={this.getTitle()}/>
                         </h2>
                         <TextTruncate line={1} truncateText="…" text={this.getText()} className="article-content"/>
                     </div>
-                    <footer className="article-info-preview author" >
+                    <footer className="article-info-preview author">
                         <div className="author-content" onClick={this.authorOnClick}>
-                            <img src={this.getUserAvatar()} width="40px"
-                                 height="40px" alt=""/>
+                            <figure className="avatar" style={avatarImgStyle}/>
                             <span>{this.getUserName()}</span>
                         </div>
                         <span className="comments">{this.getComments()}</span>

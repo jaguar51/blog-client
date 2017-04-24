@@ -23,6 +23,7 @@ export default class Comments extends React.Component {
         this.getInput = this.getInput.bind(this);
         this.commentOnChange = this.commentOnChange.bind(this);
         this.sendOnClick = this.sendOnClick.bind(this);
+        this.handelKeyDown = this.handelKeyDown.bind(this);
     }
 
     loadItems() {
@@ -87,6 +88,12 @@ export default class Comments extends React.Component {
         }
     }
 
+    handelKeyDown(event) {
+        if (event.ctrlKey === true && event.key == 'Enter') {
+            this.sendOnClick();
+        }
+    }
+
     getInput() {
         if (this.tokenService.isTokenExist()) {
             return <div className="article-form">
@@ -95,7 +102,7 @@ export default class Comments extends React.Component {
                         <label htmlFor="text">Оставить комментарий</label>
                         <textarea className="form-control vresize" name="text" id="text"
                                   placeholder="Введите текст" onChange={this.commentOnChange}
-                                  value={this.state.comment}/>
+                                  value={this.state.comment} onKeyDown={this.handelKeyDown}/>
                     </div>
                     <button className="btn btn-default custom-button" onClick={this.sendOnClick}>Отправить</button>
                 </div>
