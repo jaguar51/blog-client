@@ -31,11 +31,18 @@ export default class UserMenu extends React.Component {
     }
 
     render() {
+        let avatarImgStyle = {
+            'backgroundImage': 'url(' + this.state.profileImg + ')',
+            'backgroundRepeat': 'no-repeat',
+            'backgroundPosition': 'center',
+            'backgroundSize': 'cover',
+        };
+
         return (
             <Nav className="right-profile">
                 <Dropdown id="dropdown-custom-1" noCaret className="right-profile">
                     <Dropdown.Toggle noCaret className="user-menu">
-                        <img className="img-circle profile-img" src={this.state.profileImg} alt=""/>
+                        <figure className="img-circle profile-img" style={avatarImgStyle}/>
                         <div className="profile-name">
                             Профиль
                             <span className="caret"></span>

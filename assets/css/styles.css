@@ -336,14 +336,14 @@ a {
     padding-bottom: 20px;
 }
 
-.author img,
+.avatar,
 .author-content {
     display: inline-block;
     vertical-align: middle;
     font-weight: bold;
 }
 
-.author img {
+.avatar {
     border-radius: 50%;
     margin-right: 0.6em;
     height: 40px;
@@ -821,4 +821,12 @@ span.tagRemove:hover {
     color: #fff;
     background-color: #214369;
     border-color: #1e3c5d;
+}
+
+.article-body-text a {
+    color: #6da3bd;
+}
+
+.article-body-text a:hover {
+    text-decoration-line: underline;
 }
