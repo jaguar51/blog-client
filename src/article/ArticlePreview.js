@@ -27,7 +27,7 @@ class ArticlePreview extends React.Component {
         if (this.props.data.images.length !== 0) {
             return this.api.image.getUrl(this.props.data.images[0].originalPath);
         }
-        return '/assets/img/default-article-img/default-img1.png';
+        return '/assets/img/default-article-img/default-img.png';
     }
 
     getText() {
