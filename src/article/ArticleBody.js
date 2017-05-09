@@ -1,6 +1,6 @@
 import React from "react";
-import {browserHistory, Link} from "react-router";
-import {Button, ButtonGroup} from 'react-bootstrap';
+import {browserHistory} from "react-router";
+import {Button, ButtonGroup} from "react-bootstrap";
 import TokenService from "../api/TokenService";
 import Api from "../api/Api";
 
@@ -123,7 +123,8 @@ export default class ArticleBody extends React.Component {
                         <ButtonGroup>{this.getAdminButtons()}{this.getModerButtons()}{this.getChangeButtons()}</ButtonGroup>;
                 } else if (roles[i] === "ROLE_MODERATOR") {
                     menu = <ButtonGroup>{this.getModerButtons()}{this.getChangeButtons()}</ButtonGroup>;
-                } else if (this.tokenService.getId() === this.props.article.author.id) {
+                } else if (this.props.article.author !== null
+                    && this.tokenService.getId() === this.props.article.author.id) {
                     menu = this.getChangeButtons();
                 }
             }
