@@ -54,6 +54,8 @@ export default class ArticleCreation extends React.Component {
         this.sendArticle = this.sendArticle.bind(this);
         this.draftClick = this.draftClick.bind(this);
         this.validateArticle = this.validateArticle.bind(this);
+
+        document.title = "Создание статьи";
     }
 
     uploadImage(files) {

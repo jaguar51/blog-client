@@ -132,6 +132,10 @@ a {
     text-shadow: 1px 1px 1px black;
 }
 
+.custom-navbar .navbar-brand:hover {
+    color: #fff;
+}
+
 .custom-navbar .navbar-nav > li > a {
     color: #fff;
 }
@@ -341,6 +345,10 @@ a {
     display: inline-block;
     vertical-align: middle;
     font-weight: bold;
+}
+
+.author-content {
+    cursor: pointer;
 }
 
 .avatar {

@@ -47,6 +47,8 @@ export default class UserProfile extends React.Component {
         this.getModerButtons = this.getModerButtons.bind(this);
         this.getAdminButtons = this.getAdminButtons.bind(this);
         this.getAdminMenu = this.getAdminMenu.bind(this);
+
+        document.title = "Профиль";
     }
 
     loadItems() {

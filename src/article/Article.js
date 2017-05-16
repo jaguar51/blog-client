@@ -24,7 +24,8 @@ export default class Article extends React.Component {
                 this.setState({
                     article: body.data.result === null ? "not found" : body.data.result,
                     message: "Данная статья не найдена"
-                })
+                });
+                document.title = this.state.article.title;
             }),
             error: ((body) => {
                 console.error('error');
@@ -33,7 +34,8 @@ export default class Article extends React.Component {
                     this.setState({
                         article: "not found",
                         message: "Нет прав доступа"
-                    })
+                    });
+                    document.title = "Не найдено";
                 }
             })
         });
