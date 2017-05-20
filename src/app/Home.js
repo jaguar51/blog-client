@@ -17,6 +17,7 @@ export default class Home extends React.Component {
             hasMore: true,
         };
         this.loadItems = this.loadItems.bind(this);
+        document.title = "Blog";
     }
 
     loadItems() {

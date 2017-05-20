@@ -48,6 +48,8 @@ export default class UserSettings extends React.Component {
         this.repeatedPasswordChange = this.repeatedPasswordChange.bind(this);
 
         this.update = this.update.bind(this);
+
+        document.title = "Настройки";
     }
 
     getUserAvatar() {
